@@ -18,15 +18,22 @@ namespace Adventure_man
         public static World currentWorld;
         private World world1;
 
+        private Texture2D collisionTexture;
+        
+
         Scene menu;
         Scene ui;
         List<Scene> loadedScenes;
+
+       
+
         public GameWorld()
         {
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
             Services = base.Services;
+            //screenSize = new Vector2(_graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight);
 
         }
 
@@ -35,6 +42,9 @@ namespace Adventure_man
             // TODO: Add your initialization logic here
             world1 = new World();
             currentWorld = world1;
+            _graphics.PreferredBackBufferWidth =(int)currentWorld.screenSize.X;
+            _graphics.PreferredBackBufferHeight = (int)currentWorld.screenSize.Y;
+
             base.Initialize();
         }
 
@@ -45,6 +55,7 @@ namespace Adventure_man
             loadedScenes = new List<Scene>();
             loadedScenes.Add(menu);
 
+            collisionTexture = Content.Load<Texture2D>("CollisionTexture");
 
             foreach (GameObject o in currentWorld.Objects)
             {
@@ -97,6 +108,10 @@ namespace Adventure_man
             foreach (GameObject o in currentWorld.Objects)
             {
                 o.Draw(gameTime, _spriteBatch);
+#if DEBUG
+                DrawCollisionBox(o);
+#endif
+
             }
 
 
@@ -104,6 +119,23 @@ namespace Adventure_man
             _spriteBatch.End();
 
             base.Draw(gameTime);
+        }
+
+
+
+        private void DrawCollisionBox(GameObject go)
+        {
+            Rectangle topLine = new Rectangle(go.CollisionBox.X, go.CollisionBox.Y, go.CollisionBox.Width, 1);
+            Rectangle bottomLine = new Rectangle(go.CollisionBox.X, go.CollisionBox.Y + go.CollisionBox.Height, go.CollisionBox.Width, 1);
+            Rectangle rightLine = new Rectangle(go.CollisionBox.X + go.CollisionBox.Width, go.CollisionBox.Y, 1, go.CollisionBox.Height);
+            Rectangle leftLine = new Rectangle(go.CollisionBox.X, go.CollisionBox.Y, 1, go.CollisionBox.Height);
+
+            _spriteBatch.Draw(collisionTexture, topLine, Color.Red);
+            _spriteBatch.Draw(collisionTexture, bottomLine, Color.Red);
+            _spriteBatch.Draw(collisionTexture, rightLine, Color.Red);
+            _spriteBatch.Draw(collisionTexture, leftLine, Color.Red);
+
+
         }
     }
 }

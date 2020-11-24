@@ -40,8 +40,7 @@ namespace Adventure_man
             }
         }
 
-
-        public Rectangle CollisionBox
+        public virtual Rectangle CollisionBox
         {
             get
             {

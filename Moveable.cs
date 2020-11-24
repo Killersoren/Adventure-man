@@ -11,6 +11,9 @@ namespace Adventure_man
     {
         public Vector2 velocity;
         public float speed;
+        //public float gravity;
+        //public Vector2 forceGravity;
+
 
         protected Texture2D[] sprites;
         protected float fps;
@@ -20,12 +23,18 @@ namespace Adventure_man
 
         public void Move(GameTime gameTime)
         {
+            if (velocity != Vector2.Zero)
+                CheckCollisions();
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
             position += ((velocity * speed) * deltaTime);
+            //position += ((forceGravity) * deltaTime);
+            
+            //    Animate(gameTime);
 
-            if (velocity != Vector2.Zero)
-                Animate(gameTime);
-
+        }
+        public void Gravity()
+        {
+            velocity += new Vector2(0, 1);
         }
 
         //public override void Draw(SpriteBatch spriteBatch)
@@ -52,6 +61,15 @@ namespace Adventure_man
 
         }
 
+        public abstract void OnCollision(GameObject other);
+        public void CheckCollisions()
+        {
+            foreach(GameObject other in GameWorld.currentWorld.Objects)
+            {
+                if (CollisionBox.Intersects(other.CollisionBox))
+                    OnCollision(other);
+            }
+        }
 
 
         public override void LoadContent(ContentManager content)
