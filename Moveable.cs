@@ -70,20 +70,20 @@ namespace Adventure_man
                     OnCollision(other);
             }
         }
+// tror disse er unødvendige, player og enemy tager bare methoder fra Gameobjects hvis ikke de er overskrevet i moveable
+       // https://stackoverflow.com/questions/51114135/abstract-class-grandchildren-inheritance
+        //public override void LoadContent(ContentManager content)
+        //{
+        //    LoadContentMoveable(content);
+        //}
+        //public abstract void LoadContentMoveable(ContentManager content);
 
 
-        public override void LoadContent(ContentManager content)
-        {
-            LoadContentMoveable(content);
-        }
-        public abstract void LoadContentMoveable(ContentManager content);
-
-
-        public override void Update(GameTime gameTime)
-        {
-            UpdateMoveable(gameTime);
-        }
-        public abstract void UpdateMoveable(GameTime gameTime);
+        //public override void Update(GameTime gameTime)
+        //{
+        //    UpdateMoveable(gameTime);
+        //}
+        //public abstract void UpdateMoveable(GameTime gameTime);
 
         //protected override void OnCollision(GameObject other)
         //{

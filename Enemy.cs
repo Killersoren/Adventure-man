@@ -24,7 +24,9 @@ namespace Adventure_man
         }
 
 
-        public override void LoadContentMoveable(ContentManager content)
+        //public override void LoadContent(ContentManager content)
+        public override void LoadContent()
+
         {
 
         }
@@ -34,7 +36,7 @@ namespace Adventure_man
             spriteBatch.Draw(sprite, position, Color.White);
         }
 
-        public override void UpdateMoveable(GameTime gameTime)
+        public override void Update(GameTime gameTime)
         {
             Move(gameTime);
         }

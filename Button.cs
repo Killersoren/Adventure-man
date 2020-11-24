@@ -17,17 +17,15 @@ namespace Adventure_man
         private MouseState mouseLast;
         private Rectangle mouseRectangle;
         public event EventHandler Click;
-
-        public Button(Texture2D sprite, Rectangle rectangle)
+        public Button(Rectangle rectangle)
         {
-            this.sprite = sprite;
             this.rectangle = rectangle;
             this.color = defaultColor;
+            this.sprite = GameWorld.content.Load<Texture2D>("button");
 
         }
-        public override void LoadContent(ContentManager content)
+        public override void LoadContent()
         {
-            throw new NotImplementedException();
         }
         public override void Update(GameTime gameTime)
         {

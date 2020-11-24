@@ -13,9 +13,8 @@ namespace Adventure_man
         List<GameObject> gameObject = new List<GameObject>();
         public Menu()
         {
-            Texture2D buttonSprite = Content.Load<Texture2D>("button");
             Rectangle buttonRectangle = new Rectangle(10, 350, 100, 100);
-            Button testButton = new Button(buttonSprite, buttonRectangle);
+            Button testButton = new Button(buttonRectangle);
             testButton.Click += TestButton_Click;
 
             gameObject.Add(testButton);

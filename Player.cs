@@ -70,7 +70,7 @@ namespace Adventure_man
         //    throw new NotImplementedException();
         //}
 
-        public override void UpdateMoveable(GameTime gameTime)
+        public override void Update(GameTime gameTime)
         {
             HandleInput(gameTime);
             //Animate(gameTime);
@@ -78,21 +78,22 @@ namespace Adventure_man
             Move(gameTime);
         }
 
-        public override void LoadContent(ContentManager content)
+        //public override void LoadContent(ContentManager content)
+        public override void LoadContent()
+
         {
             sprites = new Texture2D[2];
             for (int i = 0; i < sprites.Length; i++)
             {
-                sprites[i] = content.Load<Texture2D>("MoveTest" + (i + 1)+"_v2");
+                //sprites[i] = content.Load<Texture2D>("MoveTest" + (i + 1)+"_v2");
+                sprites[i] = GameWorld.content.Load<Texture2D>("MoveTest" + (i + 1) + "_v2");
+
             }
 
             sprite = sprites[0];
         }
 
-        public override void LoadContentMoveable(ContentManager content)
-        {
-            throw new NotImplementedException();
-        }
+       
 
         public override void OnCollision(GameObject other)
         {

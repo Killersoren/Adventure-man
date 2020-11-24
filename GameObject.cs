@@ -55,7 +55,9 @@ namespace Adventure_man
 
 
 
-        public abstract void LoadContent(ContentManager content);
+        //public abstract void LoadContent(ContentManager content);
+        public abstract void LoadContent();
+
 
         public virtual void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {

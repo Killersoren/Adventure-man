@@ -10,11 +10,9 @@ namespace Adventure_man
     abstract class Scene
     {
         private Vector2 position;
-        protected ContentManager Content = new ContentManager(GameWorld.Services);
 
         public Scene()
         {
-            Content.RootDirectory = "Content";
         }
 
 

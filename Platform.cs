@@ -67,9 +67,13 @@ namespace Adventure_man
             scale = 1;
         }
 
-        public override void LoadContent(ContentManager content)
+       // public override void LoadContent(ContentManager content)
+
+        public override void LoadContent()
         {
-            sprite = content.Load<Texture2D>("PlatformTest");
+            //sprite = content.Load<Texture2D>("PlatformTest");
+
+            sprite = GameWorld.content.Load<Texture2D>("PlatformTest");
 
         }
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)

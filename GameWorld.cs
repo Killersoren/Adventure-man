@@ -11,7 +11,7 @@ namespace Adventure_man
         private GraphicsDeviceManager _graphics;
         public SpriteBatch _spriteBatch;
 
-        new public static GameServiceContainer Services;
+        //new public static GameServiceContainer Services;
 
         private static Scene currentScene;
 
@@ -19,6 +19,9 @@ namespace Adventure_man
         private World world1;
 
         private Texture2D collisionTexture;
+
+        
+        public static ContentManager content;
         
 
         Scene menu;
@@ -32,9 +35,9 @@ namespace Adventure_man
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
-            Services = base.Services;
+            //Services = base.Services;
             //screenSize = new Vector2(_graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight);
-
+            content = Content;
         }
 
         protected override void Initialize()
@@ -59,7 +62,7 @@ namespace Adventure_man
 
             foreach (GameObject o in currentWorld.Objects)
             {
-                o.LoadContent(Content);
+                o.LoadContent();
             }
 
 
