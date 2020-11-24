@@ -34,5 +34,10 @@ namespace Adventure_man
         public override void Update(GameTime gameTime)
         {
         }
+
+        public override void Loadcontent()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

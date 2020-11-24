@@ -20,15 +20,19 @@ namespace Adventure_man
 
         private Texture2D collisionTexture;
 
-        
+
         public static ContentManager content;
-        
+        public static (int x, int y) SceenSize;
 
         Scene menu;
         Scene ui;
-        List<Scene> loadedScenes;
 
+
+        public static List<Scene> loadedScenes;
+                 
        
+
+
 
         public GameWorld()
         {
@@ -48,6 +52,8 @@ namespace Adventure_man
             _graphics.PreferredBackBufferWidth =(int)currentWorld.screenSize.X;
             _graphics.PreferredBackBufferHeight = (int)currentWorld.screenSize.Y;
 
+            SceenSize = (GraphicsDevice.DisplayMode.Width, GraphicsDevice.DisplayMode.Height);
+
             base.Initialize();
         }
 
@@ -55,8 +61,12 @@ namespace Adventure_man
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             menu = new Menu();
+            ui = new UI();
+
             loadedScenes = new List<Scene>();
+            loadedScenes.Add(ui);
             loadedScenes.Add(menu);
+
 
             collisionTexture = Content.Load<Texture2D>("CollisionTexture");
 
@@ -68,12 +78,7 @@ namespace Adventure_man
 
         }
 
-        public void StartGame()
-        {
-            loadedScenes.Clear();
-            // ui = new Menu();
-            // menu = ui;
-        }
+       
 
         protected override void Update(GameTime gameTime)
         {

@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Adventure_man
 {
-    abstract class Scene
+    abstract public class Scene
     {
         private Vector2 position;
 
@@ -15,6 +15,7 @@ namespace Adventure_man
         {
         }
 
+        public abstract void Loadcontent();
 
         public abstract void Draw(GameTime gameTime, SpriteBatch spritebatch);
 
