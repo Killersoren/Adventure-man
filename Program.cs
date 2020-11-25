@@ -4,11 +4,12 @@ namespace Adventure_man
 {
     public static class Program
     {
+        public static GameWorld AdventureMan = new GameWorld();
+
         [STAThread]
-        static void Main()
+        public static void Main()
         {
-            using (var game = new GameWorld())
-                game.Run();
+            AdventureMan.Run();
         }
     }
 }

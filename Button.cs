@@ -8,26 +8,28 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Adventure_man
 {
-    class Button : GameObject
+    internal class Button
     {
         private bool hover;
         private Color hoverColor = Color.Gray;
         private Color defaultColor = Color.White;
+        private Color currentColor = Color.White;
         private MouseState mouseCurrent;
         private MouseState mouseLast;
         private Rectangle mouseRectangle;
+        private Rectangle rectangle;
+        private SpriteAnimation sprite;
+
         public event EventHandler Click;
+
         public Button(Rectangle rectangle)
         {
             this.rectangle = rectangle;
-            this.color = defaultColor;
-            this.sprite = GameWorld.content.Load<Texture2D>("button");
+            this.currentColor = defaultColor;
+            this.sprite = Program.AdventureMan.content.Load<Texture2D>("button");
+        }
 
-        }
-        public override void LoadContent()
-        {
-        }
-        public override void Update(GameTime gameTime)
+        public void Update()
         {
             mouseLast = mouseCurrent;
             mouseCurrent = Mouse.GetState();
@@ -43,21 +45,18 @@ namespace Adventure_man
                 }
             }
         }
-        public override void Draw(GameTime gameTime, SpriteBatch spritebatch)
+
+        public void Draw(GameTime gameTime, SpriteBatch spritebatch)
         {
             if (hover == true)
             {
-                this.color = hoverColor;
+                this.currentColor = hoverColor;
             }
             else
             {
-                this.color = defaultColor;
-
+                this.currentColor = defaultColor;
             }
-            spritebatch.Draw(sprite, rectangle, color);
+            spritebatch.Draw(sprite, rectangle, currentColor);
         }
-
-
     }
 }
-

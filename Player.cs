@@ -8,119 +8,102 @@ using System.Text;
 
 namespace Adventure_man
 {
-    class Player : Moveable
+    public class Player : MoveableGameObject
     {
+        public int Points = 0;
+        private float gravStrength = 0; // don't like the placement of this var :/
 
+        protected bool isGrounded //bad, we check too often i think
+        {
+            get
+            {
+                var isGrounded = false;
 
-        /// <summary>
-        /// Initialisere en Player Object
-        /// </summary>
+                var downRec = HitBox.Copy();
+                downRec.Location -= new Vector2(0, -5);
+
+                foreach (GameObject gameObject in Program.AdventureMan.CurrentWorld.GameObjects)
+                {
+                    if (downRec.Intersects(gameObject.HitBox) && !isGrounded)
+                    {
+                        if (gameObject is Platform)
+                        {
+                            isGrounded = true;
+                        }
+                    }
+                }
+                return isGrounded;
+            }
+        }
+
         public Player()
         {
-
-            speed = 100;
-            effect = SpriteEffects.None;
-            color = Color.White;
-            scale = 1;
-            position = new Vector2(32,64);
-
-            //forceGravity = new Vector2(0, 9.81f);
-            //forceGravity = new Vector2(0, 1f);
-
-
+            dragCoefficient = 0.9f;
+            speed = 3f;
         }
+
+        public override void Update()
+        {
+            ApplyGravity();
+            HandleInput();
+            base.Update();
+        }
+
+        private void Jump()
+        {
+            if (isGrounded)
+            {
+                Velocity += new Vector2(0, -30f);
+            }
+        }
+
+        private void ApplyGravity()
+        {
+            if (isGrounded)
+            {
+                if (Velocity.Y > 0)
+                    Velocity.Y = 0;
+
+                gravStrength = 0;
+                return;
+            }
+            gravStrength += 0.1f;
+            Velocity += new Vector2(0, gravStrength);
+        }
+
         /// <summary>
         /// Handles Player input
         /// </summary>
-        private void HandleInput(GameTime gameTime)
+        private void HandleInput()
         {
-            velocity = Vector2.Zero;
-
             KeyboardState keyState = Keyboard.GetState();
 
             if (keyState.IsKeyDown(Keys.D) || keyState.IsKeyDown(Keys.Right))
             {
-                velocity += new Vector2(1, 0);
-                effect = SpriteEffects.None;
-                Animate(gameTime);
+                Velocity += Vector2.UnitX;
             }
             if (keyState.IsKeyDown(Keys.A) || keyState.IsKeyDown(Keys.Left))
             {
-                velocity += new Vector2(-1, 0);
-                effect = SpriteEffects.FlipHorizontally;
-                Animate(gameTime);
+                Velocity += -Vector2.UnitX;
             }
-
-
-
-
-            if (velocity != Vector2.Zero)
+            if (keyState.IsKeyDown(Keys.W) || keyState.IsKeyDown(Keys.Up))
             {
-                velocity.Normalize();
+                Jump();
             }
-
-
-
-
         }
 
-
-        //public override void OnCollisionMoveable(GameObject other)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        public override void Update(GameTime gameTime)
+        public override void LoadContent(ContentManager contentManager)
         {
-            HandleInput(gameTime);
-            //Animate(gameTime);
-            Gravity();
-            Move(gameTime);
-        }
-
-        //public override void LoadContent(ContentManager content)
-        public override void LoadContent()
-
-        {
-            sprites = new Texture2D[2];
+            var sprites = new Texture2D[2];
             for (int i = 0; i < sprites.Length; i++)
             {
                 //sprites[i] = content.Load<Texture2D>("MoveTest" + (i + 1)+"_v2");
-                sprites[i] = GameWorld.content.Load<Texture2D>("MoveTest" + (i + 1) + "_v2");
-
+                sprites[i] = Program.AdventureMan.content.Load<Texture2D>("MoveTest" + (i + 1) + "_v2");
             }
 
-            sprite = sprites[0];
+            Sprite = new SpriteAnimation(sprites);
+            //HitBox = new RectangleF((int)Location.X, (int)Location.Y, Sprite.Width, Sprite.Height);
+            Size = new Vector2(Sprite.Width, Sprite.Height);
         }
-
-       
-
-        public override void OnCollision(GameObject other)
-        {
-            if (other is Platform)
-            {
-                
-                if (other.CollisionBox.Center.Y>CollisionBox.Center.Y) // If Player is on top
-                {
-                    //color = Color.Red;
-                    velocity.Y = 0;
-                    //velocity.Normalize();
-                }
-                if(other.CollisionBox.Bottom<=CollisionBox.Bottom && other.CollisionBox.Center.X<CollisionBox.Center.X) // if the player is to the Right of the platform
-                {
-                    velocity += new Vector2(1, 0);
-                }
-                if (other.CollisionBox.Bottom <= CollisionBox.Bottom && other.CollisionBox.Center.X > CollisionBox.Center.X)// if the player is to the Left of the platform
-                {
-                    velocity += new Vector2(-1, 0);
-                }
-            }
-        }
-        //public override void Draw(SpriteBatch spriteBatch)
-        //{
-        //    spriteBatch.Draw(sprite, position, Color.White);
-        //}
-
-
     }
 }

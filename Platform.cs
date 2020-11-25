@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Adventure_man
 {
-    class Platform : GameObject
+    internal class Platform : GameObject
     {
         private int width;
         private int height;
@@ -23,6 +23,7 @@ namespace Adventure_man
                     width = 1;
             }
         }
+
         public int Height
         {
             get { return height; }
@@ -35,66 +36,46 @@ namespace Adventure_man
             }
         }
 
-        public override Rectangle CollisionBox
-        {
-            get
-            {
-                return new Rectangle(
-                    (int)(position.X),
-                    (int)(position.Y),
-                    sprite.Width*Width,
-                    sprite.Height*Height
-                );
-            }
-        }
-
         /// <summary>
         /// Generates a platform object
         /// </summary>
         /// <param name="pos">the position of the platform in the grid, Top Left</param>
         /// <param name="width">the nuber of Grid spaces its going to fill, so the number we are going to multiply the Sprite width with</param>
         /// <param name="height">Same as above just for height</param>
-        public Platform(Vector2 pos,int width, int height)
+        public Platform(Vector2 pos, int width, int height)
         {
             Width = width;
             Height = height;
             int res = World.GridResulution;
-            position = new Vector2(pos.X*res, pos.Y * res);
-
-
-
-            color = Color.White;
-            scale = 1;
+            Location = new Vector2(pos.X * res, pos.Y * res);
         }
 
-       // public override void LoadContent(ContentManager content)
-
-        public override void LoadContent()
+        public Platform(int X, int Y, int width, int height)
         {
-            //sprite = content.Load<Texture2D>("PlatformTest");
-
-            sprite = GameWorld.content.Load<Texture2D>("PlatformTest");
-
+            Width = width;
+            Height = height;
+            int res = World.GridResulution;
+            Location = new Vector2(X * res, Y * res);
         }
-        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+
+        // public override void LoadContent(ContentManager content)
+
+        public override void LoadContent(ContentManager contentManager)
         {
-            if (width == 1 && height == 1)
-                spriteBatch.Draw(sprite, position, color);
-            else
+            Sprite = contentManager.Load<Texture2D>("PlatformTest");
+            //HitBox = new RectangleF(Location.X, Location.Y, Sprite.Width * Width, Sprite.Height * Height);
+            Size = new Vector2(Sprite.Width * Width, Sprite.Height * Height);
+        }
+
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            for (int y = 0; y < height; y++)
             {
-                for (int y = 0; y < height; y++)
+                for (int x = 0; x < width; x++)
                 {
-                    for (int x = 0; x < width; x++)
-                    {
-                        spriteBatch.Draw(sprite, new Vector2(position.X + (sprite.Width * x), position.Y + (sprite.Height * y)), color);
-                    }
+                    spriteBatch.Draw(Sprite, new Vector2(Location.X + (Sprite.Width * x), Location.Y + (Sprite.Height * y)), Color.White);
                 }
             }
-        }
-
-        public override void Update(GameTime gameTime)
-        {
-            
         }
     }
 }

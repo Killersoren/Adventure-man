@@ -13,27 +13,19 @@ namespace Adventure_man
 
         //new public static GameServiceContainer Services;
 
-        private static Scene currentScene;
-        public static bool isGameStarted = false;
+        private Scene currentScene;
+        public bool isGameStarted = false;
 
-        public static World currentWorld;
-        private World world1;
+        public World CurrentWorld;
 
         private Texture2D collisionTexture;
 
+        public ContentManager content;
+        public (int x, int y) SceenSize;
+        private KeyboardState laststate;
 
-        public static ContentManager content;
-        public static (int x, int y) SceenSize;
-        KeyboardState laststate;
-
-        Scene menu;
-        Scene ui;
-
-
-                 
-       
-
-
+        private Scene menu;
+        private Scene ui;
 
         public GameWorld()
         {
@@ -48,10 +40,9 @@ namespace Adventure_man
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            world1 = new World();
-            currentWorld = world1;
-            _graphics.PreferredBackBufferWidth =(int)currentWorld.screenSize.X;
-            _graphics.PreferredBackBufferHeight = (int)currentWorld.screenSize.Y;
+            CurrentWorld = new World();
+            _graphics.PreferredBackBufferWidth = (int)CurrentWorld.screenSize.X;
+            _graphics.PreferredBackBufferHeight = (int)CurrentWorld.screenSize.Y;
 
             SceenSize = (GraphicsDevice.DisplayMode.Width, GraphicsDevice.DisplayMode.Height);
 
@@ -64,46 +55,30 @@ namespace Adventure_man
             menu = new Menu();
             ui = new UI();
 
-
-           
-
             collisionTexture = Content.Load<Texture2D>("CollisionTexture");
 
-            foreach (GameObject o in currentWorld.Objects)
+            foreach (GameObject o in CurrentWorld.Objects)
             {
-                o.LoadContent();
+                o.LoadContent(content);
             }
-
-
-
         }
-
-
 
         protected override void Update(GameTime gameTime)
         {
-
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
             if (isGameStarted)
             {
                 currentScene = ui;
-
-
-                foreach (GameObject o in currentWorld.Objects)
-                {
-                    o.Update(gameTime);
-                }
+                CurrentWorld.Update();
             }
             else
             {
                 currentScene = menu;
             }
+
             var getstate = Keyboard.GetState();
-
-            
-
             if (getstate.IsKeyDown(Keys.Enter) && !laststate.IsKeyDown(Keys.Enter))
             {
                 isGameStarted = !isGameStarted;
@@ -121,43 +96,12 @@ namespace Adventure_man
 
             _spriteBatch.Begin();
 
-
-          
-
-
-            foreach (GameObject o in currentWorld.Objects)
-            {
-                o.Draw(gameTime, _spriteBatch);
-#if DEBUG
-                DrawCollisionBox(o);
-#endif
-
-            }
-
+            CurrentWorld.Draw(_spriteBatch);
             currentScene.Draw(gameTime, _spriteBatch);
-
 
             _spriteBatch.End();
 
             base.Draw(gameTime);
         }
-
-
-
-        private void DrawCollisionBox(GameObject go)
-        {
-            Rectangle topLine = new Rectangle(go.CollisionBox.X, go.CollisionBox.Y, go.CollisionBox.Width, 1);
-            Rectangle bottomLine = new Rectangle(go.CollisionBox.X, go.CollisionBox.Y + go.CollisionBox.Height, go.CollisionBox.Width, 1);
-            Rectangle rightLine = new Rectangle(go.CollisionBox.X + go.CollisionBox.Width, go.CollisionBox.Y, 1, go.CollisionBox.Height);
-            Rectangle leftLine = new Rectangle(go.CollisionBox.X, go.CollisionBox.Y, 1, go.CollisionBox.Height);
-
-            _spriteBatch.Draw(collisionTexture, topLine, Color.Red);
-            _spriteBatch.Draw(collisionTexture, bottomLine, Color.Red);
-            _spriteBatch.Draw(collisionTexture, rightLine, Color.Red);
-            _spriteBatch.Draw(collisionTexture, leftLine, Color.Red);
-
-
-        }
-
     }
 }
