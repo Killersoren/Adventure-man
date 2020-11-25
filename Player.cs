@@ -13,7 +13,7 @@ namespace Adventure_man
         public int Points = 0;
         private float gravStrength = 0; // don't like the placement of this var :/
 
-        protected bool isGrounded //bad, we check too often i think
+        protected bool isGrounded //bad maybe?, we check too often i think, maybe not only when we try to apply gravity (once per cycle) and ocasionally when we jummp
         {
             get
             {

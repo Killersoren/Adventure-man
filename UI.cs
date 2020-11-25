@@ -22,13 +22,13 @@ namespace Adventure_man
         public override void Loadcontent()
         {
             // Loads and sets background texture
-         backgroundSprite = GameWorld.content.Load<Texture2D>("bar");
+            backgroundSprite = Program.AdventureMan.content.Load<Texture2D>("bar");
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spritebatch)
         {
             // Draws background
-            spritebatch.Draw(backgroundSprite, new Rectangle(GameWorld.SceenSize.x / 2, GameWorld.SceenSize.y / 2, GameWorld.SceenSize.x / 2, GameWorld.SceenSize.y / 2), Color.White);
+            spritebatch.Draw(backgroundSprite, new Rectangle(Program.AdventureMan.SceenSize.x / 2, Program.AdventureMan.SceenSize.y / 2, Program.AdventureMan.SceenSize.x / 2, Program.AdventureMan.SceenSize.y / 2), Color.White);
         }
 
         public override void Update(GameTime gameTime)

@@ -10,6 +10,8 @@ namespace Adventure_man
     internal class Menu : Scene
     {
         public Button testButton;
+        private List<Button> buttons;
+
         public Menu()
         {
             // Creates Start button
@@ -17,14 +19,17 @@ namespace Adventure_man
             testButton = new Button(buttonRectangle, "Start");
             testButton.Click += TestButton_Click;
 
+            buttons = new List<Button>();
+
             Loadcontent();
-            gameObject.Add(testButton);
+            buttons.Add(testButton);
         }
+
         //  this.sprite = GameWorld.content.Load<Texture2D>("button");
 
         public override void Loadcontent()
         {
-            backgroundSprite = GameWorld.content.Load<Texture2D>("deepart");
+            backgroundSprite = Program.AdventureMan.content.Load<Texture2D>("deepart");
         }
 
         private void TestButton_Click(object sender, System.EventArgs e)
@@ -37,24 +42,25 @@ namespace Adventure_man
             //    tempscene.RemoveAt(0);
             //GameWorld.loadedScenes = tempscene;
 
-            GameWorld.isGameStarted = true;
+            Program.AdventureMan.isGameStarted = true;
         }
+
         public override void Update(GameTime gameTime)
         {
-            foreach (GameObject obj in gameObject)
+            foreach (Button b in buttons)
             {
-                obj.Update(gameTime);
+                b.Update(gameTime);
             }
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spritebatch)
         {
-            spritebatch.Draw(backgroundSprite, new Rectangle(0, 0, GameWorld.SceenSize.x, GameWorld.SceenSize.y), Color.White);
+            spritebatch.Draw(backgroundSprite, new Rectangle(0, 0, Program.AdventureMan.SceenSize.x, Program.AdventureMan.SceenSize.y), Color.White);
             //spritebatch.DrawString(spritefont, "Menu / pause");
 
-            foreach (GameObject obj in gameObject)
+            foreach (Button b in buttons)
             {
-                obj.Draw(gameTime, spritebatch);
+                b.Draw(gameTime, spritebatch);
             }
         }
     }

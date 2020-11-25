@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Adventure_man
 {
-    class Button
+    internal class Button
     {
         private bool hover;
         private Color hoverColor = Color.Gray;
@@ -33,7 +33,7 @@ namespace Adventure_man
         {
             this.rectangle = rectangle;
             this.color = defaultColor;
-            this.sprite = GameWorld.content.Load<Texture2D>("button");
+            this.sprite = Program.AdventureMan.content.Load<Texture2D>("button");
             this.buttonDescription = buttonDescription;
         }
 
@@ -49,13 +49,14 @@ namespace Adventure_man
             if (mouseRectangle.Intersects(rectangle))
             {
                 hover = true;
-            // Invokes button content if last mouse state is clicked and current is realease, invokes when click is over, instead of on click
+                // Invokes button content if last mouse state is clicked and current is realease, invokes when click is over, instead of on click
                 if (mouseLast.LeftButton == ButtonState.Pressed && mouseCurrent.LeftButton == ButtonState.Released)
                 {
                     Click?.Invoke(this, new EventArgs());
                 }
             }
         }
+
         public void Draw(GameTime gameTime, SpriteBatch spritebatch)
         {
             // Toggles color of button depending on hover
@@ -70,9 +71,9 @@ namespace Adventure_man
             // Draws button
             spritebatch.Draw(sprite, rectangle, color);
             // Draws buttons description text in middle of button
-                var x = (rectangle.X + (rectangle.Width / 2)) - (GameWorld.font.MeasureString(buttonDescription).X / 2);
-                var y = (rectangle.Y + (rectangle.Height / 2)) - (GameWorld.font.MeasureString(buttonDescription).Y / 2);
-                spritebatch.DrawString(GameWorld.font, buttonDescription, new Vector2(x, y), Color.Black);
+            //var x = (rectangle.X + (rectangle.Width / 2)) - (GameWorld.font.MeasureString(buttonDescription).X / 2);
+            //var y = (rectangle.Y + (rectangle.Height / 2)) - (GameWorld.font.MeasureString(buttonDescription).Y / 2); //my font was broken so comment this out to test
+            //spritebatch.DrawString(GameWorld.font, buttonDescription, new Vector2(x, y), Color.Black);
         }
     }
 }

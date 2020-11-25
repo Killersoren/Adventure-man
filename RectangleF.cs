@@ -14,6 +14,8 @@ namespace Adventure_man
         public Vector2 Location { get => new Vector2(X, Y); set { X = value.X; Y = value.Y; } }
         public Vector2 Size { get => new Vector2(Width, Height); set { Width = value.X; Height = value.Y; } }
 
+        public Vector2 Center { get => new Vector2(X - Width / 2, Y - Height / 2); }
+
         public RectangleF()
         {
         }
