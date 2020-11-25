@@ -41,7 +41,7 @@ namespace Adventure_man
             //    tempscene.RemoveAt(0);
             //GameWorld.loadedScenes = tempscene;
 
-
+            GameWorld.isGameStarted = true;
 
 
 

@@ -14,6 +14,7 @@ namespace Adventure_man
         //new public static GameServiceContainer Services;
 
         private static Scene currentScene;
+        public static bool isGameStarted = false;
 
         public static World currentWorld;
         private World world1;
@@ -23,12 +24,12 @@ namespace Adventure_man
 
         public static ContentManager content;
         public static (int x, int y) SceenSize;
+        KeyboardState laststate;
 
         Scene menu;
         Scene ui;
 
 
-        public static List<Scene> loadedScenes;
                  
        
 
@@ -63,10 +64,8 @@ namespace Adventure_man
             menu = new Menu();
             ui = new UI();
 
-            loadedScenes = new List<Scene>();
-            loadedScenes.Add(ui);
-            loadedScenes.Add(menu);
 
+           
 
             collisionTexture = Content.Load<Texture2D>("CollisionTexture");
 
@@ -76,26 +75,42 @@ namespace Adventure_man
             }
 
 
+
         }
 
-       
+
 
         protected override void Update(GameTime gameTime)
         {
+
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            foreach (GameObject o in currentWorld.Objects)
+            if (isGameStarted)
             {
-                o.Update(gameTime);
+                currentScene = ui;
+
+
+                foreach (GameObject o in currentWorld.Objects)
+                {
+                    o.Update(gameTime);
+                }
             }
-
-
-            foreach (Scene scenes in loadedScenes)
+            else
             {
-                scenes.Update(gameTime);
+                currentScene = menu;
             }
+            var getstate = Keyboard.GetState();
 
+            
+
+            if (getstate.IsKeyDown(Keys.Enter) && !laststate.IsKeyDown(Keys.Enter))
+            {
+                isGameStarted = !isGameStarted;
+            }
+            laststate = getstate;
+
+            currentScene.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -107,11 +122,8 @@ namespace Adventure_man
             _spriteBatch.Begin();
 
 
-            foreach (Scene scenes in loadedScenes)
-            {
-                scenes.Draw(gameTime, _spriteBatch);
+          
 
-            }
 
             foreach (GameObject o in currentWorld.Objects)
             {
@@ -122,6 +134,7 @@ namespace Adventure_man
 
             }
 
+            currentScene.Draw(gameTime, _spriteBatch);
 
 
             _spriteBatch.End();
@@ -145,5 +158,6 @@ namespace Adventure_man
 
 
         }
+
     }
 }

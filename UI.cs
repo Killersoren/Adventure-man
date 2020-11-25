@@ -10,6 +10,9 @@ namespace Adventure_man
 {
     class UI : Scene
     {
+
+        public Texture2D backgroundSprite;
+
         public UI()
         {
 
@@ -19,6 +22,7 @@ namespace Adventure_man
             //testButton.Click += TestButton_Click;
 
             //gameObject.Add(testButton);
+            Loadcontent();
         }
 
         private void TestButton_Click(object sender, EventArgs e)
@@ -26,8 +30,18 @@ namespace Adventure_man
 
         }
 
+        public override void Loadcontent()
+        {
+         backgroundSprite = GameWorld.content.Load<Texture2D>("bar");
+
+
+        }
+
         public override void Draw(GameTime gameTime, SpriteBatch spritebatch)
         {
+
+            spritebatch.Draw(backgroundSprite, new Rectangle(0, 0, GameWorld.SceenSize.x, GameWorld.SceenSize.y), Color.White * 0.5f);
+
         }
 
 
@@ -35,9 +49,6 @@ namespace Adventure_man
         {
         }
 
-        public override void Loadcontent()
-        {
-            throw new NotImplementedException();
-        }
+       
     }
 }
