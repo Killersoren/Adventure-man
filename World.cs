@@ -46,6 +46,8 @@ namespace Adventure_man
             Objects.Add(new Platform(new Vector2(0,7), 13, 1));
 
             Objects.Add(new Platform(new Vector2(4, 5), 1, 2));
+            Objects.Add(new Enemy(new Vector2(2, 5)));
+
 
             TransferMoveables();
         }
