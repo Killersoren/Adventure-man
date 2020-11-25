@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Adventure_man
 {
-    class Button : GameObject
+    class Button
     {
         private bool hover;
         private Color hoverColor = Color.Gray;
@@ -16,35 +16,49 @@ namespace Adventure_man
         private MouseState mouseCurrent;
         private MouseState mouseLast;
         private Rectangle mouseRectangle;
+        private string buttonDescription;
+        private Rectangle rectangle;
+        private Color color;
+        private Texture2D sprite;
+
         public event EventHandler Click;
-        public Button(Rectangle rectangle)
+
+
+        /// <summary>
+        /// Button constructor
+        /// </summary>
+        /// <param name="rectangle"></param>
+        /// <param name="buttonDescription"></param>
+        public Button(Rectangle rectangle, string buttonDescription)
         {
             this.rectangle = rectangle;
             this.color = defaultColor;
             this.sprite = GameWorld.content.Load<Texture2D>("button");
-
+            this.buttonDescription = buttonDescription;
         }
-        public override void LoadContent()
+      
+        public void Update(GameTime gameTime)
         {
-        }
-        public override void Update(GameTime gameTime)
-        {
+            // Stores current and last mouse states and sets current position
             mouseLast = mouseCurrent;
             mouseCurrent = Mouse.GetState();
             mouseRectangle = new Rectangle(mouseCurrent.X, mouseCurrent.Y, 1, 1);
-
+            // Resets hover to false after hovering
             hover = false;
+            // Sets hover to true if mouse cursor intersects with button rectangle
             if (mouseRectangle.Intersects(rectangle))
             {
                 hover = true;
+            // Invokes button content if last mouse state is clicked and current is realease, invokes when click is over, instead of on click 
                 if (mouseLast.LeftButton == ButtonState.Pressed && mouseCurrent.LeftButton == ButtonState.Released)
                 {
                     Click?.Invoke(this, new EventArgs());
                 }
             }
         }
-        public override void Draw(GameTime gameTime, SpriteBatch spritebatch)
+        public void Draw(GameTime gameTime, SpriteBatch spritebatch)
         {
+            // Toggles color of button depending on hover
             if (hover == true)
             {
                 this.color = hoverColor;
@@ -54,7 +68,13 @@ namespace Adventure_man
                 this.color = defaultColor;
 
             }
+            // Draws button
             spritebatch.Draw(sprite, rectangle, color);
+            // Draws buttons description text in middle of button 
+                var x = (rectangle.X + (rectangle.Width / 2)) - (GameWorld.font.MeasureString(buttonDescription).X / 2);
+                var y = (rectangle.Y + (rectangle.Height / 2)) - (GameWorld.font.MeasureString(buttonDescription).Y / 2);
+                spritebatch.DrawString(GameWorld.font, buttonDescription, new Vector2(x, y), Color.Black);
+           
         }
 
 

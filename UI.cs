@@ -11,17 +11,11 @@ namespace Adventure_man
     class UI : Scene
     {
 
-        public Texture2D backgroundSprite;
 
         public UI()
         {
 
-            //Texture2D buttonSprite = Content.Load<Texture2D>("button");
-            //Rectangle buttonRectangle = new Rectangle(10, 350, 100, 100);
-            //Button testButton = new Button(buttonSprite, buttonRectangle);
-            //testButton.Click += TestButton_Click;
-
-            //gameObject.Add(testButton);
+            // content shouldent be loaded in constructor ?
             Loadcontent();
         }
 
@@ -32,6 +26,7 @@ namespace Adventure_man
 
         public override void Loadcontent()
         {
+            // Loads and sets background texture 
          backgroundSprite = GameWorld.content.Load<Texture2D>("bar");
 
 
@@ -39,10 +34,12 @@ namespace Adventure_man
 
         public override void Draw(GameTime gameTime, SpriteBatch spritebatch)
         {
+            // Draws background
+            spritebatch.Draw(backgroundSprite, new Rectangle(GameWorld.SceenSize.x / 2, GameWorld.SceenSize.y / 2, GameWorld.SceenSize.x / 2, GameWorld.SceenSize.y / 2), Color.White);
 
-            spritebatch.Draw(backgroundSprite, new Rectangle(0, 0, GameWorld.SceenSize.x, GameWorld.SceenSize.y), Color.White * 0.5f);
 
         }
+
 
 
         public override void Update(GameTime gameTime)

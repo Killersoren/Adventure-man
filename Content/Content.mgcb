@@ -61,6 +61,13 @@
 /processorParam:TextureFormat=Color
 /build:deepart.jpg
 
+#begin File.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:File.spritefont;spritefont
+
 #begin MoveTest1.png
 /importer:TextureImporter
 /processor:TextureProcessor
