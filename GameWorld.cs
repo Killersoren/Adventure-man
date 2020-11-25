@@ -20,12 +20,12 @@ namespace Adventure_man
 
         private Texture2D collisionTexture;
 
-        public ContentManager content;
-        public (int x, int y) SceenSize;
-        private KeyboardState laststate;
+        public static ContentManager content;
+        public static (int x, int y) SceenSize;
+        KeyboardState laststate;
 
-        private Scene menu;
-        private Scene ui;
+        Scene menu;
+        Scene ui;
 
         public GameWorld()
         {
@@ -40,9 +40,14 @@ namespace Adventure_man
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            CurrentWorld = new World();
-            _graphics.PreferredBackBufferWidth = (int)CurrentWorld.screenSize.X;
-            _graphics.PreferredBackBufferHeight = (int)CurrentWorld.screenSize.Y;
+            currentWorld = new World();
+
+            // Creates each scene
+            menu = new Menu();
+            ui = new UI();
+
+            _graphics.PreferredBackBufferWidth = (int)currentWorld.screenSize.X;
+            _graphics.PreferredBackBufferHeight = (int)currentWorld.screenSize.Y;
 
             SceenSize = (GraphicsDevice.DisplayMode.Width, GraphicsDevice.DisplayMode.Height);
 
@@ -52,8 +57,9 @@ namespace Adventure_man
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-            menu = new Menu();
-            ui = new UI();
+
+            // Sets spritefont
+            font = Content.Load<SpriteFont>("spritefont");
 
             collisionTexture = Content.Load<Texture2D>("CollisionTexture");
 
@@ -68,6 +74,7 @@ namespace Adventure_man
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
+            // Pauses game by changing scene and not running game updates
             if (isGameStarted)
             {
                 currentScene = ui;
@@ -77,7 +84,6 @@ namespace Adventure_man
             {
                 currentScene = menu;
             }
-
             var getstate = Keyboard.GetState();
             if (getstate.IsKeyDown(Keys.Enter) && !laststate.IsKeyDown(Keys.Enter))
             {
@@ -85,6 +91,7 @@ namespace Adventure_man
             }
             laststate = getstate;
 
+            // Updates current scene
             currentScene.Update(gameTime);
 
             base.Update(gameTime);

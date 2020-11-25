@@ -9,24 +9,22 @@ namespace Adventure_man
 {
     internal class Menu : Scene
     {
-        private List<Button> buttons = new List<Button>();
-        public Texture2D backgroundSprite;
-
+        public Button testButton;
         public Menu()
         {
+            // Creates Start button
             Rectangle buttonRectangle = new Rectangle(10, 350, 100, 100);
-            Button testButton = new Button(buttonRectangle);
+            testButton = new Button(buttonRectangle, "Start");
             testButton.Click += TestButton_Click;
 
             Loadcontent();
-            buttons.Add(testButton);
+            gameObject.Add(testButton);
         }
-
         //  this.sprite = GameWorld.content.Load<Texture2D>("button");
 
         public override void Loadcontent()
         {
-            backgroundSprite = Program.AdventureMan.content.Load<Texture2D>("deepart");
+            backgroundSprite = GameWorld.content.Load<Texture2D>("deepart");
         }
 
         private void TestButton_Click(object sender, System.EventArgs e)
@@ -39,25 +37,24 @@ namespace Adventure_man
             //    tempscene.RemoveAt(0);
             //GameWorld.loadedScenes = tempscene;
 
-            Program.AdventureMan.isGameStarted = true;
+            GameWorld.isGameStarted = true;
         }
-
         public override void Update(GameTime gameTime)
         {
-            foreach (Button b in buttons)
+            foreach (GameObject obj in gameObject)
             {
-                b.Update();
+                obj.Update(gameTime);
             }
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spritebatch)
         {
-            spritebatch.Draw(backgroundSprite, new Rectangle(0, 0, Program.AdventureMan.SceenSize.x, Program.AdventureMan.SceenSize.y), Color.White);
+            spritebatch.Draw(backgroundSprite, new Rectangle(0, 0, GameWorld.SceenSize.x, GameWorld.SceenSize.y), Color.White);
             //spritebatch.DrawString(spritefont, "Menu / pause");
 
-            foreach (Button b in buttons)
+            foreach (GameObject obj in gameObject)
             {
-                b.Draw(gameTime, spritebatch);
+                obj.Draw(gameTime, spritebatch);
             }
         }
     }

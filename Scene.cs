@@ -9,11 +9,14 @@ namespace Adventure_man
 {
     abstract public class Scene
     {
-        private Vector2 position;
+        
+        protected Texture2D backgroundSprite;
 
         public Scene()
         {
         }
+
+
 
         public abstract void Loadcontent();
 
