@@ -44,7 +44,6 @@ namespace Adventure_man
             Objects.Add(Player);
             Objects.Add(new Platform(0, 7, 13, 1));
 
-
             Objects.Add(new Platform(4, 4, 2, 1));
             Objects.Add(new Platform(7, 2, 2, 1));
         }
