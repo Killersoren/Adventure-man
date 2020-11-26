@@ -39,7 +39,8 @@ namespace Adventure_man
             screenSize = new Vector2(worldGrid.X * GridResulution, worldGrid.Y * GridResulution);
 
             Player = new Player();
-
+            PowerUp1 testpu = new PowerUp1();
+            Objects.Add(testpu);
             Objects.Add(Player);
             Objects.Add(new Platform(0, 7, 13, 1));
 
