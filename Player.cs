@@ -14,7 +14,6 @@ namespace Adventure_man
         private float gravStrength = 0; // don't like the placement of this var :/
         private Weapon currentWeapon;
 
-
         protected bool isGrounded //bad maybe?, we check too often i think, maybe not only when we try to apply gravity (once per cycle) and ocasionally when we jummp
         {
             get
@@ -22,7 +21,7 @@ namespace Adventure_man
                 var isGrounded = false;
 
                 var downRec = HitBox.Copy();
-                downRec.Location -= new Vector2(0, -5);
+                downRec.Location -= new Vector2(0, -1);
 
                 foreach (GameObject gameObject in Program.AdventureMan.CurrentWorld.GameObjects)
                 {
@@ -42,7 +41,7 @@ namespace Adventure_man
         {
             dragCoefficient = 0.9f;
             speed = 1f;
-            currentWeapon = new Bow("Falcon Bow", 100,100);
+            currentWeapon = new Bow("Falcon Bow", 100, 100);
         }
 
         public override void Update()
@@ -97,7 +96,6 @@ namespace Adventure_man
             {
                 Attack();
             }
-
         }
 
         public override void LoadContent(ContentManager contentManager)
@@ -111,12 +109,12 @@ namespace Adventure_man
 
             Sprite = new SpriteAnimation(sprites);
             //HitBox = new RectangleF((int)Location.X, (int)Location.Y, Sprite.Width, Sprite.Height);
-            Size = new Vector2(Sprite.Width, Sprite.Height);
+            Size = new Vector2(Sprite.Width - 1, Sprite.Height - 1);
         }
 
         public void Attack()
         {
-            currentWeapon.UseWeapon(Location,GameWorld.Direction.Right);// Need some kind of facing system
+            currentWeapon.UseWeapon(Location, GameWorld.Direction.Right);// Need some kind of facing system
         }
     }
 }

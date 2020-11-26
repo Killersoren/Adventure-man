@@ -35,16 +35,44 @@ namespace Adventure_man
             step.Normalize();
             step *= stepSize;
 
+            var stepY = new Vector2(0, step.Y);
+            var stepX = new Vector2(step.X, 0);
+
+            bool movingX = stepX != Vector2.Zero;
+            bool movingY = stepY != Vector2.Zero;
+
             var nextTarget = HitBox.Copy();
 
-            while (Vector2.Distance(nextTarget.Location, targetPosition) > stepSize)
+            while (movingX || movingY)
             {
-                if (!MoveTo(nextTarget.Location += step))
+                if (Vector2.Distance(nextTarget.Location, targetPosition) <= stepSize) //we're at the location (ca.)
                     break;
+
+                if (movingX)
+                {
+                    if (!MoveTo(nextTarget.Location += stepX))
+                    {
+                        nextTarget.Location -= stepX;
+                        targetPosition.X = nextTarget.Location.X;
+                        Velocity.X = 0;
+                        movingX = false;
+                    }
+                }
+
+                if (movingY)
+                {
+                    if (!MoveTo(nextTarget.Location += stepY))
+                    {
+                        nextTarget.Location -= stepY;
+                        targetPosition.Y = nextTarget.Location.Y;
+                        Velocity.Y = 0;
+                        movingY = false;
+                    }
+                }
             }
 
-            // ActivateCollisions(collisions);
-            // collisions.Clear();
+            ActivateCollisions(collisions);
+            collisions.Clear();
         }
 
         public bool MoveTo(Vector2 position)
