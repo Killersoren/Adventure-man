@@ -9,6 +9,7 @@ namespace Adventure_man
     public class World
     {
         public List<GameObject> GameObjects;
+        public List<GameObject> newGameObjects;
         public static Player Player;
 
         /// <summary>
@@ -31,6 +32,7 @@ namespace Adventure_man
         public World()
         {
             Objects = new List<GameObject>();
+            newGameObjects = new List<GameObject>();
 
             worldGrid = new Vector2(16, 16);
             gridResulution = 64;
@@ -40,11 +42,17 @@ namespace Adventure_man
 
             Objects.Add(Player);
             Objects.Add(new Platform(0, 7, 13, 1));
-            Objects.Add(new Platform(4, 5, 1, 2));
+
+
+            Objects.Add(new Platform(4, 4, 2, 1));
+            Objects.Add(new Platform(7, 2, 2, 1));
         }
 
         public void Update()
         {
+            GameObjects.AddRange(newGameObjects);
+            newGameObjects.Clear();
+
             foreach (GameObject o in Objects)
             {
                 o.Update();

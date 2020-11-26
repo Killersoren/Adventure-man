@@ -27,6 +27,13 @@ namespace Adventure_man
         private Scene menu;
         private Scene ui;
 
+        public enum Direction
+        {
+            Right,
+            Left
+        }
+
+
         public GameWorld()
         {
             _graphics = new GraphicsDeviceManager(this);

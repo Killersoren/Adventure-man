@@ -12,6 +12,8 @@ namespace Adventure_man
     {
         public int Points = 0;
         private float gravStrength = 0; // don't like the placement of this var :/
+        private Weapon currentWeapon;
+
 
         protected bool isGrounded //bad maybe?, we check too often i think, maybe not only when we try to apply gravity (once per cycle) and ocasionally when we jummp
         {
@@ -39,7 +41,8 @@ namespace Adventure_man
         public Player()
         {
             dragCoefficient = 0.9f;
-            speed = 3f;
+            speed = 1f;
+            currentWeapon = new Bow("Falcon Bow", 100,100);
         }
 
         public override void Update()
@@ -90,6 +93,11 @@ namespace Adventure_man
             {
                 Jump();
             }
+            if (keyState.IsKeyDown(Keys.E))
+            {
+                Attack();
+            }
+
         }
 
         public override void LoadContent(ContentManager contentManager)
@@ -104,6 +112,11 @@ namespace Adventure_man
             Sprite = new SpriteAnimation(sprites);
             //HitBox = new RectangleF((int)Location.X, (int)Location.Y, Sprite.Width, Sprite.Height);
             Size = new Vector2(Sprite.Width, Sprite.Height);
+        }
+
+        public void Attack()
+        {
+            currentWeapon.UseWeapon(Location,GameWorld.Direction.Right);// Need some kind of facing system
         }
     }
 }
