@@ -11,7 +11,7 @@ namespace Adventure_man
     public abstract class GameObject
     {
         public SpriteAnimation Sprite;
-
+        
         public RectangleF HitBox;
 
         public Vector2 Location
