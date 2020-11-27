@@ -7,16 +7,19 @@ using System.Text;
 
 namespace Adventure_man
 {
-    class Arrow : MoveableGameObject
+    internal class Arrow : MoveableGameObject
     {
-
-        public Arrow(Vector2 position,Vector2 velocity, float speed)
+        public Arrow()
         {
-            Location = position;
-            base.Velocity = velocity;
-            base.speed = speed;
+        }
 
-
+        public Arrow Shoot(Vector2 position, Vector2 velocity, float speed)
+        {
+            Arrow arrow = this;
+            arrow.Location = position;
+            arrow.Velocity = velocity;
+            arrow.speed = speed;
+            return arrow;
         }
 
         public override void LoadContent(ContentManager contentManager)
@@ -27,6 +30,7 @@ namespace Adventure_man
             Sprite = new SpriteAnimation(sprites);
             Size = new Vector2(Sprite.Width, Sprite.Height);
         }
+
         public override void Update()
         {
             base.Update();

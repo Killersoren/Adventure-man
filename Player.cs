@@ -62,7 +62,7 @@ namespace Adventure_man
             }
             if (availableJumps-- > 0)
             {
-                Velocity += new Vector2(0, -30f); //should probably also reset the gravity or something like that for better feel, pretty sure other games also do this
+                Velocity.Y = -30;// += new Vector2(0, -30f); //should probably also reset the gravity or something like that for better feel, pretty sure other games also do this
             }
         }
 
