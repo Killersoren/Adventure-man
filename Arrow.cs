@@ -20,7 +20,7 @@ namespace Adventure_man
         {
             Arrow arrow = this;
             arrow.Location = position;
-            arrow.Velocity = velocity;
+            arrow.velocity = velocity;
             
             return arrow;
         }
