@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using static Adventure_man.GameWorld;
 
 namespace Adventure_man
 {
@@ -15,6 +16,8 @@ namespace Adventure_man
         private Weapon currentWeapon;
         private int availableJumps;
         public int JumpAmount;
+        public Direction dir;
+
 
         protected bool isGrounded //bad maybe?, we check too often i think, maybe not only when we try to apply gravity (once per cycle) and ocasionally when we jummp
         {
@@ -46,11 +49,13 @@ namespace Adventure_man
             JumpAmount = 1;
             dragCoefficient = 0.9f;
             speed = 1f;
-            CurrentWeapon = new Bow("Falcon Bow", 100, 1,1);
+            CurrentWeapon = new Bow("Falcon Bow", 100, 1,5);
         }
 
         public override void Update()
         {
+            
+
             CurrentWeapon.WeaponCooldown();
             ApplyGravity();
             HandleInput();
@@ -96,10 +101,12 @@ namespace Adventure_man
             if (keyState.IsKeyDown(Keys.D) || keyState.IsKeyDown(Keys.Right))
             {
                 velocity += Vector2.UnitX;
+                dir = Direction.Right;
             }
             if (keyState.IsKeyDown(Keys.A) || keyState.IsKeyDown(Keys.Left))
             {
                 velocity += -Vector2.UnitX;
+                dir = Direction.Left;
             }
             if ((keyState.IsKeyDown(Keys.W) && lastState.IsKeyUp(Keys.W)) || (keyState.IsKeyDown(Keys.Up) && lastState.IsKeyUp(Keys.Up)))
             {
@@ -129,5 +136,6 @@ namespace Adventure_man
         {
             CurrentWeapon.UseWeapon(Location, GameWorld.Direction.Right);// Need some kind of facing system
         }
+
     }
 }

@@ -30,10 +30,10 @@ namespace Adventure_man
         private Scene menu;
         private Scene ui;
 
-        public enum Direction
+        public enum Direction : int
         {
-            Right,
-            Left
+            Right=1,
+            Left=-1
         }
 
 

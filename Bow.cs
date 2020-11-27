@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -10,7 +11,8 @@ namespace Adventure_man
     {
         private float force;
         private Arrow arrow;
-        
+        private Texture2D arrowSprite;
+        private Vector2 bowOffset;
 
         public Bow(string name, int damage, float force,float fireRate)
         {
@@ -18,9 +20,12 @@ namespace Adventure_man
             base.name = name;
             this.force = force;
             this.fireRate = fireRate;
+            bowOffset = new Vector2(64, 32);
+            arrowSprite = Program.AdventureMan.Content.Load<Texture2D>("Arrow");
 
-            arrow = new Arrow(damage,force);
-            arrow.LoadContent(Program.AdventureMan.content);
+            
+            //arrow = new Arrow(damage,force);
+            //arrow.LoadContent(Program.AdventureMan.content);
         }
 
         public override void UseWeapon(Vector2 position, Direction direction)
@@ -28,21 +33,9 @@ namespace Adventure_man
             if (cooldown<=0)
             {
                 int dir;
-                switch (direction)
-                {
-                    case Direction.Right:
-                        dir = 1;
-                        break;
-
-                    case Direction.Left:
-                        dir = -1;
-                        break;
-
-                    default:
-                        dir = 1;
-                        break;
-                }
-                Program.AdventureMan.CurrentWorld.newGameObjects.Add(arrow.Shoot(position, new Vector2(dir, 0)));
+                dir = (int)direction;
+                //Program.AdventureMan.CurrentWorld.newGameObjects.Add(arrow.Shoot(position, new Vector2(dir, 0)));
+                Program.AdventureMan.CurrentWorld.newGameObjects.Add(new Arrow(arrowSprite, position + (bowOffset*new Vector2((int)World.Player.dir,1)),damage,force));
                 cooldown = 1000 / fireRate;
             }
             

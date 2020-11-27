@@ -14,7 +14,11 @@ namespace Adventure_man
 
         public RectangleF HitBox;
 
+        public Vector2 offset;
+
         public Color color = Color.White;
+        public SpriteEffects effect;
+
 
         public Vector2 Location
         {

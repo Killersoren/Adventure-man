@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using static Adventure_man.GameWorld;
 
 namespace Adventure_man
 {
@@ -12,6 +13,7 @@ namespace Adventure_man
         public Vector2 velocity;
         protected float dragCoefficient = 1f;
         protected float speed = 1f;
+        public Direction dir;
 
         private HashSet<GameObject> collisions = new HashSet<GameObject>();
 
@@ -108,5 +110,20 @@ namespace Adventure_man
                 gameObject.OnCollision(this);
             }
         }
+
+        public void FlipSprite()
+        {
+            switch (dir)
+            {
+                case Direction.Right:
+                    effect = SpriteEffects.None;
+                    break;
+                case Direction.Left:
+                    effect = SpriteEffects.FlipHorizontally;
+                    break;
+            }
+        }
+        
+
     }
 }

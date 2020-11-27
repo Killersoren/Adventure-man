@@ -10,20 +10,33 @@ namespace Adventure_man
     internal class Arrow : MoveableGameObject
     {
         private int damage;
-        public Arrow(int damage, float speed)
+        private SpriteEffects effect;
+        private Vector2 origin;
+
+        public Arrow(Texture2D sprite,Vector2 position, int damage, float speed)
         {
+            dir = World.Player.dir;
+            Location = position;
+            this.velocity = new Vector2((int)dir,0);
+            Sprite = sprite;
+            Size = new Vector2(Sprite.Width, Sprite.Height);
             this.damage = damage;
             this.speed = speed;
+            FlipSprite();
+            
+            origin = new Vector2(Sprite.Width * (int)dir, Sprite.Height / 2);
+
+
         }
 
-        public Arrow Shoot(Vector2 position, Vector2 velocity)
-        {
-            Arrow arrow = this;
-            arrow.Location = position;
-            arrow.velocity = velocity;
+        //public Arrow Shoot(Vector2 position, Vector2 velocity)
+        //{
+        //    Arrow arrow = this;
+        //    arrow.Location = position;
+        //    arrow.velocity = velocity;
             
-            return arrow;
-        }
+        //    return arrow;
+        //}
 
         public override void LoadContent(ContentManager contentManager)
         {
@@ -31,9 +44,9 @@ namespace Adventure_man
             //sprites[0] = Program.AdventureMan.Content.Load<Texture2D>("Arrow");
             //sprites[1] = Program.AdventureMan.Content.Load<Texture2D>("PlatformTest");
             //Sprite = new SpriteAnimation(sprites);
-            Sprite= Program.AdventureMan.Content.Load<Texture2D>("Arrow");
+            //Sprite= Program.AdventureMan.Content.Load<Texture2D>("Arrow");
 
-            Size = new Vector2(Sprite.Width, Sprite.Height);
+            //Size = new Vector2(Sprite.Width, Sprite.Height);
         }
 
         public override void Update()
@@ -46,6 +59,10 @@ namespace Adventure_man
 
 
             base.Update();
+        }
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            spriteBatch.Draw(Sprite, Location, null, Color.White, 0, origin, 1, effect, 1);
         }
     }
 }
