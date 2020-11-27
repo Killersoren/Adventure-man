@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -47,6 +48,9 @@ namespace Adventure_man
             pickUp.Use = (Player p) => { ++p.JumpAmount; };
             Objects.Add(pickUp);
             Objects.Add(Player);
+
+
+            Objects.Add(new Enemy(9, 4));
             Objects.Add(new Platform(0, 7, 13, 1));
 
             Objects.Add(new Platform(4, 4, 2, 1));
@@ -57,6 +61,8 @@ namespace Adventure_man
         {
             GameObjects.AddRange(newGameObjects);
             newGameObjects.Clear();
+
+
 
             foreach (GameObject o in Objects)
             {

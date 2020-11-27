@@ -1,4 +1,4 @@
-﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -65,7 +65,7 @@ namespace Adventure_man
             }
             if (availableJumps-- > 0)
             {
-                Velocity.Y = -30;// += new Vector2(0, -30f); //should probably also reset the gravity or something like that for better feel, pretty sure other games also do this
+                velocity.Y = -30;// += new Vector2(0, -30f); //should probably also reset the gravity or something like that for better feel, pretty sure other games also do this
             }
         }
 
@@ -73,14 +73,14 @@ namespace Adventure_man
         {
             if (isGrounded)
             {
-                if (Velocity.Y > 0)
-                    Velocity.Y = 0;
+                if (velocity.Y > 0)
+                    velocity.Y = 0;
 
                 gravStrength = 0;
                 return;
             }
             gravStrength += 0.1f;
-            Velocity += new Vector2(0, gravStrength);
+            velocity += new Vector2(0, gravStrength);
         }
 
         private KeyboardState keyState; //don't like this in this scope
@@ -95,11 +95,11 @@ namespace Adventure_man
 
             if (keyState.IsKeyDown(Keys.D) || keyState.IsKeyDown(Keys.Right))
             {
-                Velocity += Vector2.UnitX;
+                velocity += Vector2.UnitX;
             }
             if (keyState.IsKeyDown(Keys.A) || keyState.IsKeyDown(Keys.Left))
             {
-                Velocity += -Vector2.UnitX;
+                velocity += -Vector2.UnitX;
             }
             if ((keyState.IsKeyDown(Keys.W) && lastState.IsKeyUp(Keys.W)) || (keyState.IsKeyDown(Keys.Up) && lastState.IsKeyUp(Keys.Up)))
             {

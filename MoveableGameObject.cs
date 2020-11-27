@@ -1,4 +1,4 @@
-﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -9,7 +9,7 @@ namespace Adventure_man
 {
     public abstract class MoveableGameObject : GameObject
     {
-        public Vector2 Velocity;
+        public Vector2 velocity;
         protected float dragCoefficient = 1f;
         protected float speed = 1f;
 
@@ -17,9 +17,9 @@ namespace Adventure_man
 
         public override void Update()
         {
-            if (Velocity.RoundTo(3) != Vector2.Zero)
+            if (velocity.RoundTo(3) != Vector2.Zero)
             {
-                Move((Velocity *= dragCoefficient) * speed);
+                Move((velocity *= dragCoefficient) * speed);
             }
 
             base.Update();
@@ -54,7 +54,7 @@ namespace Adventure_man
                     {
                         nextTarget.Location -= stepX;
                         targetPosition.X = nextTarget.Location.X;
-                        Velocity.X = 0;
+                        velocity.X = 0;
                         movingX = false;
                     }
                 }
@@ -65,7 +65,7 @@ namespace Adventure_man
                     {
                         nextTarget.Location -= stepY;
                         targetPosition.Y = nextTarget.Location.Y;
-                        Velocity.Y = 0;
+                        velocity.Y = 0;
                         movingY = false;
                     }
                 }
