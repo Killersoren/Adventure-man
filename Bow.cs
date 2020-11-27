@@ -35,7 +35,7 @@ namespace Adventure_man
                 int dir;
                 dir = (int)direction;
                 //Program.AdventureMan.CurrentWorld.newGameObjects.Add(arrow.Shoot(position, new Vector2(dir, 0)));
-                Program.AdventureMan.CurrentWorld.newGameObjects.Add(new Arrow(arrowSprite, position + (bowOffset*new Vector2((int)World.Player.dir,1)),damage,force));
+                GameObject.Spawn(new Arrow(arrowSprite, position + (bowOffset*new Vector2((int)World.Player.dir,1)),damage,force));
                 cooldown = 1000 / fireRate;
             }
             

@@ -60,6 +60,10 @@ namespace Adventure_man
         {
             Program.AdventureMan.CurrentWorld.GameObjectsToRemove.Add(o);
         }
+        public static void Spawn(GameObject o)
+        {
+            Program.AdventureMan.CurrentWorld.newGameObjects.Add(o);
+        }
 
     }
 }

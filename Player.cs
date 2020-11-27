@@ -49,7 +49,7 @@ namespace Adventure_man
             JumpAmount = 1;
             dragCoefficient = 0.9f;
             speed = 1f;
-            CurrentWeapon = new Bow("Falcon Bow", 100, 1,5);
+            CurrentWeapon = new Bow("Falcon Bow", 100, 10,5);
         }
 
         public override void Update()

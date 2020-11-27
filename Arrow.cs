@@ -9,6 +9,7 @@ namespace Adventure_man
 {
     internal class Arrow : MoveableGameObject
     {
+        private Vector2 oldLoc;
         private int damage;
         private SpriteEffects effect;
         private Vector2 origin;
@@ -55,10 +56,24 @@ namespace Adventure_man
             if (Location.X > Program.AdventureMan.CurrentWorld.screenSize.X || Location.X < 0)
                 Destroy(this);
 
-            foreach(var o in Program.AdventureMan.CurrentWorld.Objects)
 
+            foreach (var other in Program.AdventureMan.CurrentWorld.Objects)
+                if (HitBox.Intersects(other.HitBox))
+                {
+                    if (other is Platform)
+                    {
+                        Destroy(this);
+                    }
+                    if (other is Enemy)
+                    {
+                        ((Enemy)other).TakeDamage(damage);
+                        Destroy(this);
+                    }
+
+                }
 
             base.Update();
+
         }
         public override void Draw(SpriteBatch spriteBatch)
         {

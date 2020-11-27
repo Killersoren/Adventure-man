@@ -14,7 +14,19 @@ namespace Adventure_man
     internal class Enemy : MoveableGameObject
     {
         private int health;
-        private bool isAlive;
+        private bool isAlive
+        {
+            get
+            {
+                if (health > 0)
+                    return true;
+                else
+                    return false;
+            }
+        }
+
+        
+
 
         public int res = World.GridResulution;
 
@@ -57,6 +69,7 @@ namespace Adventure_man
         public Enemy()
         {
             dragCoefficient = 0.9f;
+            health = 200;
             speed = 1f;
         }
 
@@ -66,7 +79,7 @@ namespace Adventure_man
             dragCoefficient = 0.9f;
             speed = 0.2f;
             int res = World.GridResulution;
-
+            health = 200;
             Location = new Vector2(X * res, Y * res);
 
 
@@ -154,6 +167,13 @@ namespace Adventure_man
 
         public override void Update()
         {
+            if (isAlive == false)
+            {
+                //Die();
+                Respawn();
+            }
+                
+
             //Debug.WriteLine("last Velocity is" + lastVelocity);
 
             Debug.WriteLine("Velocity is" + velocity);
@@ -185,10 +205,21 @@ namespace Adventure_man
         {
         }
 
-        public void TakeDamage()
+        public void TakeDamage(int damage)
         {
+            health -= damage;
         }
+        public void Die()
+        {
+            Destroy(this);
 
+            //Spawn(new Enemy(9, 3));
+        }
+        public void Respawn()
+        {
+            health = 200;
+            Location = new Vector2(9 * res, 3 * res);
+        }
 
         public override void OnCollision(GameObject other)
         {
