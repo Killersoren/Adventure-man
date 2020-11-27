@@ -10,35 +10,42 @@ namespace Adventure_man
     {
         private float force;
         private Arrow arrow;
+        
 
-        public Bow(string name, int damage, float force)
+        public Bow(string name, int damage, float force,float fireRate)
         {
             base.damage = damage;
             base.name = name;
             this.force = force;
+            this.fireRate = fireRate;
 
-            arrow = new Arrow();
+            arrow = new Arrow(damage,force);
             arrow.LoadContent(Program.AdventureMan.content);
         }
 
         public override void UseWeapon(Vector2 position, Direction direction)
         {
-            int dir;
-            switch (direction)
+            if (cooldown<=0)
             {
-                case Direction.Right:
-                    dir = 1;
-                    break;
+                int dir;
+                switch (direction)
+                {
+                    case Direction.Right:
+                        dir = 1;
+                        break;
 
-                case Direction.Left:
-                    dir = -1;
-                    break;
+                    case Direction.Left:
+                        dir = -1;
+                        break;
 
-                default:
-                    dir = 1;
-                    break;
+                    default:
+                        dir = 1;
+                        break;
+                }
+                Program.AdventureMan.CurrentWorld.newGameObjects.Add(arrow.Shoot(position, new Vector2(dir, 0)));
+                cooldown = 1000 / fireRate;
             }
-            Program.AdventureMan.CurrentWorld.newGameObjects.Add(arrow.Shoot(position, new Vector2(dir, 0), force));
+            
         }
     }
 }

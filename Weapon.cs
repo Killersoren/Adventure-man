@@ -10,6 +10,9 @@ namespace Adventure_man
     {
         public string name;
         public int damage;
+        public float fireRate;
+        public float cooldown;
+
 
        /// <summary>
        /// Uses the current Weapon
@@ -18,6 +21,22 @@ namespace Adventure_man
        /// <param name="direction">The Direction the user is facing</param>
         public abstract void UseWeapon(Vector2 position,Direction direction);
 
+        public void WeaponCooldown()
+        {
+            
+            if (cooldown > 0)
+            {
+                cooldown -= (float)Program.AdventureMan.gameTime.ElapsedGameTime.TotalMilliseconds;
+                //World.Player.color = Color.Red;
+
+            }
+            //else
+            //{
+            //    //World.Player.color = Color.White;
+
+            //}
+
+        }
 
 
     }

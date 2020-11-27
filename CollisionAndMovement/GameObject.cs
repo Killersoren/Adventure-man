@@ -14,6 +14,8 @@ namespace Adventure_man
 
         public RectangleF HitBox;
 
+        public Color color = Color.White;
+
         public Vector2 Location
         {
             get => HitBox.Location;
@@ -48,7 +50,12 @@ namespace Adventure_man
 
         public virtual void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(Sprite, HitBox, Color.White);
+            spriteBatch.Draw(Sprite, HitBox, color);
         }
+        public void Destroy(GameObject o)
+        {
+            Program.AdventureMan.CurrentWorld.GameObjectsToRemove.Add(o);
+        }
+
     }
 }

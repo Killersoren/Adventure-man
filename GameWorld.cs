@@ -10,6 +10,9 @@ namespace Adventure_man
     {
         private GraphicsDeviceManager _graphics;
         public SpriteBatch _spriteBatch;
+        public GameTime gameTime;
+
+        public SpriteFont font;
 
         //new public static GameServiceContainer Services;
 
@@ -42,6 +45,7 @@ namespace Adventure_man
             //Services = base.Services;
             //screenSize = new Vector2(_graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight);
             content = Content;
+            gameTime = new GameTime();
         }
 
         protected override void Initialize()
@@ -66,9 +70,10 @@ namespace Adventure_man
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // Sets spritefont
-            //font = Content.Load<SpriteFont>("spritefont"); // My font was brokne
+            font = Content.Load<SpriteFont>("Font"); // My font was brokne
 
             collisionTexture = Content.Load<Texture2D>("CollisionTexture");
+
 
             foreach (GameObject o in CurrentWorld.Objects)
             {
@@ -78,6 +83,7 @@ namespace Adventure_man
 
         protected override void Update(GameTime gameTime)
         {
+            this.gameTime = gameTime;
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
@@ -109,6 +115,13 @@ namespace Adventure_man
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             _spriteBatch.Begin();
+            //For getting feedback
+#if DEBUG
+            _spriteBatch.DrawString(font, $"Player pos= {World.Player.Location.X},{World.Player.Location.Y}", Vector2.Zero, Color.White);
+            _spriteBatch.DrawString(font, $"Player Weapon cooldown ={World.Player.CurrentWeapon.cooldown}", new Vector2(0,font.LineSpacing), Color.White);
+            _spriteBatch.DrawString(font, $"Player pos= {World.Player.Location.X},{World.Player.Location.Y}", new Vector2(0, font.LineSpacing*2), Color.White);
+            _spriteBatch.DrawString(font, $"Player pos= {World.Player.Location.X},{World.Player.Location.Y}", new Vector2(0, font.LineSpacing*3), Color.White);
+#endif
 
             CurrentWorld.Draw(_spriteBatch);
             currentScene.Draw(gameTime, _spriteBatch);

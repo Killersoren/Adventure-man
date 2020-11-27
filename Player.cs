@@ -39,16 +39,19 @@ namespace Adventure_man
             }
         }
 
+        internal Weapon CurrentWeapon { get => currentWeapon;private set => currentWeapon = value; }
+
         public Player()
         {
             JumpAmount = 1;
             dragCoefficient = 0.9f;
             speed = 1f;
-            currentWeapon = new Bow("Falcon Bow", 100, 100);
+            CurrentWeapon = new Bow("Falcon Bow", 100, 1,1);
         }
 
         public override void Update()
         {
+            CurrentWeapon.WeaponCooldown();
             ApplyGravity();
             HandleInput();
             base.Update();
@@ -124,7 +127,7 @@ namespace Adventure_man
 
         public void Attack()
         {
-            currentWeapon.UseWeapon(Location, GameWorld.Direction.Right);// Need some kind of facing system
+            CurrentWeapon.UseWeapon(Location, GameWorld.Direction.Right);// Need some kind of facing system
         }
     }
 }
