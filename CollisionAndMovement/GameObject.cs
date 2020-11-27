@@ -11,7 +11,7 @@ namespace Adventure_man
     public abstract class GameObject
     {
         public SpriteAnimation Sprite;
-        
+
         public RectangleF HitBox;
 
         public Vector2 Location
@@ -48,7 +48,7 @@ namespace Adventure_man
 
         public virtual void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(Sprite, Location, Color.White);
+            spriteBatch.Draw(Sprite, HitBox, Color.White);
         }
     }
 }

@@ -10,6 +10,7 @@ namespace Adventure_man
     {
         public List<GameObject> GameObjects;
         public List<GameObject> newGameObjects;
+        public List<GameObject> GameObjectsToRemove;
         public static Player Player;
 
         /// <summary>
@@ -31,7 +32,8 @@ namespace Adventure_man
 
         public World()
         {
-            Objects = new List<GameObject>();
+            GameObjects = new List<GameObject>();
+            GameObjectsToRemove = new List<GameObject>();
             newGameObjects = new List<GameObject>();
 
             worldGrid = new Vector2(16, 16);
@@ -39,8 +41,11 @@ namespace Adventure_man
             screenSize = new Vector2(worldGrid.X * GridResulution, worldGrid.Y * GridResulution);
 
             Player = new Player();
-            PowerUp1 testpu = new PowerUp1();
-            Objects.Add(testpu);
+            //PowerUp1 testpu = new PowerUp1();
+            //Objects.Add(testpu);
+            PickUp pickUp = new PickUp("doublejump", new Vector2(100, 200));
+            pickUp.Use = (Player p) => { ++p.JumpAmount; };
+            Objects.Add(pickUp);
             Objects.Add(Player);
             Objects.Add(new Platform(0, 7, 13, 1));
 
@@ -57,6 +62,12 @@ namespace Adventure_man
             {
                 o.Update();
             }
+
+            foreach (GameObject g in GameObjectsToRemove)
+            {
+                GameObjects.Remove(g);
+            }
+            GameObjectsToRemove.Clear();
         }
 
         public void Draw(SpriteBatch spriteBatch)
