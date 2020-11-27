@@ -13,7 +13,7 @@ namespace Adventure_man
         public Arrow(Vector2 position,Vector2 velocity, float speed)
         {
             Location = position;
-            base.Velocity = velocity;
+            base.velocity = velocity;
             base.speed = speed;
 
 

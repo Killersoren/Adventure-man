@@ -3,8 +3,11 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
+using System.Timers;
 
 namespace Adventure_man
 {
@@ -12,6 +15,18 @@ namespace Adventure_man
     {
         private int health;
         private bool isAlive;
+
+        public int res = World.GridResulution;
+
+        private static Timer timerA;
+        private static Timer timerB;
+        private bool timerStart = false;
+
+
+
+        public static bool playerInSight = false;
+
+        public Vector2 lastVelocity;
 
         private float gravStrength = 0; // don't like the placement of this var :/
 
@@ -38,17 +53,26 @@ namespace Adventure_man
             }
         }
 
+
         public Enemy()
         {
-            speed = 100;
+            dragCoefficient = 0.9f;
+            speed = 1f;
         }
 
-        public Enemy(Vector2 pos)
+
+        public Enemy(int X, int Y)
         {
-            speed = 100;
+            dragCoefficient = 0.9f;
+            speed = 0.2f;
+            int res = World.GridResulution;
 
-            Location = new Vector2(32 + (pos.X * World.GridResulution), 64 + (pos.Y * World.GridResulution));
+            Location = new Vector2(X * res, Y * res);
+
+
         }
+
+
 
         //public override void LoadContent(ContentManager content)
         public override void LoadContent(ContentManager contentManager)
@@ -60,7 +84,67 @@ namespace Adventure_man
                 sprites[i] = Program.AdventureMan.content.Load<Texture2D>("MoveTest" + (i + 1) + "_v2");
             }
 
-            Sprite = sprites;
+            Sprite = new SpriteAnimation(sprites);
+            //HitBox = new RectangleF((int)Location.X, (int)Location.Y, Sprite.Width, Sprite.Height);
+            Size = new Vector2(Sprite.Width - 1, Sprite.Height - 1);
+
+        }
+
+
+
+        private void SetTimerA()
+        {
+            // Create a timer with a two second interval.
+            timerA = new System.Timers.Timer(2500);
+            // Hook up the Elapsed event for the timer. 
+            timerA.Elapsed += OnTimedEventA;
+            timerA.AutoReset = false;
+            timerA.Enabled = true;
+        }
+
+        void SetTimerB()
+        {
+            // Create a timer with a two second interval.
+            timerB = new System.Timers.Timer(2500);
+            // Hook up the Elapsed event for the timer. 
+            timerB.Elapsed += OnTimedEventB;
+            timerB.AutoReset = false;
+            timerB.Enabled = true;
+        }
+
+
+
+        void OnTimedEventA(Object source, ElapsedEventArgs e)
+        {
+            timerStart = true;
+            velocity += -Vector2.UnitX;
+
+
+            SetTimerB();
+
+        }
+
+        void OnTimedEventB(Object source, ElapsedEventArgs e)
+        {
+
+            velocity += Vector2.UnitX;
+            SetTimerA();
+        }
+
+        public void EnemyLogic()
+        {
+
+            if (playerInSight == false)
+
+            {
+
+                if (!timerStart)
+                {
+                    SetTimerA();
+
+                }
+            }
+
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -70,21 +154,31 @@ namespace Adventure_man
 
         public override void Update()
         {
+            //Debug.WriteLine("last Velocity is" + lastVelocity);
+
+            Debug.WriteLine("Velocity is" + velocity);
+
+
+
             ApplyGravity();
+            EnemyLogic();
+
+
+            base.Update();
         }
 
         private void ApplyGravity()
         {
             if (isGrounded)
             {
-                if (Velocity.Y > 0)
-                    Velocity.Y = 0;
+                if (velocity.Y > 0)
+                    velocity.Y = 0;
 
                 gravStrength = 0;
                 return;
             }
             gravStrength += 0.1f;
-            Velocity += new Vector2(0, gravStrength);
+            velocity += new Vector2(0, gravStrength);
         }
 
         public void Attack()
@@ -94,6 +188,7 @@ namespace Adventure_man
         public void TakeDamage()
         {
         }
+
 
         public override void OnCollision(GameObject other)
         {
