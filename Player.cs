@@ -13,6 +13,8 @@ namespace Adventure_man
         public int Points = 0;
         private float gravStrength = 0; // don't like the placement of this var :/
         private Weapon currentWeapon;
+        private int availableJumps;
+        public int JumpAmount;
 
         protected bool isGrounded //bad maybe?, we check too often i think, maybe not only when we try to apply gravity (once per cycle) and ocasionally when we jummp
         {
@@ -39,6 +41,7 @@ namespace Adventure_man
 
         public Player()
         {
+            JumpAmount = 1;
             dragCoefficient = 0.9f;
             speed = 1f;
             currentWeapon = new Bow("Falcon Bow", 100, 100);
@@ -55,7 +58,11 @@ namespace Adventure_man
         {
             if (isGrounded)
             {
-                velocity += new Vector2(0, -30f);
+                availableJumps = JumpAmount;
+            }
+            if (availableJumps-- > 0)
+            {
+                Velocity.Y = -30;// += new Vector2(0, -30f); //should probably also reset the gravity or something like that for better feel, pretty sure other games also do this
             }
         }
 
@@ -73,12 +80,15 @@ namespace Adventure_man
             velocity += new Vector2(0, gravStrength);
         }
 
+        private KeyboardState keyState; //don't like this in this scope
+
         /// <summary>
         /// Handles Player input
         /// </summary>
         private void HandleInput()
         {
-            KeyboardState keyState = Keyboard.GetState();
+            KeyboardState lastState = keyState;
+            keyState = Keyboard.GetState();
 
             if (keyState.IsKeyDown(Keys.D) || keyState.IsKeyDown(Keys.Right))
             {
@@ -88,7 +98,7 @@ namespace Adventure_man
             {
                 velocity += -Vector2.UnitX;
             }
-            if (keyState.IsKeyDown(Keys.W) || keyState.IsKeyDown(Keys.Up))
+            if ((keyState.IsKeyDown(Keys.W) && lastState.IsKeyUp(Keys.W)) || (keyState.IsKeyDown(Keys.Up) && lastState.IsKeyUp(Keys.Up)))
             {
                 Jump();
             }
