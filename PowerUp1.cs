@@ -11,9 +11,10 @@ namespace Adventure_man
     {
         public PowerUp1()
         {
-            this.Location = new Vector2(0, 50);
-            this.Size = new Vector2(5, 5);
+           // this.Location = new Vector2(0, 50);
+            //this.Size = new Vector2(5, 5);
         }
+       // spriteBatch.Draw(Sprite, Location, null, Color.White, 0, origin, 1, effect, 1);
 
         public override void LoadContent(ContentManager contentManager)
         {

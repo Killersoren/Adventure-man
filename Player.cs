@@ -13,10 +13,15 @@ namespace Adventure_man
     {
         public int Points = 0;
         private float gravStrength = 0; // don't like the placement of this var :/
+        private Sword sword;
+        private Bow bow;
         private Weapon currentWeapon;
+        private Texture2D currentWeaponSprite;
+        private Rectangle currentWeaponRectangle;
         private int availableJumps;
         public int JumpAmount;
-        public Direction dir;
+        
+        Weapon[] weapons = new Weapon[2];
 
 
 
@@ -50,14 +55,34 @@ namespace Adventure_man
             JumpAmount = 1;
             dragCoefficient = 0.9f;
             speed = 1f;
-            CurrentWeapon = new Bow("Falcon Bow", 100, 10,5);
+            bow = new Bow("Falcon Bow", 100, 10, 5);
+            sword = new Sword("Sword", 100);
 
 
+
+
+            weapons = new Weapon[2] {sword,bow };
+       
+            CurrentWeapon = weapons[1];
+
+        }
+
+        private void SwapWeapon()
+        {
+            if (currentWeapon == weapons[0])
+            {
+                currentWeapon = weapons[1];
+            }
+            else if (currentWeapon == weapons[1])
+            {
+            currentWeapon = weapons[0];
+            }
         }
 
         public override void Update()
         {
             CurrentWeapon.WeaponCooldown();
+            FlipSprite();
             ApplyGravity();
             HandleInput();
             base.Update();
@@ -103,16 +128,11 @@ namespace Adventure_man
             {
                 velocity += Vector2.UnitX;
                 dir = Direction.Right;
-               effect = SpriteEffects.None;
-
-
             }
             if (keyState.IsKeyDown(Keys.A) || keyState.IsKeyDown(Keys.Left))
             {
                 velocity += -Vector2.UnitX;
                 dir = Direction.Left;
-               effect = SpriteEffects.FlipHorizontally;
-
             }
             if ((keyState.IsKeyDown(Keys.W) && lastState.IsKeyUp(Keys.W)) || (keyState.IsKeyDown(Keys.Up) && lastState.IsKeyUp(Keys.Up)))
             {
@@ -121,6 +141,10 @@ namespace Adventure_man
             if (keyState.IsKeyDown(Keys.E))
             {
                 Attack();
+            }
+            if (keyState.IsKeyDown(Keys.Q) && lastState.IsKeyUp(Keys.Q))
+            {
+                SwapWeapon();
             }
         }
 
@@ -133,10 +157,26 @@ namespace Adventure_man
                 sprites[i] = Program.AdventureMan.content.Load<Texture2D>("MoveTest" + (i + 1) + "_v2");
 
             }
+            currentWeaponSprite = Program.AdventureMan.content.Load<Texture2D>("swordLitte");
 
             Sprite = new SpriteAnimation(sprites);
             //HitBox = new RectangleF((int)Location.X, (int)Location.Y, Sprite.Width, Sprite.Height);
             Size = new Vector2(Sprite.Width - 1, Sprite.Height - 1);
+
+
+           
+
+        }
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+
+            if (currentWeapon is Sword)
+            {
+                spriteBatch.Draw(currentWeaponSprite, sword.origin, Color.White);
+
+            }
+
+            base.Draw(spriteBatch);
         }
 
         public void Attack()

@@ -16,7 +16,7 @@ namespace Adventure_man
 
         public PickUp(string spritePath)
         {
-            Size = new Vector2(100, 100);
+            Size = new Vector2(64, 64);
             Use = (Player p) => { };
             this.spritePath = spritePath;
         }
