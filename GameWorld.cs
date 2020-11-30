@@ -119,8 +119,8 @@ namespace Adventure_man
 #if DEBUG
             _spriteBatch.DrawString(font, $"Player pos= {World.Player.Location.X},{World.Player.Location.Y}", Vector2.Zero, Color.White);
             _spriteBatch.DrawString(font, $"Player Weapon cooldown ={World.Player.CurrentWeapon.cooldown}", new Vector2(0,font.LineSpacing), Color.White);
-            _spriteBatch.DrawString(font, $"Player pos= {World.Player.Location.X},{World.Player.Location.Y}", new Vector2(0, font.LineSpacing*2), Color.White);
-            _spriteBatch.DrawString(font, $"Player pos= {World.Player.Location.X},{World.Player.Location.Y}", new Vector2(0, font.LineSpacing*3), Color.White);
+            _spriteBatch.DrawString(font, $"Player Health= {World.Player.health}", new Vector2(0, font.LineSpacing*2), Color.White);
+            _spriteBatch.DrawString(font, $"", new Vector2(0, font.LineSpacing*3), Color.White);
 #endif
 
             CurrentWorld.Draw(_spriteBatch);

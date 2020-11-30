@@ -14,17 +14,14 @@ namespace Adventure_man
 
         public RectangleF HitBox;
 
+        //Only for objects with origin != (0,0)
+        public Vector2 origin;
         public Vector2 offset;
 
         public Color color = Color.White;
         public SpriteEffects effect;
 
 
-        //public Vector2 Location
-        //{
-        //    get => HitBox.Location;
-        //    protected set => HitBox.Location = value;
-        //}
         public Vector2 Location
         {
             get => HitBox.Location;
@@ -59,12 +56,7 @@ namespace Adventure_man
 
         public virtual void Draw(SpriteBatch spriteBatch)
         {
-            //spriteBatch.Draw(Sprite, HitBox, color);
-            //spriteBatch.Draw(Sprite,HitBox,null, color, 0f, Vector2.Zero, effect, 0f );
-            
-            spriteBatch.Draw(Sprite, Location, null, Color.White, 0, Vector2.Zero, 1, effect, 1);
-
-
+            spriteBatch.Draw(Sprite, HitBox, color);
         }
         public void Destroy(GameObject o)
         {

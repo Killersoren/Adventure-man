@@ -11,10 +11,12 @@ namespace Adventure_man
     {
         private Vector2 oldLoc;
         private int damage;
-        private Vector2 origin;
+        private MoveableGameObject friendly;//the object that shot the arrow
 
-        public Arrow(Texture2D sprite,Vector2 position, int damage, float speed)
+
+        public Arrow(Texture2D sprite,Vector2 position, int damage, float speed,MoveableGameObject friendly)
         {
+            this.friendly = friendly;
             dir = World.Player.dir;
             Location = position;
             this.velocity = new Vector2((int)dir,0);
@@ -24,9 +26,9 @@ namespace Adventure_man
             this.speed = speed;
             FlipSprite();
             
-            origin = new Vector2(Sprite.Width * (int)dir, Sprite.Height / 2);
-
-
+            //origin = new Vector2(Sprite.Width * (int)dir, Sprite.Height / 2);
+            //offset = origin * -1;
+            
         }
 
         //public Arrow Shoot(Vector2 position, Vector2 velocity)
@@ -63,9 +65,14 @@ namespace Adventure_man
                     {
                         Destroy(this);
                     }
-                    if (other is Enemy)
+                    if (other is Enemy && other != friendly) 
                     {
                         ((Enemy)other).TakeDamage(damage);
+                        Destroy(this);
+                    }
+                    if (other is Player && other != friendly)
+                    {
+                        ((Player)other).TakeDamage(damage);
                         Destroy(this);
                     }
 

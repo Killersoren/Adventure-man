@@ -20,6 +20,19 @@ namespace Adventure_man
         private Rectangle currentWeaponRectangle;
         private int availableJumps;
         public int JumpAmount;
+        public Direction dir;
+        
+        public int health;
+        private bool isAlive
+        {
+            get
+            {
+                if (health > 0)
+                    return true;
+                else
+                    return false;
+            }
+        }
         
         Weapon[] weapons = new Weapon[2];
 
@@ -52,6 +65,7 @@ namespace Adventure_man
 
         public Player()
         {
+            health = 200;
             JumpAmount = 1;
             dragCoefficient = 0.9f;
             speed = 1f;
@@ -81,6 +95,12 @@ namespace Adventure_man
 
         public override void Update()
         {
+            if (isAlive == false)
+            {
+                //Die();
+                Respawn();
+            }
+
             CurrentWeapon.WeaponCooldown();
             FlipSprite();
             ApplyGravity();
@@ -155,7 +175,6 @@ namespace Adventure_man
             {
                 //sprites[i] = content.Load<Texture2D>("MoveTest" + (i + 1)+"_v2");
                 sprites[i] = Program.AdventureMan.content.Load<Texture2D>("MoveTest" + (i + 1) + "_v2");
-
             }
             currentWeaponSprite = Program.AdventureMan.content.Load<Texture2D>("swordLitte");
 
@@ -183,6 +202,20 @@ namespace Adventure_man
         {
             CurrentWeapon.UseWeapon(Location, GameWorld.Direction.Right);// Need some kind of facing system
         }
+        public void TakeDamage(int damage)
+        {
+            health -= damage;
+        }
+        public void Die()
+        {
+            Destroy(this);
 
+            //Spawn(new Enemy(9, 3));
+        }
+        public void Respawn()
+        {
+            health = 200;
+            Location =Vector2.Zero;
+        }
     }
 }

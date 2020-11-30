@@ -12,6 +12,7 @@ namespace Adventure_man
         public int damage;
         public float fireRate;
         public float cooldown;
+        public MoveableGameObject user;
 
 
 
