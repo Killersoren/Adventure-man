@@ -20,7 +20,7 @@ namespace Adventure_man
             base.name = name;
             this.force = force;
             this.fireRate = fireRate;
-            bowOffset = new Vector2(64, 32);
+            bowOffset = new Vector2(32, 32);
             arrowSprite = Program.AdventureMan.Content.Load<Texture2D>("Arrow");
 
             
@@ -35,7 +35,7 @@ namespace Adventure_man
                 int dir;
                 dir = (int)direction;
                 //Program.AdventureMan.CurrentWorld.newGameObjects.Add(arrow.Shoot(position, new Vector2(dir, 0)));
-                GameObject.Spawn(new Arrow(arrowSprite, position + (bowOffset*new Vector2((int)World.Player.dir,1)),damage,force));
+                GameObject.Spawn(new Arrow(arrowSprite, position + (bowOffset+new Vector2(32*(int)World.Player.dir,0)),damage,force));
                 cooldown = 1000 / fireRate;
             }
             
