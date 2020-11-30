@@ -17,10 +17,8 @@ namespace Adventure_man
         private Bow bow;
         private Weapon currentWeapon;
         private Texture2D currentWeaponSprite;
-        private Rectangle currentWeaponRectangle;
         private int availableJumps;
         public int JumpAmount;
-        public Direction dir;
         
         public int health;
         private bool isAlive
@@ -69,7 +67,7 @@ namespace Adventure_man
             JumpAmount = 1;
             dragCoefficient = 0.9f;
             speed = 1f;
-            bow = new Bow("Falcon Bow", 100, 10, 5);
+            bow = new Bow("Falcon Bow", 100, 10, 5, this);
             sword = new Sword("Sword", 100);
 
 
