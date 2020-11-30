@@ -56,7 +56,9 @@ namespace Adventure_man
 
         public virtual void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(Sprite, HitBox, color);
+            //spriteBatch.Draw(Sprite, HitBox, color);
+            spriteBatch.Draw(Sprite, HitBox,null, color,0f,Vector2.Zero,effect,0f);
+
         }
         public void Destroy(GameObject o)
         {
