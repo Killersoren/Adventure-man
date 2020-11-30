@@ -17,6 +17,18 @@ namespace Adventure_man
         private int availableJumps;
         public int JumpAmount;
         public Direction dir;
+        
+        public int health;
+        private bool isAlive
+        {
+            get
+            {
+                if (health > 0)
+                    return true;
+                else
+                    return false;
+            }
+        }
 
 
 
@@ -47,16 +59,21 @@ namespace Adventure_man
 
         public Player()
         {
+            health = 200;
             JumpAmount = 1;
             dragCoefficient = 0.9f;
             speed = 1f;
-            CurrentWeapon = new Bow("Falcon Bow", 100, 10,5);
-
-
+            CurrentWeapon = new Bow("Falcon Bow", 100, 1,5,this);
         }
 
         public override void Update()
         {
+            if (isAlive == false)
+            {
+                //Die();
+                Respawn();
+            }
+
             CurrentWeapon.WeaponCooldown();
             ApplyGravity();
             HandleInput();
@@ -103,16 +120,11 @@ namespace Adventure_man
             {
                 velocity += Vector2.UnitX;
                 dir = Direction.Right;
-               effect = SpriteEffects.None;
-
-
             }
             if (keyState.IsKeyDown(Keys.A) || keyState.IsKeyDown(Keys.Left))
             {
                 velocity += -Vector2.UnitX;
                 dir = Direction.Left;
-               effect = SpriteEffects.FlipHorizontally;
-
             }
             if ((keyState.IsKeyDown(Keys.W) && lastState.IsKeyUp(Keys.W)) || (keyState.IsKeyDown(Keys.Up) && lastState.IsKeyUp(Keys.Up)))
             {
@@ -131,7 +143,6 @@ namespace Adventure_man
             {
                 //sprites[i] = content.Load<Texture2D>("MoveTest" + (i + 1)+"_v2");
                 sprites[i] = Program.AdventureMan.content.Load<Texture2D>("MoveTest" + (i + 1) + "_v2");
-
             }
 
             Sprite = new SpriteAnimation(sprites);
@@ -143,6 +154,20 @@ namespace Adventure_man
         {
             CurrentWeapon.UseWeapon(Location, GameWorld.Direction.Right);// Need some kind of facing system
         }
+        public void TakeDamage(int damage)
+        {
+            health -= damage;
+        }
+        public void Die()
+        {
+            Destroy(this);
 
+            //Spawn(new Enemy(9, 3));
+        }
+        public void Respawn()
+        {
+            health = 200;
+            Location =Vector2.Zero;
+        }
     }
 }

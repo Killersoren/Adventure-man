@@ -15,6 +15,10 @@ namespace Adventure_man
         protected float speed = 1f;
         public Direction dir;
 
+
+        
+
+
         private HashSet<GameObject> collisions = new HashSet<GameObject>();
 
         public override void Update()
