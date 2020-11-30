@@ -20,6 +20,11 @@ namespace Adventure_man
         public SpriteEffects effect;
 
 
+        //public Vector2 Location
+        //{
+        //    get => HitBox.Location;
+        //    protected set => HitBox.Location = value;
+        //}
         public Vector2 Location
         {
             get => HitBox.Location;
@@ -54,7 +59,12 @@ namespace Adventure_man
 
         public virtual void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(Sprite, HitBox, color);
+            //spriteBatch.Draw(Sprite, HitBox, color);
+            //spriteBatch.Draw(Sprite,HitBox,null, color, 0f, Vector2.Zero, effect, 0f );
+            
+            spriteBatch.Draw(Sprite, Location, null, Color.White, 0, Vector2.Zero, 1, effect, 1);
+
+
         }
         public void Destroy(GameObject o)
         {

@@ -63,7 +63,6 @@ namespace Adventure_man
             newGameObjects.Clear();
 
 
-
             foreach (GameObject o in Objects)
             {
                 o.Update();

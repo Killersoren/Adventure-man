@@ -19,6 +19,7 @@ namespace Adventure_man
         public Direction dir;
 
 
+
         protected bool isGrounded //bad maybe?, we check too often i think, maybe not only when we try to apply gravity (once per cycle) and ocasionally when we jummp
         {
             get
@@ -50,12 +51,12 @@ namespace Adventure_man
             dragCoefficient = 0.9f;
             speed = 1f;
             CurrentWeapon = new Bow("Falcon Bow", 100, 10,5);
+
+
         }
 
         public override void Update()
         {
-            
-
             CurrentWeapon.WeaponCooldown();
             ApplyGravity();
             HandleInput();
@@ -102,11 +103,16 @@ namespace Adventure_man
             {
                 velocity += Vector2.UnitX;
                 dir = Direction.Right;
+               effect = SpriteEffects.None;
+
+
             }
             if (keyState.IsKeyDown(Keys.A) || keyState.IsKeyDown(Keys.Left))
             {
                 velocity += -Vector2.UnitX;
                 dir = Direction.Left;
+               effect = SpriteEffects.FlipHorizontally;
+
             }
             if ((keyState.IsKeyDown(Keys.W) && lastState.IsKeyUp(Keys.W)) || (keyState.IsKeyDown(Keys.Up) && lastState.IsKeyUp(Keys.Up)))
             {
@@ -125,6 +131,7 @@ namespace Adventure_man
             {
                 //sprites[i] = content.Load<Texture2D>("MoveTest" + (i + 1)+"_v2");
                 sprites[i] = Program.AdventureMan.content.Load<Texture2D>("MoveTest" + (i + 1) + "_v2");
+
             }
 
             Sprite = new SpriteAnimation(sprites);

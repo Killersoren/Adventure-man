@@ -11,7 +11,6 @@ namespace Adventure_man
     {
         private Vector2 oldLoc;
         private int damage;
-        private SpriteEffects effect;
         private Vector2 origin;
 
         public Arrow(Texture2D sprite,Vector2 position, int damage, float speed)
