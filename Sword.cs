@@ -1,33 +1,55 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Adventure_man
 {
-    class Sword : Weapon
+   internal class Sword : Weapon
     {
-        public Vector2 origin;
+        private Texture2D swordSprite;
+        private Vector2 swordOffset;
+        private int offseta;
+        private int offsetb;
+        
 
-        public Sword(string name, int damage)
+
+        public Sword(string name, int damage, float force, float fireRate, MoveableGameObject user)
         {
+            base.user = user;
             base.damage = damage;
             base.name = name;
+            this.fireRate = fireRate;
 
+            // Ras - flyttes til egen load metode eller til SwordAttack ?
+            swordSprite = Program.AdventureMan.Content.Load<Texture2D>("Sword");
 
         }
-
+        
+       
 
         public override void UseWeapon(Vector2 position, GameWorld.Direction direction)
         {
-            //if (cooldown <= 0)
-            //{
-            //    int dir;
-            //    dir = (int)direction;
-            //    GameObject.Spawn(new Sword(, position + (new Vector2((int)World.Player.dir, 1)), damage));
-            //    cooldown = 1000 / fireRate;
-            //}
-        }
+            //Ras - Edited version of arrow, no speed(force))
+            // 
+            if (cooldown <= 0)
+            {
+                swordOffset = new Vector2(0, World.Player.Size.Y / 4);
+                //offseta = ((int)World.Player.Size.X + swordSprite.Width) / 2;
+                //offsetb = offseta - swordSprite.Width;
 
+
+                GameObject.Spawn(new SwordAttack(swordSprite, position + (swordOffset + new Vector2(offsetb + offseta * (int)World.Player.dir, 0)), damage, user, direction));
+                
+                cooldown = 1000 / fireRate;
+
+            }
+        }
     }
+
+
+      
+
+    
 }

@@ -34,14 +34,6 @@ namespace Adventure_man
 
         private void TestButton_Click(object sender, System.EventArgs e)
         {
-            //GameWorld.StartGame();
-
-            //List<Scene> tempscene = new List<Scene>();
-            //tempscene = GameWorld.loadedScenes;
-
-            //    tempscene.RemoveAt(0);
-            //GameWorld.loadedScenes = tempscene;
-
             Program.AdventureMan.isGameStarted = true;
         }
 
