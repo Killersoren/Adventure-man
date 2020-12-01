@@ -25,8 +25,9 @@ namespace Adventure_man
             }
         }
 
-        
-
+        public Texture2D coinSprite;
+        public Vector2 coinSpawnOffset;
+        Random rnd;
 
         public int res = World.GridResulution;
 
@@ -71,6 +72,8 @@ namespace Adventure_man
             dragCoefficient = 0.9f;
             health = 200;
             speed = 1f;
+            rnd = new Random();
+            staticDir = GameWorld.Direction.Right;
         }
 
 
@@ -81,8 +84,8 @@ namespace Adventure_man
             int res = World.GridResulution;
             health = 200;
             Location = new Vector2(X * res, Y * res);
-
-
+            rnd = new Random();
+            staticDir = GameWorld.Direction.Right;
         }
 
 
@@ -100,6 +103,10 @@ namespace Adventure_man
             Sprite = new SpriteAnimation(sprites);
             //HitBox = new RectangleF((int)Location.X, (int)Location.Y, Sprite.Width, Sprite.Height);
             Size = new Vector2(Sprite.Width - 1, Sprite.Height - 1);
+
+            coinSpawnOffset = new Vector2(Size.X / 2, Size.Y / 4);
+
+            coinSprite = Program.AdventureMan.content.Load<Texture2D>("Coin");
 
         }
 
@@ -183,7 +190,7 @@ namespace Adventure_man
             ApplyGravity();
             EnemyLogic();
 
-
+            dir=UpdateSprite();
             base.Update();
         }
 
@@ -211,14 +218,27 @@ namespace Adventure_man
         }
         public void Die()
         {
+            Coins();
             Destroy(this);
 
             //Spawn(new Enemy(9, 3));
         }
         public void Respawn()
         {
+            Coins();
             health = 200;
             Location = new Vector2(9 * res, 3 * res);
+        }
+        /// <summary>
+        /// Spawns x-y coins
+        /// </summary>
+        public void Coins()
+        {
+            for (int i = rnd.Next(3, 7); i > 0; i--)
+            {
+                Spawn(new Coin(coinSprite,Location+coinSpawnOffset,new Vector2(rnd.Next(-5,5),rnd.Next(-5,5))));
+            }
+
         }
 
         public override void OnCollision(GameObject other)

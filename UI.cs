@@ -29,6 +29,8 @@ namespace Adventure_man
         {
             // Draws background
             spritebatch.Draw(backgroundSprite, new Rectangle(Program.AdventureMan.SceenSize.x / 2, Program.AdventureMan.SceenSize.y / 2, Program.AdventureMan.SceenSize.x / 2, Program.AdventureMan.SceenSize.y / 2), Color.White);
+            spritebatch.DrawString(Program.AdventureMan.font, $"{World.Player.points}", new Vector2(Program.AdventureMan.CurrentWorld.screenSize.X / 2, 0),Color.White);
+
         }
 
         public override void Update(GameTime gameTime)

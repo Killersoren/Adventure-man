@@ -13,10 +13,11 @@ namespace Adventure_man
         public Vector2 velocity;
         protected float dragCoefficient = 1f;
         protected float speed = 1f;
-        public Direction dir;
+        public Direction dir;//=Direction.Right
+        public Direction staticDir;
 
 
-        
+
 
 
         private HashSet<GameObject> collisions = new HashSet<GameObject>();
@@ -114,6 +115,46 @@ namespace Adventure_man
                 gameObject.OnCollision(this);
             }
         }
+        private Direction CheckDirection()
+        {
+            Direction oldDir = dir;
+            if (velocity.X > 0)
+            {
+                dir = Direction.Right;
+                //staticDir = Direction.Right;
+            }
+                
+            else if (velocity.X < 0)
+            {
+                dir = Direction.Left;
+                //staticDir = Direction.Left;
+            }
+                
+            else
+            {
+                if (oldDir!=0)
+                    dir = oldDir;
+                else
+                {
+                    switch(effect)
+                    {
+                        case SpriteEffects.None:
+                            dir = Direction.Right;
+                            break;
+                        case SpriteEffects.FlipHorizontally:
+                            dir = Direction.Left;
+                            break;
+                        default:
+                            dir = Direction.Right;
+                            break;
+                    }
+                    
+                }
+
+            }
+
+            return dir;
+        }
 
         public void FlipSprite()
         {
@@ -126,6 +167,12 @@ namespace Adventure_man
                     effect = SpriteEffects.FlipHorizontally;
                     break;
             }
+        }
+        public Direction UpdateSprite()
+        {
+            Direction tempdir=CheckDirection();
+            FlipSprite();
+            return tempdir;
         }
         
 

@@ -37,22 +37,19 @@ namespace Adventure_man
             GameObjectsToRemove = new List<GameObject>();
             newGameObjects = new List<GameObject>();
 
-            worldGrid = new Vector2(16, 16);
+            //worldGrid = new Vector2(16, 16);
             gridResulution = 64;
-            screenSize = new Vector2(worldGrid.X * GridResulution, worldGrid.Y * GridResulution);
+            screenSize = new Vector2(Program.AdventureMan._graphics.PreferredBackBufferWidth, Program.AdventureMan._graphics.PreferredBackBufferHeight);
+            //screenSize = new Vector2(worldGrid.X * GridResulution, worldGrid.Y * GridResulution);
 
             Player = new Player();
             //PowerUp1 testpu = new PowerUp1();
             //Objects.Add(testpu);
             PickUp pickUp = new PickUp("doublejump", new Vector2(100, 200));
             pickUp.Use = (Player p) => { ++p.JumpAmount; };
-
-            PickUp pickUp2 = new PickUp("MoveTest", new Vector2(200, 200));
-            pickUp2.Use = (Player p) => { p.HitBox.Height *= 0.5f; };
-
             Objects.Add(pickUp);
-            Objects.Add(pickUp2);
             Objects.Add(Player);
+
 
             Objects.Add(new Enemy(9, 4));
             Objects.Add(new Platform(0, 7, 13, 1));
@@ -65,6 +62,8 @@ namespace Adventure_man
         {
             GameObjects.AddRange(newGameObjects);
             newGameObjects.Clear();
+
+
 
             foreach (GameObject o in Objects)
             {

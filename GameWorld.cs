@@ -8,7 +8,7 @@ namespace Adventure_man
 {
     public class GameWorld : Game
     {
-        private GraphicsDeviceManager _graphics;
+        public GraphicsDeviceManager _graphics;
         public SpriteBatch _spriteBatch;
         public GameTime gameTime;
 

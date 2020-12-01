@@ -61,6 +61,12 @@
 /processorParam:TextureFormat=Color
 /build:Coin.png
 
+#begin CoinSound.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:CoinSound.wav
+
 #begin CollisionTexture.png
 /importer:TextureImporter
 /processor:TextureProcessor
