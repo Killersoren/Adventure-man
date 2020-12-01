@@ -46,9 +46,13 @@ namespace Adventure_man
             //Objects.Add(testpu);
             PickUp pickUp = new PickUp("doublejump", new Vector2(100, 200));
             pickUp.Use = (Player p) => { ++p.JumpAmount; };
-            Objects.Add(pickUp);
-            Objects.Add(Player);
 
+            PickUp pickUp2 = new PickUp("MoveTest", new Vector2(200, 200));
+            pickUp2.Use = (Player p) => { p.HitBox.Height *= 0.5f; };
+
+            Objects.Add(pickUp);
+            Objects.Add(pickUp2);
+            Objects.Add(Player);
 
             Objects.Add(new Enemy(9, 4));
             Objects.Add(new Platform(0, 7, 13, 1));
@@ -61,7 +65,6 @@ namespace Adventure_man
         {
             GameObjects.AddRange(newGameObjects);
             newGameObjects.Clear();
-
 
             foreach (GameObject o in Objects)
             {

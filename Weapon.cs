@@ -15,11 +15,12 @@ namespace Adventure_man
         public MoveableGameObject user;
 
 
-       /// <summary>
-       /// Uses the current Weapon
-       /// </summary>
-       /// <param name="position">The position of the user</param>
-       /// <param name="direction">The Direction the user is facing</param>
+
+        /// <summary>
+        /// Uses the current Weapon
+        /// </summary>
+        /// <param name="position">The position of the user</param>
+        /// <param name="direction">The Direction the user is facing</param>
         public abstract void UseWeapon(Vector2 position,Direction direction);
 
         public void WeaponCooldown()

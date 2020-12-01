@@ -13,22 +13,20 @@ namespace Adventure_man
         private int damage;
         private MoveableGameObject friendly;//the object that shot the arrow
 
-
-        public Arrow(Texture2D sprite,Vector2 position, int damage, float speed,MoveableGameObject friendly)
+        public Arrow(Texture2D sprite, Vector2 position, int damage, float speed, MoveableGameObject friendly)
         {
             this.friendly = friendly;
             dir = World.Player.dir;
             Location = position;
-            this.velocity = new Vector2((int)dir,0);
+            this.velocity = new Vector2((int)dir, 0);
             Sprite = sprite;
             Size = new Vector2(Sprite.Width, Sprite.Height);
             this.damage = damage;
             this.speed = speed;
             FlipSprite();
-            
+
             //origin = new Vector2(Sprite.Width * (int)dir, Sprite.Height / 2);
             //offset = origin * -1;
-            
         }
 
         //public Arrow Shoot(Vector2 position, Vector2 velocity)
@@ -36,7 +34,7 @@ namespace Adventure_man
         //    Arrow arrow = this;
         //    arrow.Location = position;
         //    arrow.velocity = velocity;
-            
+
         //    return arrow;
         //}
 
@@ -53,34 +51,26 @@ namespace Adventure_man
 
         public override void Update()
         {
-
             if (Location.X > Program.AdventureMan.CurrentWorld.screenSize.X || Location.X < 0)
                 Destroy(this);
 
-
-            foreach (var other in Program.AdventureMan.CurrentWorld.Objects)
-                if (HitBox.Intersects(other.HitBox))
-                {
-                    if (other is Platform)
-                    {
-                        Destroy(this);
-                    }
-                    if (other is Enemy && other != friendly) 
-                    {
-                        ((Enemy)other).TakeDamage(damage);
-                        Destroy(this);
-                    }
-                    if (other is Player && other != friendly)
-                    {
-                        ((Player)other).TakeDamage(damage);
-                        Destroy(this);
-                    }
-
-                }
-
             base.Update();
-
         }
+
+        public override void OnCollision(GameObject collisionTarget)
+        {
+            if (collisionTarget is Platform)
+            {
+                Destroy(this);
+            }
+            if (collisionTarget is Enemy)
+            {
+                ((Enemy)collisionTarget).TakeDamage(damage);
+                Destroy(this);
+            }
+            base.OnCollision(collisionTarget);
+        }
+
         public override void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(Sprite, Location, null, Color.White, 0, origin, 1, effect, 1);
