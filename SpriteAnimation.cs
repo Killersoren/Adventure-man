@@ -8,9 +8,9 @@ namespace Adventure_man
 {
     public class SpriteAnimation
     {
-        private Texture2D[] Frames;
+        private Texture2D[] frames;
         private ulong currIndex;
-        public int Length { get => Frames.Length; }
+        public int Length { get => frames.Length; }
 
         public int Width;
         public int Height;
@@ -27,14 +27,14 @@ namespace Adventure_man
 
         public SpriteAnimation(Texture2D[] frames)
         {
-            Frames = frames;
-            Width = Frames[0].Width;
-            Height = Frames[0].Height;
+            this.frames = frames;
+            Width = this.frames[0].Width;
+            Height = this.frames[0].Height;
         }
 
         public SpriteAnimation(Texture2D[] frames, uint inverseSpeed)
         {
-            Frames = frames;
+            this.frames = frames;
             InverseSpeed = inverseSpeed;
         }
 
@@ -59,7 +59,7 @@ namespace Adventure_man
         /// <returns></returns>
         public Texture2D GetNextFrame()
         {
-            return Frames[(++currIndex % ((ulong)Frames.Length * InverseSpeed)) / InverseSpeed];
+            return frames[(++currIndex % ((ulong)frames.Length * InverseSpeed)) / InverseSpeed];
         }
     }
 }
