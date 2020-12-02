@@ -99,6 +99,18 @@ namespace Adventure_man
                 Respawn();
             }
 
+            if (isGrounded)
+            {
+                //resets jumps
+                availableJumps = JumpAmount;
+
+                //Reset gravity
+                if (velocity.Y > 0)
+                    velocity.Y = 0;
+
+                gravStrength = 0;
+            }
+
             CurrentWeapon.WeaponCooldown();
             ApplyGravity();
             HandleInput();
@@ -108,10 +120,6 @@ namespace Adventure_man
 
         private void Jump()
         {
-            if (isGrounded)
-            {
-                availableJumps = JumpAmount;
-            }
             if (availableJumps-- > 0)
             {
                 velocity.Y = -30;// += new Vector2(0, -30f); //should probably also reset the gravity or something like that for better feel, pretty sure other games also do this
@@ -120,14 +128,6 @@ namespace Adventure_man
 
         private void ApplyGravity()
         {
-            if (isGrounded)
-            {
-                if (velocity.Y > 0)
-                    velocity.Y = 0;
-
-                gravStrength = 0;
-                return;
-            }
             gravStrength += 0.1f;
             velocity += new Vector2(0, gravStrength);
         }
