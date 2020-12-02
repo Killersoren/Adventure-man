@@ -29,7 +29,7 @@ namespace Adventure_man
         {
             // Draws background
             spritebatch.Draw(backgroundSprite, new Rectangle(-100, -160, Program.AdventureMan.SceenSize.x / 2, Program.AdventureMan.SceenSize.y/2), Color.White);
-            spritebatch.DrawString(Program.AdventureMan.font, $"Coins: {World.Player.points}", new Vector2(Program.AdventureMan.CurrentWorld.screenSize.X / 2, 0),Color.Yellow);
+            spritebatch.DrawString(Program.AdventureMan.font, $"Coins: {World.Player.points}", new Vector2(Program.AdventureMan.CurrentWorld.worldSize.X / 2, 0),Color.Yellow);
 
 
             //For getting feedback

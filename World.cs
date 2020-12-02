@@ -26,7 +26,7 @@ namespace Adventure_man
 
         public static int GridResulution { get => gridResulution; }
 
-        public Vector2 screenSize;
+        public Vector2 worldSize;
         //public static Vector2 ScreenSize { get => screenSize; }
 
         internal List<GameObject> Objects { get => GameObjects; private set => GameObjects = value; }
@@ -37,12 +37,12 @@ namespace Adventure_man
             GameObjectsToRemove = new List<GameObject>();
             newGameObjects = new List<GameObject>();
 
-            //worldGrid = new Vector2(16, 16);
+            worldGrid = new Vector2(20, 10);
             gridResulution = 64;
-            screenSize = new Vector2(Program.AdventureMan._graphics.PreferredBackBufferWidth, Program.AdventureMan._graphics.PreferredBackBufferHeight);
-            //screenSize = new Vector2(worldGrid.X * GridResulution, worldGrid.Y * GridResulution);
+            //worldSize = new Vector2(Program.AdventureMan._graphics.PreferredBackBufferWidth, Program.AdventureMan._graphics.PreferredBackBufferHeight);
+            worldSize = new Vector2(worldGrid.X * GridResulution, worldGrid.Y * GridResulution);
 
-            Player = new Player();
+            Player = new Player(0,5);
             //PowerUp1 testpu = new PowerUp1();
             //Objects.Add(testpu);
             PickUp pickUp = new PickUp("doublejump", new Vector2(100, 200));
@@ -56,6 +56,7 @@ namespace Adventure_man
 
             Objects.Add(new Platform(4, 4, 2, 1));
             Objects.Add(new Platform(7, 2, 2, 1));
+            Boarder();
         }
 
         public void Update()
@@ -87,5 +88,15 @@ namespace Adventure_man
 #endif
             }
         }
+        private void Boarder()
+        {
+            Objects.Add(new Platform(0, -2, (int)worldGrid.X, 1)); //Top
+            Objects.Add(new Platform(0, (int)worldGrid.Y, (int)worldGrid.X, 1)); //Bottom
+
+            Objects.Add(new Platform(-1,0,1,(int)worldGrid.Y)); //Left
+            Objects.Add(new Platform((int)worldGrid.X, 0, 1, (int)worldGrid.Y)); //Right
+        }
+
+
     }
 }

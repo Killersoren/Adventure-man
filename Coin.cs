@@ -51,7 +51,7 @@ namespace Adventure_man
 
         public override void Update()
         {
-            if (Location.X > Program.AdventureMan.CurrentWorld.screenSize.X || Location.X < 0 || Location.Y > Program.AdventureMan.CurrentWorld.screenSize.Y || Location.Y < 0)
+            if (Location.X > Program.AdventureMan.CurrentWorld.worldSize.X || Location.X < 0 || Location.Y > Program.AdventureMan.CurrentWorld.worldSize.Y || Location.Y < 0)
                 Destroy(this);
             if (firstUpdate)
                 firstUpdate = false;

@@ -57,6 +57,23 @@ namespace Adventure_man
 
             CurrentWeapon = weapons[1];
         }
+        public Player(int X, int Y)
+        {
+            int res = World.GridResulution;
+            Location = new Vector2(X * res, Y * res);
+            health = 200;
+            JumpAmount = 1;
+            dragCoefficient = 0.9f;
+            speed = 1f;
+            CurrentWeapon = new Bow("Falcon Bow", 100, 10, 5, this);
+            staticDir = Direction.Right;
+            bow = new Bow("Falcon Bow", 100, 10, 5, this);
+            sword = new Sword("Sword", 100, 10, 5, this);
+
+            weapons = new Weapon[2] { sword, bow };
+
+            CurrentWeapon = weapons[1];
+        }
 
         private void SwapWeapon()
         {

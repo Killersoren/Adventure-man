@@ -57,8 +57,9 @@ namespace Adventure_man
             menu = new Menu();
             ui = new UI();
 
-            _graphics.PreferredBackBufferWidth = (int)CurrentWorld.screenSize.X;
-            _graphics.PreferredBackBufferHeight = (int)CurrentWorld.screenSize.Y;
+            _graphics.PreferredBackBufferWidth = (int)CurrentWorld.worldSize.X;
+            _graphics.PreferredBackBufferHeight = (int)CurrentWorld.worldSize.Y;
+            _graphics.ApplyChanges();
 
             SceenSize = (GraphicsDevice.DisplayMode.Width, GraphicsDevice.DisplayMode.Height);
 

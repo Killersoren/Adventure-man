@@ -79,8 +79,8 @@ namespace Adventure_man
             dragCoefficient = 0.9f;
             speed = 0.2f;
             int res = World.GridResulution;
-            health = 200;
             Location = new Vector2(X * res, Y * res);
+            health = 200;
             rnd = new Random();
             staticDir = GameWorld.Direction.Right;
         }

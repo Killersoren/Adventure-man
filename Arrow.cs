@@ -52,7 +52,7 @@ namespace Adventure_man
 
         public override void Update()
         {
-            if (Location.X > Program.AdventureMan.CurrentWorld.screenSize.X || Location.X < 0)
+            if (Location.X > Program.AdventureMan.CurrentWorld.worldSize.X || Location.X < 0)
                 Destroy(this);
 
             base.Update();
