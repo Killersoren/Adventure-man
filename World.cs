@@ -53,6 +53,7 @@ namespace Adventure_man
 
             Objects.Add(new Enemy(9, 4));
             Objects.Add(new Platform(0, 7, 13, 1));
+            Objects.Add(new Platform(13, 8, 1, 1));
 
             Objects.Add(new Platform(4, 4, 2, 1));
             Objects.Add(new Platform(7, 2, 2, 1));
@@ -90,7 +91,7 @@ namespace Adventure_man
         }
         private void Boarder()
         {
-            Objects.Add(new Platform(0, -2, (int)worldGrid.X, 1)); //Top
+            Objects.Add(new Platform(0, -2, (int)worldGrid.X, 1)); //Top (y=-2 :Leaves a i grid gab at the op of the two side boarders, but allows for jumping at the top)
             Objects.Add(new Platform(0, (int)worldGrid.Y, (int)worldGrid.X, 1)); //Bottom
 
             Objects.Add(new Platform(-1,0,1,(int)worldGrid.Y)); //Left

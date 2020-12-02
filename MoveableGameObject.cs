@@ -12,6 +12,8 @@ namespace Adventure_man
     {
         public Vector2 velocity;
         protected float dragCoefficient = 1f;
+        protected float groundDrag=1f;
+        protected float bounce=0f; //0=no bouncyness   1=infinite bouncyness;
         protected float speed = 1f;
         public Direction dir;//=Direction.Right
         public Direction staticDir;

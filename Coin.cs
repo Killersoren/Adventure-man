@@ -39,7 +39,9 @@ namespace Adventure_man
 
         public Coin(Texture2D sprite, Vector2 position, Vector2 velocity)
         {
-            
+            dragCoefficient = 1f;
+            groundDrag = 0.9f;
+            bounce = 0.5f;
             Sprite = sprite;
             Location = position;
             base.velocity = velocity;
@@ -67,9 +69,9 @@ namespace Adventure_man
             if (isGrounded)
             {
                 if (velocity.Y > 0)
-                    velocity.Y = 0;
+                    velocity.Y *=-bounce;
                 if (velocity.X != 0)
-                    velocity.X = 0;
+                    velocity.X*=groundDrag;
 
                 gravStrength = 0;
                 return;
