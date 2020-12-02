@@ -16,11 +16,11 @@ namespace Adventure_man
 
         //Only for objects with origin != (0,0)
         public Vector2 origin;
+
         public Vector2 offset;
 
         public Color color = Color.White;
         public SpriteEffects effect;
-
 
         public Vector2 Location
         {
@@ -48,6 +48,7 @@ namespace Adventure_man
 
         public virtual void Update()
         {
+            Sprite.Update();
         }
 
         public virtual void OnCollision(GameObject collisionTarget)
@@ -57,17 +58,17 @@ namespace Adventure_man
         public virtual void Draw(SpriteBatch spriteBatch)
         {
             //spriteBatch.Draw(Sprite, HitBox, color);
-            spriteBatch.Draw(Sprite, HitBox,null, color,0f,Vector2.Zero,effect,0f);
-
+            spriteBatch.Draw(Sprite, HitBox, null, color, 0f, Vector2.Zero, effect, 0f);
         }
+
         public void Destroy(GameObject o)
         {
             Program.AdventureMan.CurrentWorld.GameObjectsToRemove.Add(o);
         }
+
         public static void Spawn(GameObject o)
         {
             Program.AdventureMan.CurrentWorld.newGameObjects.Add(o);
         }
-
     }
 }

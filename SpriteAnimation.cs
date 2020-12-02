@@ -40,7 +40,12 @@ namespace Adventure_man
 
         public static implicit operator Texture2D(SpriteAnimation a)
         {
-            return a.GetNextFrame();
+            return a.frames[(a.currIndex % ((ulong)a.frames.Length * a.InverseSpeed)) / a.InverseSpeed];
+        }
+
+        public void Update()
+        {
+            ++currIndex;
         }
 
         public static implicit operator SpriteAnimation(Texture2D[] t)
@@ -57,9 +62,9 @@ namespace Adventure_man
         /// Gets next frame
         /// </summary>
         /// <returns></returns>
-        public Texture2D GetNextFrame()
-        {
-            return frames[(++currIndex % ((ulong)frames.Length * InverseSpeed)) / InverseSpeed];
-        }
+        //public Texture2D GetNextFrame()
+        //{
+        //    return frames[(++currIndex % ((ulong)frames.Length * InverseSpeed)) / InverseSpeed];
+        //}
     }
 }

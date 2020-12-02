@@ -14,6 +14,7 @@ namespace Adventure_man
     internal class Enemy : MoveableGameObject
     {
         private int health;
+
         private bool isAlive
         {
             get
@@ -27,15 +28,13 @@ namespace Adventure_man
 
         public Texture2D coinSprite;
         public Vector2 coinSpawnOffset;
-        Random rnd;
+        private Random rnd;
 
         public int res = World.GridResulution;
 
         private static Timer timerA;
         private static Timer timerB;
         private bool timerStart = false;
-
-
 
         public static bool playerInSight = false;
 
@@ -66,7 +65,6 @@ namespace Adventure_man
             }
         }
 
-
         public Enemy()
         {
             dragCoefficient = 0.9f;
@@ -75,7 +73,6 @@ namespace Adventure_man
             rnd = new Random();
             staticDir = GameWorld.Direction.Right;
         }
-
 
         public Enemy(int X, int Y)
         {
@@ -87,8 +84,6 @@ namespace Adventure_man
             rnd = new Random();
             staticDir = GameWorld.Direction.Right;
         }
-
-
 
         //public override void LoadContent(ContentManager content)
         public override void LoadContent(ContentManager contentManager)
@@ -107,64 +102,52 @@ namespace Adventure_man
             coinSpawnOffset = new Vector2(Size.X / 2, Size.Y / 4);
 
             coinSprite = Program.AdventureMan.content.Load<Texture2D>("Coin");
-
         }
-
-
 
         private void SetTimerA()
         {
             // Create a timer with a two second interval.
             timerA = new System.Timers.Timer(2500);
-            // Hook up the Elapsed event for the timer. 
+            // Hook up the Elapsed event for the timer.
             timerA.Elapsed += OnTimedEventA;
             timerA.AutoReset = false;
             timerA.Enabled = true;
         }
 
-        void SetTimerB()
+        private void SetTimerB()
         {
             // Create a timer with a two second interval.
             timerB = new System.Timers.Timer(2500);
-            // Hook up the Elapsed event for the timer. 
+            // Hook up the Elapsed event for the timer.
             timerB.Elapsed += OnTimedEventB;
             timerB.AutoReset = false;
             timerB.Enabled = true;
         }
 
-
-
-        void OnTimedEventA(Object source, ElapsedEventArgs e)
+        private void OnTimedEventA(Object source, ElapsedEventArgs e)
         {
             timerStart = true;
             velocity += -Vector2.UnitX;
 
-
             SetTimerB();
-
         }
 
-        void OnTimedEventB(Object source, ElapsedEventArgs e)
+        private void OnTimedEventB(Object source, ElapsedEventArgs e)
         {
-
             velocity += Vector2.UnitX;
             SetTimerA();
         }
 
         public void EnemyLogic()
         {
-
             if (playerInSight == false)
 
             {
-
                 if (!timerStart)
                 {
                     SetTimerA();
-
                 }
             }
-
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -179,18 +162,15 @@ namespace Adventure_man
                 //Die();
                 Respawn();
             }
-                
 
             //Debug.WriteLine("last Velocity is" + lastVelocity);
 
             Debug.WriteLine("Velocity is" + velocity);
 
-
-
             ApplyGravity();
             EnemyLogic();
 
-            dir=UpdateSprite();
+            dir = UpdateSprite();
             base.Update();
         }
 
@@ -216,6 +196,7 @@ namespace Adventure_man
         {
             health -= damage;
         }
+
         public void Die()
         {
             Coins();
@@ -223,12 +204,14 @@ namespace Adventure_man
 
             //Spawn(new Enemy(9, 3));
         }
+
         public void Respawn()
         {
             Coins();
             health = 200;
             Location = new Vector2(9 * res, 3 * res);
         }
+
         /// <summary>
         /// Spawns x-y coins
         /// </summary>
@@ -236,9 +219,8 @@ namespace Adventure_man
         {
             for (int i = rnd.Next(3, 7); i > 0; i--)
             {
-                Spawn(new Coin(coinSprite,Location+coinSpawnOffset,new Vector2(rnd.Next(-5,5),rnd.Next(-5,5))));
+                Spawn(new Coin(coinSprite, Location + coinSpawnOffset, new Vector2(rnd.Next(-5, 5), rnd.Next(-5, 5))));
             }
-
         }
 
         public override void OnCollision(GameObject other)
