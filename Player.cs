@@ -38,28 +38,7 @@ namespace Adventure_man
 
         private Weapon[] weapons = new Weapon[2];
 
-        protected bool isGrounded //bad maybe?, we check too often i think, maybe not only when we try to apply gravity (once per cycle) and ocasionally when we jummp
-        {
-            get
-            {
-                var isGrounded = false;
-
-                var downRec = HitBox.Copy();
-                downRec.Location -= new Vector2(0, -1);
-
-                foreach (GameObject gameObject in Program.AdventureMan.CurrentWorld.GameObjects)
-                {
-                    if (downRec.Intersects(gameObject.HitBox) && !isGrounded)
-                    {
-                        if (gameObject is Platform)
-                        {
-                            isGrounded = true;
-                        }
-                    }
-                }
-                return isGrounded;
-            }
-        }
+        protected bool isGrounded; //bad maybe?, we check too often i think, maybe not only when we try to apply gravity (once per cycle) and ocasionally when we jummp
 
         internal Weapon CurrentWeapon { get => currentWeapon; private set => currentWeapon = value; }
 
@@ -91,8 +70,30 @@ namespace Adventure_man
             }
         }
 
+        private bool CheckIfGrounded()
+        {
+            var isGrounded = false;
+
+            var downRec = HitBox.Copy();
+            downRec.Location -= new Vector2(0, -1);
+
+            foreach (GameObject gameObject in Program.AdventureMan.CurrentWorld.GameObjects)
+            {
+                if (downRec.Intersects(gameObject.HitBox) && !isGrounded)
+                {
+                    if (gameObject is Platform)
+                    {
+                        isGrounded = true;
+                    }
+                }
+            }
+            return isGrounded;
+        }
+
         public override void Update()
         {
+            isGrounded = CheckIfGrounded();
+
             if (isAlive == false)
             {
                 //Die();
