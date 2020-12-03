@@ -54,14 +54,17 @@ namespace Adventure_man
             CurrentWorld = new World();
 
             // Creates each scene
-            menu = new Menu();
-            ui = new UI();
+       
 
             _graphics.PreferredBackBufferWidth = (int)CurrentWorld.worldSize.X;
             _graphics.PreferredBackBufferHeight = (int)CurrentWorld.worldSize.Y;
-            _graphics.ApplyChanges();
 
             SceenSize = (GraphicsDevice.DisplayMode.Width, GraphicsDevice.DisplayMode.Height);
+
+
+            menu = new Menu();
+            ui = new UI();
+            _graphics.ApplyChanges();
 
             base.Initialize();
         }
@@ -85,8 +88,8 @@ namespace Adventure_man
         protected override void Update(GameTime gameTime)
         {
             this.gameTime = gameTime;
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
+
+           
 
             // Pauses game by changing scene and not running game updates
             if (isGameStarted)
@@ -99,7 +102,15 @@ namespace Adventure_man
                 currentScene = menu;
             }
             var getstate = Keyboard.GetState();
+#if DEBUG
+            if (getstate.IsKeyDown(Keys.Escape) && !laststate.IsKeyDown(Keys.Escape))
+                Exit();
             if (getstate.IsKeyDown(Keys.Enter) && !laststate.IsKeyDown(Keys.Enter))
+            {
+                isGameStarted = !isGameStarted;
+            }
+#endif
+            if (getstate.IsKeyDown(Keys.Escape) && !laststate.IsKeyDown(Keys.Escape))
             {
                 isGameStarted = !isGameStarted;
             }
@@ -111,6 +122,7 @@ namespace Adventure_man
             base.Update(gameTime);
         }
 
+        
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);

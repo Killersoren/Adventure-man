@@ -9,30 +9,58 @@ namespace Adventure_man
 {
     internal class Menu : Scene
     {
-        public Button testButton;
+        public Button startResumeGame;
+        public Button exit;
+        public Button fullScreen;
+        
+
         private List<Button> buttons;
 
         public Menu()
         {
             // Creates Start button
-            Rectangle buttonRectangle = new Rectangle(10, 350, 100, 100);
-            testButton = new Button(buttonRectangle, "Start");
-            testButton.Click += TestButton_Click;
+            Rectangle buttonRectangle = new Rectangle(Program.AdventureMan.SceenSize.x/100 *10, Program.AdventureMan.SceenSize.y /100 *40, 150, 100);
+            Rectangle exitButtonRectangle = new Rectangle(Program.AdventureMan.SceenSize.x / 100 * 90, Program.AdventureMan.SceenSize.y / 100 * 50, 150, 100);
+            Rectangle FullscreenButtonRectangle = new Rectangle(Program.AdventureMan.SceenSize.x / 100 * 10, Program.AdventureMan.SceenSize.y / 100 * 30, 150, 100);
+
+
+
+            startResumeGame = new Button(buttonRectangle, "Start");
+            exit = new Button(exitButtonRectangle, "Exit");
+            fullScreen = new Button(FullscreenButtonRectangle, "Fullscreen");
+            startResumeGame.Click += StartResumeGame_Click;
+            exit.Click += Exit_Click;
+            fullScreen.Click += FullScreen_Click;
 
             buttons = new List<Button>();
 
             Loadcontent();
-            buttons.Add(testButton);
+            buttons.Add(startResumeGame);
+            buttons.Add(exit);
+            buttons.Add(fullScreen);
+
+
         }
 
-        //  this.sprite = GameWorld.content.Load<Texture2D>("button");
+        private void FullScreen_Click(object sender, EventArgs e)
+        {
+            Program.AdventureMan._graphics.IsFullScreen = !Program.AdventureMan._graphics.IsFullScreen;
+            Program.AdventureMan._graphics.ApplyChanges();
+        }
+
+        private void Exit_Click(object sender, EventArgs e)
+        {
+
+            Program.AdventureMan.Exit();
+        }
+
 
         public override void Loadcontent()
         {
             backgroundSprite = Program.AdventureMan.content.Load<Texture2D>("deepart");
         }
 
-        private void TestButton_Click(object sender, System.EventArgs e)
+        private void StartResumeGame_Click(object sender, System.EventArgs e)
         {
             Program.AdventureMan.isGameStarted = true;
         }
@@ -48,7 +76,9 @@ namespace Adventure_man
         public override void Draw(GameTime gameTime, SpriteBatch spritebatch)
         {
             spritebatch.Draw(backgroundSprite, new Rectangle(0, 0, Program.AdventureMan.SceenSize.x, Program.AdventureMan.SceenSize.y), Color.Black * 0.5f);
-            //spritebatch.DrawString(spritefont, "Menu / pause");
+            spritebatch.DrawString(Program.AdventureMan.font, " Menu / Paused ", new Vector2(Program.AdventureMan.SceenSize.x/4, Program.AdventureMan.SceenSize.y/20), Color.Black , 0f, Vector2.Zero, 3f,SpriteEffects.None,0f);
+
+
 
             foreach (Button b in buttons)
             {

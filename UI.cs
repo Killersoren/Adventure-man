@@ -28,9 +28,10 @@ namespace Adventure_man
         public override void Draw(GameTime gameTime, SpriteBatch spritebatch)
         {
             // Draws background
-            spritebatch.Draw(backgroundSprite, new Rectangle(-100, -160, Program.AdventureMan.SceenSize.x / 2, Program.AdventureMan.SceenSize.y/2), Color.White);
+            //Program.AdventureMan.SceenSize.x / 100 * 1, Program.AdventureMan.SceenSize.y / 100 * 40, 150, 100
+            spritebatch.Draw(backgroundSprite, new Rectangle(-100, -160, Program.AdventureMan.SceenSize.x , Program.AdventureMan.SceenSize.y/2), Color.White);
             spritebatch.DrawString(Program.AdventureMan.font, $"Coins: {World.Player.points}", new Vector2(Program.AdventureMan.CurrentWorld.worldSize.X / 2, 0),Color.Yellow);
-
+            //(int)Program.AdventureMan.CurrentWorld.worldSize
 
             //For getting feedback
 #if DEBUG
