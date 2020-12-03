@@ -13,6 +13,8 @@ namespace Adventure_man
         public GameTime gameTime;
 
         public SpriteFont font;
+        public SpriteFont altFont;
+        
 
         //new public static GameServiceContainer Services;
 
@@ -75,6 +77,8 @@ namespace Adventure_man
 
             // Sets spritefont
             font = Content.Load<SpriteFont>("Font"); // My font was brokne
+            altFont = Content.Load<SpriteFont>("AltFont");
+
 
             collisionTexture = Content.Load<Texture2D>("CollisionTexture");
 
