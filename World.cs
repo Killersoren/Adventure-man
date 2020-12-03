@@ -37,7 +37,7 @@ namespace Adventure_man
             GameObjectsToRemove = new List<GameObject>();
             newGameObjects = new List<GameObject>();
 
-            worldGrid = new Vector2(20, 10);
+            worldGrid = new Vector2(20, 11);
             gridResulution = 64;
             //worldSize = new Vector2(Program.AdventureMan._graphics.PreferredBackBufferWidth, Program.AdventureMan._graphics.PreferredBackBufferHeight);
             worldSize = new Vector2(worldGrid.X * GridResulution, worldGrid.Y * GridResulution);
@@ -53,7 +53,7 @@ namespace Adventure_man
 
             Objects.Add(new Enemy(9, 4));
             Objects.Add(new Platform(0, 7, 13, 1));
-            Objects.Add(new Platform(13, 8, 1, 1));
+            Objects.Add(new Platform(13, 9, 1, 1));
 
             Objects.Add(new Platform(4, 4, 2, 1));
             Objects.Add(new Platform(7, 2, 2, 1));

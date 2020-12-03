@@ -1,4 +1,4 @@
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -14,6 +14,7 @@ namespace Adventure_man
     internal class Enemy : MoveableGameObject
     {
         private int health;
+        private int maxHealth;
 
         private bool isAlive
         {
@@ -30,6 +31,8 @@ namespace Adventure_man
         public Vector2 coinSpawnOffset;
         private Random rnd;
 
+        
+
         public int res = World.GridResulution;
 
         private static Timer timerA;
@@ -41,6 +44,52 @@ namespace Adventure_man
         public Vector2 lastVelocity;
 
         private float gravStrength = 0; // don't like the placement of this var :/
+
+
+        private SpriteFont healthbarFont;
+        private int healthbarLength = 6;
+        private string HealthBar
+        {
+            get
+            {
+                Debug.WriteLine($"{healthbarFont.MeasureString("█").X} {healthbarFont.MeasureString(" ").X} {healthbarFont.Spacing}");
+                
+
+
+                StringBuilder temp = new StringBuilder("", healthbarLength);
+                double space = maxHealth / healthbarLength;
+                int full = (int)Math.Floor(health / space);
+                int empty = healthbarLength - full;
+
+                for (int i = full; i> 0; i--)
+                {
+                    temp.Append("█");
+                }
+                for (int i = empty; i > 0; i--)
+                {
+                    temp.Append("   ");
+                }
+                return Convert.ToString(temp);
+            }
+        }
+        private Color HealthbarColor
+        {
+            get
+            {
+                Debug.WriteLine($"{health}/{(maxHealth * ((float)2 / 3))}");
+                if ((health <= maxHealth) && (health > (maxHealth * ((float)2 / 3))))
+                    return Color.Green;
+                else if ((health <= (maxHealth * ((float)2 / 3))) && (health > (maxHealth * ((float)1 / 3))))
+                    return Color.Yellow;
+                else if ((health <= (maxHealth * ((float)1 / 3))) && (health >= 0))
+                    return Color.Red;
+                else
+                    return Color.White;
+            }
+            
+        }
+        
+
 
         protected bool isGrounded //bad maybe?, we check too often i think, maybe not only when we try to apply gravity (once per cycle) and ocasionally when we jummp
         {
@@ -64,25 +113,27 @@ namespace Adventure_man
                 return isGrounded;
             }
         }
-
-        public Enemy()
+        private void DefaultEnemy()
         {
             dragCoefficient = 0.9f;
-            health = 200;
-            speed = 1f;
+            speed = 0.2f;
+
+            maxHealth = 200;
+            health = maxHealth;
             rnd = new Random();
             staticDir = GameWorld.Direction.Right;
         }
 
+        public Enemy()
+        {
+            DefaultEnemy();
+        }
+
         public Enemy(int X, int Y)
         {
-            dragCoefficient = 0.9f;
-            speed = 0.2f;
+            DefaultEnemy();
             int res = World.GridResulution;
             Location = new Vector2(X * res, Y * res);
-            health = 200;
-            rnd = new Random();
-            staticDir = GameWorld.Direction.Right;
         }
 
         //public override void LoadContent(ContentManager content)
@@ -102,7 +153,9 @@ namespace Adventure_man
             coinSpawnOffset = new Vector2(Size.X / 2, Size.Y / 4);
 
             coinSprite = Program.AdventureMan.content.Load<Texture2D>("Coin");
-        }
+
+            healthbarFont = Program.AdventureMan.altFont;
+    }
 
         private void SetTimerA()
         {
@@ -150,9 +203,15 @@ namespace Adventure_man
             }
         }
 
-        public void Draw(SpriteBatch spriteBatch)
+        //public void Draw(SpriteBatch spriteBatch)
+        //{
+        //    spriteBatch.Draw(Sprite, Location, Color.White);
+            
+        //}
+        public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(Sprite, Location, Color.White);
+            base.Draw(spriteBatch);
+            spriteBatch.DrawString(healthbarFont, HealthBar, new Vector2(Location.X+(Size.X/2), Location.Y - healthbarFont.LineSpacing), HealthbarColor, 0, new Vector2((healthbarFont.MeasureString(HealthBar).X / 2),0),1,SpriteEffects.None,0) ;
         }
 
         public override void Update()
@@ -165,7 +224,9 @@ namespace Adventure_man
 
             //Debug.WriteLine("last Velocity is" + lastVelocity);
 
-            Debug.WriteLine("Velocity is" + velocity);
+            //Debug.WriteLine("Velocity is" + velocity);
+            
+
 
             ApplyGravity();
             EnemyLogic();
@@ -208,7 +269,7 @@ namespace Adventure_man
         public void Respawn()
         {
             Coins();
-            health = 200;
+            health = maxHealth;
             Location = new Vector2(9 * res, 3 * res);
         }
 
