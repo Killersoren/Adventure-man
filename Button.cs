@@ -19,7 +19,6 @@ namespace Adventure_man
         private Rectangle mouseRectangle;
         private string buttonDescription;
         private Rectangle rectangle;
-        private Color color;
         private Texture2D sprite;
 
         public event EventHandler Click;
@@ -29,10 +28,9 @@ namespace Adventure_man
         /// </summary>
         /// <param name="rectangle"></param>
         /// <param name="buttonDescription"></param>
-        public Button(Rectangle rectangle, string buttonDescription)
+        public Button(int positionX, int positionY, string buttonDescription)
         {
-            this.rectangle = rectangle;
-            this.color = defaultColor;
+            this.rectangle = new Rectangle(positionX,positionY, 120,50);
             this.sprite = Program.AdventureMan.content.Load<Texture2D>("button");
             this.buttonDescription = buttonDescription;
         }
@@ -54,6 +52,7 @@ namespace Adventure_man
                 {
                     Click?.Invoke(this, new EventArgs());
                 }
+
             }
         }
 
@@ -69,7 +68,7 @@ namespace Adventure_man
                 this.currentColor = defaultColor;
             }
             // Draws button
-            spritebatch.Draw(sprite, rectangle, color);
+            spritebatch.Draw(sprite, rectangle, currentColor);
             // Draws buttons description text in middle of button
             var x = (rectangle.X + (rectangle.Width / 2)) - (Program.AdventureMan.font.MeasureString(buttonDescription).X / 2);
             var y = (rectangle.Y + (rectangle.Height / 2)) - (Program.AdventureMan.font.MeasureString(buttonDescription).Y / 2); //my font was broken so comment this out to test

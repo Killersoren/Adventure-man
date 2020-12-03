@@ -19,7 +19,7 @@ namespace Adventure_man
 
         public Vector2 offset;
 
-        public Color color = Color.White;
+        public Color color;
         public SpriteEffects effect;
 
         public Vector2 Location
@@ -36,6 +36,7 @@ namespace Adventure_man
 
         public GameObject()
         {
+            color = Color.White;
             HitBox = new RectangleF();
         }
 
@@ -57,6 +58,7 @@ namespace Adventure_man
 
         public virtual void Draw(SpriteBatch spriteBatch)
         {
+
             //spriteBatch.Draw(Sprite, HitBox, color);
             spriteBatch.Draw(Sprite, HitBox, null, color, 0f, Vector2.Zero, effect, 0f);
         }

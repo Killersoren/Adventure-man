@@ -93,7 +93,8 @@ namespace Adventure_man
         {
             this.gameTime = gameTime;
 
-           
+
+            // Updates current scene
 
             // Pauses game by changing scene and not running game updates
             if (isGameStarted)
@@ -104,6 +105,7 @@ namespace Adventure_man
             else
             {
                 currentScene = menu;
+
             }
             var getstate = Keyboard.GetState();
 #if DEBUG
@@ -120,7 +122,6 @@ namespace Adventure_man
             }
             laststate = getstate;
 
-            // Updates current scene
             currentScene.Update(gameTime);
 
             base.Update(gameTime);

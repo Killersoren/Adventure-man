@@ -18,26 +18,22 @@ namespace Adventure_man
 
         public Menu()
         {
-            // Creates buttons
-            Rectangle buttonRectangle = new Rectangle(Program.AdventureMan.SceenSize.x/100 *1, Program.AdventureMan.SceenSize.y /100 *30, 150, 100);
-            Rectangle exitButtonRectangle = new Rectangle(Program.AdventureMan.SceenSize.x / 100 * 1, Program.AdventureMan.SceenSize.y / 100 * 50, 150, 100);
-            Rectangle FullscreenButtonRectangle = new Rectangle(Program.AdventureMan.SceenSize.x / 100 * 1, Program.AdventureMan.SceenSize.y / 100 * 40, 150, 100);
 
 
 
-            startResumeGame = new Button(buttonRectangle, "Start");
-            exit = new Button(exitButtonRectangle, "Exit");
-            fullScreen = new Button(FullscreenButtonRectangle, "Fullscreen");
+            startResumeGame = new Button(Program.AdventureMan.SceenSize.x / 100 * 1, Program.AdventureMan.SceenSize.y / 100 * 40, "Start");
+            fullScreen = new Button(Program.AdventureMan.SceenSize.x / 100 * 1, Program.AdventureMan.SceenSize.y / 100 * 50, "Fullscreen");
+            exit = new Button(Program.AdventureMan.SceenSize.x / 100 * 1, Program.AdventureMan.SceenSize.y / 100 * 60, "Exit");
             startResumeGame.Click += StartResumeGame_Click;
             exit.Click += Exit_Click;
             fullScreen.Click += FullScreen_Click;
 
             buttons = new List<Button>();
 
-            Loadcontent();
             buttons.Add(startResumeGame);
             buttons.Add(exit);
             buttons.Add(fullScreen);
+            Loadcontent();
 
 
         }

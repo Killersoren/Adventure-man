@@ -13,7 +13,8 @@ namespace Adventure_man
         public List<GameObject> newGameObjects;
         public List<GameObject> GameObjectsToRemove;
         public static Player Player;
-
+        public PickUp pickUp;
+        Texture2D sprite1;
         /// <summary>
         /// The number of grids the world/level has
         /// </summary>
@@ -33,6 +34,7 @@ namespace Adventure_man
 
         public World()
         {
+
             GameObjects = new List<GameObject>();
             GameObjectsToRemove = new List<GameObject>();
             newGameObjects = new List<GameObject>();
@@ -43,9 +45,7 @@ namespace Adventure_man
             worldSize = new Vector2(worldGrid.X * GridResulution, worldGrid.Y * GridResulution);
 
             Player = new Player(0,5);
-            //PowerUp1 testpu = new PowerUp1();
-            //Objects.Add(testpu);
-            PickUp pickUp = new PickUp("doublejump", new Vector2(100, 200));
+            pickUp = new PickUp("doublejump", new Vector2(100, 200));
             pickUp.Use = (Player p) => { ++p.JumpAmount; };
             Objects.Add(pickUp);
             Objects.Add(Player);
@@ -81,6 +81,18 @@ namespace Adventure_man
 
         public void Draw(SpriteBatch spriteBatch)
         {
+            sprite1 = Program.AdventureMan.content.Load<Texture2D>("tree");
+
+            spriteBatch.Draw(sprite1,new Rectangle(2,200,128,256),Color.White);
+            spriteBatch.Draw(sprite1, new Rectangle(2, 200, 128, 256), Color.White);
+            spriteBatch.Draw(sprite1, new Rectangle(50, 200, 128, 256), Color.White);
+            spriteBatch.Draw(sprite1, new Rectangle(250, 200, 128, 256), Color.White);
+            spriteBatch.Draw(sprite1, new Rectangle(340, 200, 128, 256), Color.White);
+
+            spriteBatch.Draw(sprite1, new Rectangle(500, 200, 128, 256), Color.White);
+
+
+
             foreach (GameObject o in Objects)
             {
                 o.Draw(spriteBatch);

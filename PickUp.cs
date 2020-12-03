@@ -23,11 +23,13 @@ namespace Adventure_man
 
         public PickUp(string spritePath, Vector2 location) : this(spritePath)
         {
+
             this.Location = location;
         }
 
         public override void OnCollision(GameObject collisionTarget)
         {
+
             var p = collisionTarget as Player;
             if (p != null)
             {

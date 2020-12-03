@@ -43,6 +43,14 @@ namespace Adventure_man
             //spritebatch.Draw(backgroundSprite, new Rectangle(0, 0, Program.AdventureMan.SceenSize.x, Program.AdventureMan.SceenSize.y), Color.White);
 
 
+
+            spritebatch.Draw(Program.AdventureMan.CurrentWorld.pickUp.Sprite, new Rectangle(1100, 0, 64, 64), Color.White);
+
+
+
+
+
+
         }
 
         public override void Update(GameTime gameTime)
