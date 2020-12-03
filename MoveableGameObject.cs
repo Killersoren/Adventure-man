@@ -30,6 +30,10 @@ namespace Adventure_man
             {
                 Move((velocity *= dragCoefficient) * speed);
             }
+            else
+            {
+                Sprite.Restart();
+            }
 
             base.Update();
         }
@@ -104,6 +108,7 @@ namespace Adventure_man
             {
                 this.Location = position;
             }
+
 
             return move;
         }

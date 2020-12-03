@@ -159,16 +159,19 @@ namespace Adventure_man
         {
             KeyboardState lastState = keyState;
             keyState = Keyboard.GetState();
-
             if (keyState.IsKeyDown(Keys.D) || keyState.IsKeyDown(Keys.Right))
             {
                 velocity += Vector2.UnitX;
                 //dir = Direction.Right;
             }
-            if (keyState.IsKeyDown(Keys.A) || keyState.IsKeyDown(Keys.Left))
+            else if (keyState.IsKeyDown(Keys.A) || keyState.IsKeyDown(Keys.Left))
             {
                 velocity += -Vector2.UnitX;
                 //dir = Direction.Left;
+            }
+            else
+            {
+                Sprite.Restart();
             }
             if ((keyState.IsKeyDown(Keys.W) && lastState.IsKeyUp(Keys.W)) || (keyState.IsKeyDown(Keys.Up) && lastState.IsKeyUp(Keys.Up)))
             {
@@ -193,7 +196,7 @@ namespace Adventure_man
                 sprites[i] = Program.AdventureMan.content.Load<Texture2D>("MoveTest" + (i + 1) + "_v2");
             }
 
-            currentWeaponSprite = Program.AdventureMan.content.Load<Texture2D>("Sword");
+            //currentWeaponSprite = Program.AdventureMan.content.Load<Texture2D>("Sword");
 
             Sprite = new SpriteAnimation(sprites);
             //HitBox = new RectangleF((int)Location.X, (int)Location.Y, Sprite.Width, Sprite.Height);
