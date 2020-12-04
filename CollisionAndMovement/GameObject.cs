@@ -38,11 +38,13 @@ namespace Adventure_man
         {
             color = Color.White;
             HitBox = new RectangleF();
+            this.LoadContent(Program.AdventureMan.Content);
         }
 
         public GameObject(RectangleF rec)
         {
             HitBox = rec;
+            this.LoadContent(Program.AdventureMan.Content);
         }
 
         public abstract void LoadContent(ContentManager contentManager);
@@ -58,7 +60,6 @@ namespace Adventure_man
 
         public virtual void Draw(SpriteBatch spriteBatch)
         {
-
             //spriteBatch.Draw(Sprite, HitBox, color);
             spriteBatch.Draw(Sprite, HitBox, null, color, 0f, Vector2.Zero, effect, 0f);
         }

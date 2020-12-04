@@ -12,15 +12,11 @@ namespace Adventure_man
     {
         public Vector2 velocity;
         protected float dragCoefficient = 1f;
-        protected float groundDrag=1f;
-        protected float bounce=0f; //0=no bouncyness   1=infinite bouncyness;
+        protected float groundDrag = 1f;
+        protected float bounce = 0f; //0=no bouncyness   1=infinite bouncyness;
         protected float speed = 1f;
         public Direction dir;//=Direction.Right
         public Direction staticDir;
-
-
-
-
 
         private HashSet<GameObject> collisions = new HashSet<GameObject>();
 
@@ -98,7 +94,7 @@ namespace Adventure_man
                 if (target.Intersects(gameObject.HitBox))
                 {
                     collisions.Add(gameObject);
-                    if (gameObject is Platform)
+                    if (gameObject is IntermidiateTemporaryClassForStoppingMovement)
                     {
                         move = false;
                     }
@@ -108,7 +104,6 @@ namespace Adventure_man
             {
                 this.Location = position;
             }
-
 
             return move;
         }
@@ -122,6 +117,7 @@ namespace Adventure_man
                 gameObject.OnCollision(this);
             }
         }
+
         private Direction CheckDirection()
         {
             Direction oldDir = dir;
@@ -130,34 +126,32 @@ namespace Adventure_man
                 dir = Direction.Right;
                 //staticDir = Direction.Right;
             }
-                
             else if (velocity.X < 0)
             {
                 dir = Direction.Left;
                 //staticDir = Direction.Left;
             }
-                
             else
             {
-                if (oldDir!=0)
+                if (oldDir != 0)
                     dir = oldDir;
                 else
                 {
-                    switch(effect)
+                    switch (effect)
                     {
                         case SpriteEffects.None:
                             dir = Direction.Right;
                             break;
+
                         case SpriteEffects.FlipHorizontally:
                             dir = Direction.Left;
                             break;
+
                         default:
                             dir = Direction.Right;
                             break;
                     }
-                    
                 }
-
             }
 
             return dir;
@@ -170,18 +164,18 @@ namespace Adventure_man
                 case Direction.Right:
                     effect = SpriteEffects.None;
                     break;
+
                 case Direction.Left:
                     effect = SpriteEffects.FlipHorizontally;
                     break;
             }
         }
+
         public Direction UpdateSprite()
         {
-            Direction tempdir=CheckDirection();
+            Direction tempdir = CheckDirection();
             FlipSprite();
             return tempdir;
         }
-        
-
     }
 }

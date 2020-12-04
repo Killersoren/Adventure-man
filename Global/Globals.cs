@@ -9,6 +9,15 @@ namespace Adventure_man
     public static class Globals
     {
         public static SpriteAnimation DefaultSprite = Program.AdventureMan.Content.Load<Texture2D>("PlatformTest");
+        public static SpriteAnimation TransparentSprite;
         //public static SpriteFont DefaultFont = Program.AdventureMan.Content.Load<SpriteFont>(""); //Add this
+
+        static Globals()
+        {
+            Texture2D texture = new Texture2D(Program.AdventureMan.GraphicsDevice, 1, 1, false, SurfaceFormat.Color);
+            Color[] c = new Color[] { Color.FromNonPremultiplied(255, 255, 255, 100) };
+            texture.SetData(c);
+            TransparentSprite = texture;
+        }
     }
 }

@@ -14,7 +14,6 @@ namespace Adventure_man
 
         public SpriteFont font;
         public SpriteFont altFont;
-        
 
         //new public static GameServiceContainer Services;
 
@@ -34,10 +33,9 @@ namespace Adventure_man
 
         public enum Direction : int
         {
-            Right=1,
-            Left=-1
+            Right = 1,
+            Left = -1
         }
-
 
         public GameWorld()
         {
@@ -53,16 +51,39 @@ namespace Adventure_man
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            CurrentWorld = new World();
+            CurrentWorld = new World(
+                new List<GameObject>
+                    {
+                    new PickUp("doublejump", new Vector2(100, 200), new Vector2(64, 64), (Player p) => { ++p.JumpAmount; }),
+                    new Player(0, 5),
+                    new Enemy(9, 4),
+                    new GridPlatform(0, 7, 13, 1),
+                    new GridPlatform(4, 4, 2, 1),
+                    new GridPlatform(7, 2, 2, 1),
+                    new PickUp("", new Vector2(500, 50), new Vector2(100, 100), (Player p) =>
+                        {
+                        Program.AdventureMan.CurrentWorld = new World(
+                            new List<GameObject>
+                            {
+                            p,
+                            new Platform(0, 650, 1920, 64),
+                            new Platform(300, 500, 100, 64),
+                            new Platform(200, 300, 100, 64),
+                            new Platform(450, 200, 100, 64),
+                            new Enemy(9, 4),
+                        }
+                    );
+                    }
+                ),
+                }
+            );
 
             // Creates each scene
-       
 
             _graphics.PreferredBackBufferWidth = (int)CurrentWorld.worldSize.X;
             _graphics.PreferredBackBufferHeight = (int)CurrentWorld.worldSize.Y;
 
             SceenSize = (GraphicsDevice.DisplayMode.Width, GraphicsDevice.DisplayMode.Height);
-
 
             menu = new Menu();
             ui = new UI();
@@ -79,9 +100,7 @@ namespace Adventure_man
             font = Content.Load<SpriteFont>("Font"); // My font was brokne
             altFont = Content.Load<SpriteFont>("AltFont");
 
-
             collisionTexture = Content.Load<Texture2D>("CollisionTexture");
-
 
             foreach (GameObject o in CurrentWorld.Objects)
             {
@@ -92,7 +111,6 @@ namespace Adventure_man
         protected override void Update(GameTime gameTime)
         {
             this.gameTime = gameTime;
-
 
             // Updates current scene
 
@@ -105,7 +123,6 @@ namespace Adventure_man
             else
             {
                 currentScene = menu;
-
             }
             var getstate = Keyboard.GetState();
 #if DEBUG
@@ -127,19 +144,18 @@ namespace Adventure_man
             base.Update(gameTime);
         }
 
-        
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             _spriteBatch.Begin();
             //For getting feedback
-//#if DEBUG
-//            _spriteBatch.DrawString(font, $"Player pos= {World.Player.Location.X},{World.Player.Location.Y}", Vector2.Zero, Color.White);
-//            _spriteBatch.DrawString(font, $"Player Weapon cooldown ={World.Player.CurrentWeapon.cooldown}", new Vector2(0,font.LineSpacing), Color.White);
-//            _spriteBatch.DrawString(font, $"Player Health= {World.Player.health}", new Vector2(0, font.LineSpacing*2), Color.White);
-//            _spriteBatch.DrawString(font, $"", new Vector2(0, font.LineSpacing*3), Color.White);
-//#endif
+            //#if DEBUG
+            //            _spriteBatch.DrawString(font, $"Player pos= {World.Player.Location.X},{World.Player.Location.Y}", Vector2.Zero, Color.White);
+            //            _spriteBatch.DrawString(font, $"Player Weapon cooldown ={World.Player.CurrentWeapon.cooldown}", new Vector2(0,font.LineSpacing), Color.White);
+            //            _spriteBatch.DrawString(font, $"Player Health= {World.Player.health}", new Vector2(0, font.LineSpacing*2), Color.White);
+            //            _spriteBatch.DrawString(font, $"", new Vector2(0, font.LineSpacing*3), Color.White);
+            //#endif
 
             CurrentWorld.Draw(_spriteBatch);
             currentScene.Draw(gameTime, _spriteBatch);

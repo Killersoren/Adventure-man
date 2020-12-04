@@ -29,8 +29,8 @@ namespace Adventure_man
         {
             // Draws background
             //Program.AdventureMan.SceenSize.x / 100 * 1, Program.AdventureMan.SceenSize.y / 100 * 40, 150, 100
-            spritebatch.Draw(backgroundSprite, new Rectangle(-100, -160, Program.AdventureMan.SceenSize.x , Program.AdventureMan.SceenSize.y/2), Color.White);
-            spritebatch.DrawString(Program.AdventureMan.font, $"Coins: {World.Player.points}", new Vector2(Program.AdventureMan.CurrentWorld.worldSize.X / 2, 0),Color.Yellow);
+            spritebatch.Draw(backgroundSprite, new Rectangle(-100, -160, Program.AdventureMan.SceenSize.x, Program.AdventureMan.SceenSize.y / 2), Color.White);
+            spritebatch.DrawString(Program.AdventureMan.font, $"Coins: {World.Player.points}", new Vector2(Program.AdventureMan.CurrentWorld.worldSize.X / 2, 0), Color.Yellow);
             //(int)Program.AdventureMan.CurrentWorld.worldSize
 
             //For getting feedback
@@ -42,15 +42,7 @@ namespace Adventure_man
 #endif
             //spritebatch.Draw(backgroundSprite, new Rectangle(0, 0, Program.AdventureMan.SceenSize.x, Program.AdventureMan.SceenSize.y), Color.White);
 
-
-
-            spritebatch.Draw(Program.AdventureMan.CurrentWorld.pickUp.Sprite, new Rectangle(1100, 0, 64, 64), Color.White);
-
-
-
-
-
-
+            //  spritebatch.Draw(Program.AdventureMan.CurrentWorld.pickUp.Sprite, new Rectangle(1100, 0, 64, 64), Color.White);
         }
 
         public override void Update(GameTime gameTime)

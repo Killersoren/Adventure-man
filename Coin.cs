@@ -25,7 +25,7 @@ namespace Adventure_man
                 {
                     if (downRec.Intersects(gameObject.HitBox) && !isGrounded)
                     {
-                        if (gameObject is Platform)
+                        if (gameObject is GridPlatform)
                         {
                             isGrounded = true;
                         }

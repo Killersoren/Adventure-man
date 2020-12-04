@@ -35,8 +35,6 @@ namespace Adventure_man
         public Vector2 coinSpawnOffset;
         private Random rnd;
 
-        
-
         public int res = World.GridResulution;
 
         private static Timer timerA;
@@ -49,23 +47,21 @@ namespace Adventure_man
 
         private float gravStrength = 0; // don't like the placement of this var :/
 
-
         private SpriteFont healthbarFont;
         private int healthbarLength = 6;
+
         private string HealthBar
         {
             get
             {
-              //  Debug.WriteLine($"{healthbarFont.MeasureString("█").X} {healthbarFont.MeasureString(" ").X} {healthbarFont.Spacing}");
-                
-
+                //  Debug.WriteLine($"{healthbarFont.MeasureString("█").X} {healthbarFont.MeasureString(" ").X} {healthbarFont.Spacing}");
 
                 StringBuilder temp = new StringBuilder("", healthbarLength);
                 double space = maxHealth / healthbarLength;
                 int full = (int)Math.Floor(health / space);
                 int empty = healthbarLength - full;
 
-                for (int i = full; i> 0; i--)
+                for (int i = full; i > 0; i--)
                 {
                     temp.Append("█");
                 }
@@ -76,11 +72,12 @@ namespace Adventure_man
                 return Convert.ToString(temp);
             }
         }
+
         private Color HealthbarColor
         {
             get
             {
-               // Debug.WriteLine($"{health}/{(maxHealth * ((float)2 / 3))}");
+                // Debug.WriteLine($"{health}/{(maxHealth * ((float)2 / 3))}");
                 if ((health <= maxHealth) && (health > (maxHealth * ((float)2 / 3))))
                     return Color.Green;
                 else if ((health <= (maxHealth * ((float)2 / 3))) && (health > (maxHealth * ((float)1 / 3))))
@@ -90,10 +87,7 @@ namespace Adventure_man
                 else
                     return Color.White;
             }
-            
         }
-        
-
 
         protected bool isGrounded //bad maybe?, we check too often i think, maybe not only when we try to apply gravity (once per cycle) and ocasionally when we jummp
         {
@@ -108,7 +102,7 @@ namespace Adventure_man
                 {
                     if (downRec.Intersects(gameObject.HitBox) && !isGrounded)
                     {
-                        if (gameObject is Platform)
+                        if (gameObject is GridPlatform)
                         {
                             isGrounded = true;
                         }
@@ -117,6 +111,7 @@ namespace Adventure_man
                 return isGrounded;
             }
         }
+
         private void DefaultEnemy()
         {
             dragCoefficient = 0.9f;
@@ -140,8 +135,6 @@ namespace Adventure_man
             Location = new Vector2(X * res, Y * res);
         }
 
-
-
         //public override void LoadContent(ContentManager content)
         public override void LoadContent(ContentManager contentManager)
         {
@@ -161,7 +154,7 @@ namespace Adventure_man
             coinSprite = Program.AdventureMan.content.Load<Texture2D>("Coin");
             visionSprite = Program.AdventureMan.content.Load<Texture2D>("VisionTexture");
             healthbarFont = Program.AdventureMan.altFont;
-    }
+        }
 
         private void SetTimerA()
         {
@@ -207,10 +200,8 @@ namespace Adventure_man
                     SetTimerA();
                 }
             }
-
             else if (playerInSight)
             {
-
                 timerA.Enabled = false;
                 timerA.AutoReset = false;
                 timerB.Enabled = false;
@@ -219,23 +210,19 @@ namespace Adventure_man
                 Attack();
                 // MoveTo(World.Player.Location);
 
-
-              
-
-                    //TODO Update position af vision til at følge enemy
-
+                //TODO Update position af vision til at følge enemy
             }
         }
 
         //public void Draw(SpriteBatch spriteBatch)
         //{
         //    spriteBatch.Draw(Sprite, Location, Color.White);
-            
+
         //}
         public override void Draw(SpriteBatch spriteBatch)
         {
             base.Draw(spriteBatch);
-            spriteBatch.DrawString(healthbarFont, HealthBar, new Vector2(Location.X+(Size.X/2), Location.Y - healthbarFont.LineSpacing), HealthbarColor, 0, new Vector2((healthbarFont.MeasureString(HealthBar).X / 2),0),1,SpriteEffects.None,0) ;
+            spriteBatch.DrawString(healthbarFont, HealthBar, new Vector2(Location.X + (Size.X / 2), Location.Y - healthbarFont.LineSpacing), HealthbarColor, 0, new Vector2((healthbarFont.MeasureString(HealthBar).X / 2), 0), 1, SpriteEffects.None, 0);
         }
 
         public override void Update()
@@ -251,8 +238,6 @@ namespace Adventure_man
             //Debug.WriteLine("Velocity is" + velocity);
 
             // Debug.WriteLine(playerInSight);
-
-
 
             CreateVision();
             ApplyGravity();
@@ -278,8 +263,6 @@ namespace Adventure_man
 
         public void Attack()
         {
-            
-
         }
 
         public void TakeDamage(int damage)
@@ -316,30 +299,18 @@ namespace Adventure_man
 
         public void CreateVision()
         {
-            
             if (!EnemyVision)
             {
-
                 vision = new Vision(visionSprite, Location, 25 * 10, 50);
-
-              
 
                 Program.AdventureMan.CurrentWorld.newGameObjects.Add(vision);
 
                 EnemyVision = true;
-                
-
-
             }
-
-   
-
         }
 
         public override void OnCollision(GameObject other)
         {
-   
-
             //    if (other is Platform)
             //    {
             //        if (other.HitBox.Center.Y > HitBox.Center.Y) // If Player is on top

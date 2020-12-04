@@ -47,6 +47,7 @@ namespace Adventure_man
             spriteBatch.Draw(Globals.DefaultSprite, bottomLine, Color.Red);
             spriteBatch.Draw(Globals.DefaultSprite, rightLine, Color.Red);
             spriteBatch.Draw(Globals.DefaultSprite, leftLine, Color.Red);
+            spriteBatch.Draw(Globals.TransparentSprite, go.HitBox, Color.Red);
         }
 
         public static Vector2 RoundTo(this Vector2 vec, int digits)

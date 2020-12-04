@@ -16,8 +16,10 @@ namespace Adventure_man
         public int points = 0;
         private float gravStrength = 0; // don't like the placement of this var :/
         private Weapon currentWeapon;
+
         //private List<Weapon> weapons;
         private int availableJumps;
+
         public int JumpAmount;
         public Direction dir;
         private Sword sword;
@@ -53,7 +55,7 @@ namespace Adventure_man
             dragCoefficient = 0.9f;
             speed = 1f;
             staticDir = Direction.Right;
-            
+
             bow = new Bow("Falcon Bow", 100, 10, 5, this);
             sword = new Sword("Sword", 100, 10, 5, this);
             weapons = new Weapon[2] { sword, bow };
@@ -64,10 +66,11 @@ namespace Adventure_man
         {
             DefaultPlayer();
         }
+
         public Player(int X, int Y)
         {
             DefaultPlayer();
-            
+
             int res = World.GridResulution;
             Location = new Vector2(X * res, Y * res);
         }
@@ -95,7 +98,7 @@ namespace Adventure_man
             {
                 if (downRec.Intersects(gameObject.HitBox) && !isGrounded)
                 {
-                    if (gameObject is Platform)
+                    if (gameObject is IntermidiateTemporaryClassForStoppingMovement)
                     {
                         isGrounded = true;
                     }
@@ -142,29 +145,31 @@ namespace Adventure_man
                 velocity.Y = -30;// += new Vector2(0, -30f); //should probably also reset the gravity or something like that for better feel, pretty sure other games also do this
             }
         }
+
         private void Crouch()
         {
             Size = new Vector2(Size.X, Size.Y / 2);
             Location += new Vector2(0, Size.Y); // else player will end up in the Air
             crouched = true;
         }
+
         private void StandUp()
         {
-            bool clear = true; 
+            bool clear = true;
             var target = HitBox.Copy();
-                
-            target.Location=Location - new Vector2(0, Size.Y);
-            
+
+            target.Location = Location - new Vector2(0, Size.Y);
+
             foreach (GameObject o in Program.AdventureMan.CurrentWorld.Objects) // Makes it so that you dont get your head stuck in the cealing
             {
                 if (target.Intersects(o.HitBox))
                 {
-                    if(o is Platform && o.Location.Y < target.Location.Y)
+                    if (o is GridPlatform && o.Location.Y < target.Location.Y)
                     {
                         Debug.WriteLine("Cant Uncrouch");
                         clear = false;
 
-                        //The Bellow code is for if you want the Jumper to uncrouch in the air and get pushed down by platforms above, 
+                        //The Bellow code is for if you want the Jumper to uncrouch in the air and get pushed down by platforms above,
                         //if not in a grid this will have problems though
 
                         //if (isGrounded)
@@ -189,10 +194,6 @@ namespace Adventure_man
                 Location = target.Location; // else player will end up in the ground
                 crouched = false;
             }
-            
-
-            
-            
         }
 
         private void ApplyGravity()
@@ -228,11 +229,11 @@ namespace Adventure_man
             {
                 Jump();
             }
-            if (((keyState.IsKeyDown(Keys.S)) || (keyState.IsKeyDown(Keys.Down))) && crouched==false)
+            if (((keyState.IsKeyDown(Keys.S)) || (keyState.IsKeyDown(Keys.Down))) && crouched == false)
             {
                 Crouch();
             }
-            if ((keyState.IsKeyUp(Keys.S) && keyState.IsKeyUp(Keys.Down)) && crouched==true)
+            if ((keyState.IsKeyUp(Keys.S) && keyState.IsKeyUp(Keys.Down)) && crouched == true)
             {
                 StandUp();
             }
@@ -295,8 +296,6 @@ namespace Adventure_man
                 points += ((Coin)collisionTarget).coinValue;
                 Destroy(collisionTarget);
             }
-            
-
 
             base.OnCollision(collisionTarget);
         }
