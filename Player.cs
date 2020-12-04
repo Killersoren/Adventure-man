@@ -126,6 +126,8 @@ namespace Adventure_man
                 gravStrength = 0;
             }
 
+            //Debug.WriteLine("The player location is "+Location);
+
             CurrentWeapon.WeaponCooldown();
             ApplyGravity();
             HandleInput();

@@ -16,6 +16,8 @@ namespace Adventure_man
         private int health;
         private int maxHealth;
 
+        private Vector2 test;
+
         private bool isAlive
         {
             get
@@ -28,6 +30,8 @@ namespace Adventure_man
         }
 
         public Texture2D coinSprite;
+        public Texture2D visionSprite;
+        public Vision vision;
         public Vector2 coinSpawnOffset;
         private Random rnd;
 
@@ -40,7 +44,7 @@ namespace Adventure_man
         private bool timerStart = false;
 
         public static bool playerInSight = false;
-
+        public bool EnemyVision = false;
         public Vector2 lastVelocity;
 
         private float gravStrength = 0; // don't like the placement of this var :/
@@ -52,7 +56,7 @@ namespace Adventure_man
         {
             get
             {
-                Debug.WriteLine($"{healthbarFont.MeasureString("█").X} {healthbarFont.MeasureString(" ").X} {healthbarFont.Spacing}");
+              //  Debug.WriteLine($"{healthbarFont.MeasureString("█").X} {healthbarFont.MeasureString(" ").X} {healthbarFont.Spacing}");
                 
 
 
@@ -76,7 +80,7 @@ namespace Adventure_man
         {
             get
             {
-                Debug.WriteLine($"{health}/{(maxHealth * ((float)2 / 3))}");
+               // Debug.WriteLine($"{health}/{(maxHealth * ((float)2 / 3))}");
                 if ((health <= maxHealth) && (health > (maxHealth * ((float)2 / 3))))
                     return Color.Green;
                 else if ((health <= (maxHealth * ((float)2 / 3))) && (health > (maxHealth * ((float)1 / 3))))
@@ -136,6 +140,8 @@ namespace Adventure_man
             Location = new Vector2(X * res, Y * res);
         }
 
+
+
         //public override void LoadContent(ContentManager content)
         public override void LoadContent(ContentManager contentManager)
         {
@@ -153,14 +159,14 @@ namespace Adventure_man
             coinSpawnOffset = new Vector2(Size.X / 2, Size.Y / 4);
 
             coinSprite = Program.AdventureMan.content.Load<Texture2D>("Coin");
-
+            visionSprite = Program.AdventureMan.content.Load<Texture2D>("VisionTexture");
             healthbarFont = Program.AdventureMan.altFont;
     }
 
         private void SetTimerA()
         {
             // Create a timer with a two second interval.
-            timerA = new System.Timers.Timer(2500);
+            timerA = new System.Timers.Timer(1500);
             // Hook up the Elapsed event for the timer.
             timerA.Elapsed += OnTimedEventA;
             timerA.AutoReset = false;
@@ -170,7 +176,7 @@ namespace Adventure_man
         private void SetTimerB()
         {
             // Create a timer with a two second interval.
-            timerB = new System.Timers.Timer(2500);
+            timerB = new System.Timers.Timer(1500);
             // Hook up the Elapsed event for the timer.
             timerB.Elapsed += OnTimedEventB;
             timerB.AutoReset = false;
@@ -201,6 +207,24 @@ namespace Adventure_man
                     SetTimerA();
                 }
             }
+
+            else if (playerInSight)
+            {
+
+                timerA.Enabled = false;
+                timerA.AutoReset = false;
+                timerB.Enabled = false;
+                timerB.AutoReset = false;
+
+                Attack();
+                // MoveTo(World.Player.Location);
+
+
+              
+
+                    //TODO Update position af vision til at følge enemy
+
+            }
         }
 
         //public void Draw(SpriteBatch spriteBatch)
@@ -225,9 +249,12 @@ namespace Adventure_man
             //Debug.WriteLine("last Velocity is" + lastVelocity);
 
             //Debug.WriteLine("Velocity is" + velocity);
-            
+
+            // Debug.WriteLine(playerInSight);
 
 
+
+            CreateVision();
             ApplyGravity();
             EnemyLogic();
 
@@ -251,6 +278,8 @@ namespace Adventure_man
 
         public void Attack()
         {
+            
+
         }
 
         public void TakeDamage(int damage)
@@ -270,6 +299,7 @@ namespace Adventure_man
         {
             Coins();
             health = maxHealth;
+            playerInSight = false;
             Location = new Vector2(9 * res, 3 * res);
         }
 
@@ -284,8 +314,32 @@ namespace Adventure_man
             }
         }
 
+        public void CreateVision()
+        {
+            
+            if (!EnemyVision)
+            {
+
+                vision = new Vision(visionSprite, Location, 25 * 10, 50);
+
+              
+
+                Program.AdventureMan.CurrentWorld.newGameObjects.Add(vision);
+
+                EnemyVision = true;
+                
+
+
+            }
+
+   
+
+        }
+
         public override void OnCollision(GameObject other)
         {
+   
+
             //    if (other is Platform)
             //    {
             //        if (other.HitBox.Center.Y > HitBox.Center.Y) // If Player is on top
