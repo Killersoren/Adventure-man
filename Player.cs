@@ -42,7 +42,9 @@ namespace Adventure_man
             }
         }
 
-        private Weapon[] weapons = new Weapon[2];
+        //private Weapon[] weapons = new Weapon[2];
+
+        private List<Weapon> weapons;
 
         protected bool isGrounded; //bad maybe?, we check too often i think, maybe not only when we try to apply gravity (once per cycle) and ocasionally when we jummp
 
@@ -56,10 +58,8 @@ namespace Adventure_man
             speed = 1f;
             staticDir = Direction.Right;
 
-            bow = new Bow("Falcon Bow", 100, 10, 5, this);
-            sword = new Sword("Sword", 100, 10, 5, this);
-            weapons = new Weapon[2] { sword, bow };
-            CurrentWeapon = weapons[1];
+            weapons = new List<Weapon>();
+
         }
 
         public Player()
@@ -76,15 +76,23 @@ namespace Adventure_man
         }
 
         private void SwapWeapon()
-        {
-            if (currentWeapon == weapons[0])
+        {           
+            int i = weapons.IndexOf(currentWeapon);
+            if (i+1<weapons.Count)
             {
-                currentWeapon = weapons[1];
+                currentWeapon = weapons[i + 1];
             }
-            else if (currentWeapon == weapons[1])
+            else
             {
                 currentWeapon = weapons[0];
             }
+
+        }
+        public void PickupWeapon(Weapon weapon)
+        {
+            weapons.Add(weapon);
+            if (weapons.Count == 1)
+                currentWeapon = weapons[0];
         }
 
         private bool CheckIfGrounded()
@@ -130,8 +138,9 @@ namespace Adventure_man
             }
 
             //Debug.WriteLine("The player location is "+Location);
-
-            CurrentWeapon.WeaponCooldown();
+            if (currentWeapon!=null)
+                CurrentWeapon.WeaponCooldown();
+            
             ApplyGravity();
             HandleInput();
             dir = UpdateSprite();
@@ -267,7 +276,8 @@ namespace Adventure_man
 
         public void Attack()
         {
-            CurrentWeapon.UseWeapon(Location, dir);// Need some kind of facing system
+            if (CurrentWeapon!=null)//Jeg troede jeg allerede havde lagt dette ind men det må jeg alligevel have glemt
+                CurrentWeapon.UseWeapon(Location, dir);// Need some kind of facing system
         }
 
         public void TakeDamage(int damage)

@@ -6,7 +6,7 @@ using static Adventure_man.GameWorld;
 
 namespace Adventure_man
 {
-    abstract class Weapon
+    public abstract class Weapon
     {
         public string name;
         public int damage;

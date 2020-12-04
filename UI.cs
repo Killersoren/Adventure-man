@@ -36,7 +36,8 @@ namespace Adventure_man
             //For getting feedback
 #if DEBUG
             spritebatch.DrawString(Program.AdventureMan.font, $"Player pos= {World.Player.Location.X},{World.Player.Location.Y}", Vector2.Zero, Color.White);
-            spritebatch.DrawString(Program.AdventureMan.font, $"Player Weapon cooldown ={World.Player.CurrentWeapon.cooldown}", new Vector2(0, Program.AdventureMan.font.LineSpacing), Color.White);
+            if (World.Player.CurrentWeapon!=null)
+                spritebatch.DrawString(Program.AdventureMan.font, $"Player current Weapon={World.Player.CurrentWeapon.name}", new Vector2(0, Program.AdventureMan.font.LineSpacing), Color.White);
             spritebatch.DrawString(Program.AdventureMan.font, $"Player Health= {World.Player.health}", new Vector2(0, Program.AdventureMan.font.LineSpacing * 2), Color.White);
             spritebatch.DrawString(Program.AdventureMan.altFont, $"Test Altcodes:███", new Vector2(0, Program.AdventureMan.font.LineSpacing * 3), Color.White);
 #endif
