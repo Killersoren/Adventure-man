@@ -173,7 +173,7 @@ namespace Adventure_man
             {
                 if (target.Intersects(o.HitBox))
                 {
-                    if (o is GridPlatform && o.Location.Y < target.Location.Y)
+                    if (o is Platform && o.Location.Y < target.Location.Y)
                     {
                         Debug.WriteLine("Cant Uncrouch");
                         clear = false;

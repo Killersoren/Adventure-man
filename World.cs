@@ -90,11 +90,11 @@ namespace Adventure_man
 
         private IEnumerable<GameObject> Border()
         {
-            yield return new GridPlatform(0, -2, (int)worldGrid.X, 1); //Top (y=-2 :Leaves a i grid gab at the op of the two side boarders, but allows for jumping at the top)
-            yield return new GridPlatform(0, (int)worldGrid.Y, (int)worldGrid.X, 1); //Bottom
+            yield return new Platform(0, -2, (int)worldGrid.X, 1, true); //Top (y=-2 :Leaves a i grid gab at the op of the two side boarders, but allows for jumping at the top)
+            yield return new Platform(0, (int)worldGrid.Y, (int)worldGrid.X, 1, true); //Bottom
 
-            yield return new GridPlatform(-1, 0, 1, (int)worldGrid.Y); //Left
-            yield return new GridPlatform((int)worldGrid.X, 0, 1, (int)worldGrid.Y); //Right
+            yield return new Platform(-1, 0, 1, (int)worldGrid.Y, true); //Left
+            yield return new Platform((int)worldGrid.X, 0, 1, (int)worldGrid.Y, true); //Right
         }
     }
 }

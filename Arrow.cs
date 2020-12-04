@@ -60,7 +60,7 @@ namespace Adventure_man
 
         public override void OnCollision(GameObject collisionTarget)
         {
-            if (collisionTarget is GridPlatform)
+            if (collisionTarget is Platform)
             {
                 Destroy(this);
             }

@@ -59,9 +59,9 @@ namespace Adventure_man
                     new PickUp("Sword",8 ,6.5f, new Vector2(64, 32), (Player p) => {p.PickupWeapon(new Sword("Sword", 100, 10, 5, p)); }),
                     new Player(0, 5),
                     new Enemy(9, 4),
-                    new GridPlatform(0, 7, 13, 1),
-                    new GridPlatform(4, 4, 2, 1),
-                    new GridPlatform(7, 2, 2, 1),
+                    new Platform(0, 7, 13, 1,true),
+                    new Platform(4, 4, 2, 1,true),
+                    new Platform(7, 2, 2, 1,true),
                     new PickUp("", new Vector2(500, 50), new Vector2(100, 100), (Player p) =>
                         {
                         Program.AdventureMan.CurrentWorld = new World( 
