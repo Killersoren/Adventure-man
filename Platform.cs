@@ -15,8 +15,7 @@ namespace Adventure_man
 
         private delegate void PDraw(SpriteBatch spriteBatch);
         private PDraw PlatformDraw = (SpriteBatch spriteBatch) => { };
-        private delegate void PLoadContent(ContentManager contentManager);
-        private PLoadContent PlatformLoadContent = (ContentManager contentManager) => { };
+
         
 
 
@@ -57,6 +56,7 @@ namespace Adventure_man
             Height = height;
             int res = World.GridResulution;
             Location = new Vector2(pos.X * res, pos.Y * res);
+            this.HitBox = (new RectangleF(Location.X, Location.Y * res, width * res, height * res));
             this.grid = true;
             CheckGrid();
         }
@@ -75,6 +75,7 @@ namespace Adventure_man
             int res = World.GridResulution;
             Location = new Vector2(X * res, Y * res);
             this.grid = true;
+            this.HitBox = (new RectangleF(X*res,Y*res,width*res,height*res));
             CheckGrid();
         }
         public Platform(float x, float y, float width, float height)
@@ -86,7 +87,6 @@ namespace Adventure_man
         public override void LoadContent(ContentManager contentManager)
         {
             Sprite = contentManager.Load<Texture2D>("PlatformTest");
-            PlatformLoadContent(contentManager);
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -110,22 +110,12 @@ namespace Adventure_man
                         }
                     }
                 };
-                PlatformLoadContent = (ContentManager contentManager) =>
-                  {
-                      //Sprite = contentManager.Load<Texture2D>("PlatformTest");
-                      Size = new Vector2(Sprite.Width * Width, Sprite.Height * Height);
-                  };
-
             }
             else
             {
                 PlatformDraw = (SpriteBatch spriteBatch) =>
                 {
                     base.Draw(spriteBatch);
-                };
-                PlatformLoadContent = (ContentManager contentManager) =>
-                {
-                    //Sprite = contentManager.Load<Texture2D>("PlatformTest");
                 };
             }
 

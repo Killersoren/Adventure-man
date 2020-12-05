@@ -15,6 +15,7 @@ namespace Adventure_man
     {
         private int health;
         private int maxHealth;
+        private Vector2 spawnLocation;
 
         private Vector2 test;
 
@@ -132,7 +133,8 @@ namespace Adventure_man
         {
             DefaultEnemy();
             int res = World.GridResulution;
-            Location = new Vector2(X * res, Y * res);
+            spawnLocation = new Vector2(X * res, Y * res);
+            Location = spawnLocation;
         }
 
         //public override void LoadContent(ContentManager content)
@@ -283,7 +285,7 @@ namespace Adventure_man
             Coins();
             health = maxHealth;
             playerInSight = false;
-            Location = new Vector2(9 * res, 3 * res);
+            Location = spawnLocation;
         }
 
         /// <summary>

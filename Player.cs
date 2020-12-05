@@ -314,5 +314,10 @@ namespace Adventure_man
         //{
         //    spriteBatch.Draw(Sprite, HitBox, null, color, 0, Vector2.Zero, effect, 0);
         //}
+        public void SetSpawn(Vector2 location)
+        {
+            Location = location;
+        }
     }
+    
 }

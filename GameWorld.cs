@@ -31,6 +31,15 @@ namespace Adventure_man
         private Scene menu;
         private Scene ui;
 
+        public int worldNumber=0;
+
+        public List<Vector2> playerLocations;
+        public List<Vector2> worldSizes;
+        public List<List<GameObject>> worldLayouts;
+        public List<World.CompleationParamitor> worldCompleationParamitors;
+
+
+
         public enum Direction : int
         {
             Right = 1,
@@ -51,34 +60,36 @@ namespace Adventure_man
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            CurrentWorld = new World(
-                new List<GameObject>
-                    {
-                    new PickUp("doublejump", new Vector2(100, 200), new Vector2(64, 64), (Player p) => { ++p.JumpAmount; }),
-                    new PickUp("BowTest",4 ,6 , new Vector2(64, 64), (Player p) => {p.PickupWeapon(new Bow("Falcon Bow", 100, 10, 5, p)); }),
-                    new PickUp("Sword",8 ,6.5f, new Vector2(64, 32), (Player p) => {p.PickupWeapon(new Sword("Sword", 100, 10, 5, p)); }),
-                    new Player(0, 5),
-                    new Enemy(9, 4),
-                    new Platform(0, 7, 13, 1,true),
-                    new Platform(4, 4, 2, 1,true),
-                    new Platform(7, 2, 2, 1,true),
-                    new PickUp("", new Vector2(500, 50), new Vector2(100, 100), (Player p) =>
-                        {
-                        Program.AdventureMan.CurrentWorld = new World( 
-                            new List<GameObject>
-                            {
-                            p,
-                            new Platform(0, 650, 1920, 64),
-                            new Platform(300, 500, 100, 64),
-                            new Platform(200, 300, 100, 64),
-                            new Platform(450, 200, 100, 64),
-                            new Enemy(9, 4),
-                        }
-                    );
-                    }
-                ),
-                }
-            );
+            //CurrentWorld = new World(
+            //    new List<GameObject>
+            //        {
+            //        new PickUp("doublejump", new Vector2(100, 200), new Vector2(64, 64), (Player p) => { ++p.JumpAmount; }),
+            //        new PickUp("BowTest",4 ,6 , new Vector2(64, 64), (Player p) => {p.PickupWeapon(new Bow("Falcon Bow", 100, 10, 5, p)); }),
+            //        new PickUp("Sword",8 ,6.5f, new Vector2(64, 32), (Player p) => {p.PickupWeapon(new Sword("Sword", 100, 10, 5, p)); }),
+            //        new Player(0, 5),
+            //        new Enemy(9, 4),
+            //        new Platform(0, 7, 13, 1,true),
+            //        new Platform(4, 4, 2, 1,true),
+            //        new Platform(7, 2, 2, 1,true),
+            //        new PickUp("", new Vector2(500, 50), new Vector2(100, 100), (Player p) =>
+            //            {
+            //            Program.AdventureMan.CurrentWorld = new World( 
+            //                new List<GameObject>
+            //                {
+            //                p,
+            //                new Platform(0, 650, 1920, 64),
+            //                new Platform(300, 500, 100, 64),
+            //                new Platform(200, 300, 100, 64),
+            //                new Platform(450, 200, 100, 64),
+            //                new Enemy(9, 4),
+            //            }
+            //        );
+            //        }
+            //    ),
+            //    }
+            //);
+            GenerateWorlds();
+            CurrentWorld = new World(playerLocations[worldNumber], worldSizes[worldNumber], worldLayouts[worldNumber], worldCompleationParamitors[worldNumber]);
 
             // Creates each scene
 
@@ -143,6 +154,12 @@ namespace Adventure_man
 
             currentScene.Update(gameTime);
 
+            if (CurrentWorld.forCompleation())
+            {
+                ChangeWorld();
+
+            }
+
             base.Update(gameTime);
         }
 
@@ -166,5 +183,104 @@ namespace Adventure_man
 
             base.Draw(gameTime);
         }
+        private void ChangeWorld()
+        {
+            worldNumber++;
+            if(worldNumber<worldLayouts.Count)
+            {
+                CurrentWorld = new World(playerLocations[worldNumber], worldSizes[worldNumber],worldLayouts[worldNumber],worldCompleationParamitors[worldNumber]);
+                foreach (GameObject go in CurrentWorld.GameObjects)
+                    go.LoadContent(content);
+            }
+
+        }
+        private void GenerateWorlds()
+        {
+            playerLocations = new List<Vector2>
+            {
+                new Vector2(0*World.GridResulution,5*World.GridResulution),
+                new Vector2(0*World.GridResulution,1*World.GridResulution),
+                new Vector2(0*World.GridResulution,1*World.GridResulution)
+            };
+
+            worldSizes = new List<Vector2>
+            {
+                new Vector2(20,11),
+                new Vector2(20,11),
+                new Vector2(20,11)
+            };
+            worldLayouts = new List<List<GameObject>>
+            {
+                new List<GameObject>
+                {
+                    new PickUp("doublejump", new Vector2(100, 200), new Vector2(64, 64), (Player p) => { ++p.JumpAmount; }),
+                    new PickUp("BowTest",4 ,6 , new Vector2(64, 64), (Player p) => {p.PickupWeapon(new Bow("Falcon Bow", 100, 10, 5, p)); }),
+                    new PickUp("Sword",8 ,6.5f, new Vector2(64, 32), (Player p) => {p.PickupWeapon(new Sword("Sword", 100, 10, 5, p)); }),
+                    new Enemy(9, 4),
+                    new Platform(0, 7, 13, 1,true),
+                    new Platform(4, 4, 2, 1,true),
+                    new Platform(7, 2, 2, 1,true),
+                },
+                new List<GameObject>
+                {
+                    new Platform(0, 650, 1920, 64),
+                    new Platform(300, 500, 100, 64),
+                    new Platform(200, 300, 100, 64),
+                    new Platform(450, 200, 100, 64),
+                    new Enemy(9, 4),
+                },
+                new List<GameObject>
+                {
+                    new Enemy(9, 4),
+                    new Enemy(10, 4),
+                    new Enemy(6, 4),
+
+                }
+            };
+            worldCompleationParamitors = new List<World.CompleationParamitor>
+            {
+                () =>
+                {
+                    //int enemies=0;
+                    //foreach(GameObject go in Program.AdventureMan.CurrentWorld.GameObjects)
+                    //    if (go is Enemy)
+                    //        enemies++;
+
+                    //if (enemies==0)
+                    //    return true;
+                    //else
+                    //    return false;
+                    if (World.Player.points>=10)
+                        return true;
+                    else
+                        return false;
+                },
+                () =>
+                {
+                    //int enemies=0;
+                    //foreach(GameObject go in Program.AdventureMan.CurrentWorld.GameObjects)
+                    //    if (go is Enemy)
+                    //        enemies++;
+
+                    //if (enemies==0)
+                    //    return true;
+                    //else
+                    //    return false;
+                    if (World.Player.points>=30)
+                        return true;
+                    else
+                        return false;
+                },
+                () =>
+                {
+                    return false;
+                }
+
+            };
+
+
+        }
+
+
     }
 }

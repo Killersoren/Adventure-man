@@ -12,7 +12,12 @@ namespace Adventure_man
         public List<GameObject> GameObjects;
         public List<GameObject> newGameObjects;
         public List<GameObject> GameObjectsToRemove;
-        public static Player Player;
+        public static Player Player=new Player();
+
+        public delegate bool CompleationParamitor();
+        public CompleationParamitor forCompleation=() => { return false; };
+        private List<GameObject> nextWorld;
+
 
         //public PickUp pickUp;
         private Texture2D sprite1;
@@ -43,17 +48,31 @@ namespace Adventure_man
             Player = (Player)gameObjects.Find(a => a is Player);
 
             worldGrid = new Vector2(20, 11);
-            gridResulution = 64;
+            //gridResulution = 64;
             //worldSize = new Vector2(Program.AdventureMan._graphics.PreferredBackBufferWidth, Program.AdventureMan._graphics.PreferredBackBufferHeight);
             worldSize = new Vector2(worldGrid.X * GridResulution, worldGrid.Y * GridResulution);
 
             Objects.AddRange(Border());
+        }
+        public World(Vector2 playerLocation,Vector2 worldGrid,List<GameObject> gameObjects,CompleationParamitor forCompleation)
+        {
+            GameObjects = gameObjects;
+            GameObjectsToRemove = new List<GameObject>();
+            newGameObjects = new List<GameObject>();
+            Player.SetSpawn(playerLocation);
+            GameObjects.Add(Player);
+
+            this.forCompleation = forCompleation;
+            this.worldGrid = worldGrid;
+            worldSize = new Vector2(worldGrid.X * GridResulution, worldGrid.Y * GridResulution);
+            GameObjects.AddRange(Border());
         }
 
         public void Update()
         {
             GameObjects.AddRange(newGameObjects);
             newGameObjects.Clear();
+            
 
             foreach (GameObject o in Objects)
             {
@@ -65,6 +84,7 @@ namespace Adventure_man
                 GameObjects.Remove(g);
             }
             GameObjectsToRemove.Clear();
+            
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -91,10 +111,10 @@ namespace Adventure_man
         private IEnumerable<GameObject> Border()
         {
             yield return new Platform(0, -2, (int)worldGrid.X, 1, true); //Top (y=-2 :Leaves a i grid gab at the op of the two side boarders, but allows for jumping at the top)
-            yield return new Platform(0, (int)worldGrid.Y, (int)worldGrid.X, 1, true); //Bottom
+            yield return new Platform(0, worldGrid.Y-0.5f, (int)worldGrid.X, 1, true); //Bottom
 
             yield return new Platform(-1, 0, 1, (int)worldGrid.Y, true); //Left
-            yield return new Platform((int)worldGrid.X, 0, 1, (int)worldGrid.Y, true); //Right
+            yield return new Platform(worldGrid.X, 0, 1, (int)worldGrid.Y, true); //Right
         }
     }
 }
