@@ -30,6 +30,20 @@ namespace Adventure_man
             //arrow.LoadContent(Program.AdventureMan.content);
         }
 
+
+        public Bow(int damage, float force, float fireRate, MoveableGameObject user)
+        {
+            base.user = user;
+            base.damage = damage;
+            this.force = force;
+            this.fireRate = fireRate;
+
+            arrowSprite = Program.AdventureMan.Content.Load<Texture2D>("Arrow");
+
+            //arrow = new Arrow(damage,force);
+            //arrow.LoadContent(Program.AdventureMan.content);
+        }
+
         public override void UseWeapon(Vector2 position, Direction direction)
         {
             if (cooldown <= 0)

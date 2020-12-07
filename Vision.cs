@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 
 namespace Adventure_man
@@ -54,7 +55,7 @@ namespace Adventure_man
         public Vision(Texture2D sprite, Vector2 position, int width, int height, Enemy enemy1)
         {
             Location = position;
-            Size = new Vector2(width - 1, height - 1);
+            Size = new Vector2(width, height);
             Sprite = sprite;
             Width = width;
             Height = height;
@@ -66,6 +67,22 @@ namespace Adventure_man
         public override void Update()
         {
             MoveTo(enemy.Location);
+
+            dir = enemy.dir;
+
+            //  Debug.WriteLine("dir is " + dir);
+
+            //  Debug.WriteLine("enemy dir is " + enemy.dir);
+            if (dir == GameWorld.Direction.Right)
+            {
+            }
+
+            else if (dir == GameWorld.Direction.Left)
+            {
+                Location += new Vector2(-183, 0);
+            }
+
+            //    dir = UpdateSprite();
 
             base.Update();
         }

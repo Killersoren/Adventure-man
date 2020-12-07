@@ -11,12 +11,12 @@ using System.Timers;
 
 namespace Adventure_man
 {
-    internal class Enemy : MoveableGameObject
+    public class Enemy : MoveableGameObject
     {
         private int health;
         private int maxHealth;
         private Vector2 spawnLocation;
-
+        private Weapon weapon;
         private Vector2 test;
 
         private bool isAlive
@@ -30,16 +30,18 @@ namespace Adventure_man
             }
         }
 
+        internal Weapon EnemyWeapon { get => weapon; private set => weapon = value; }
+
         public Texture2D coinSprite;
         public Texture2D visionSprite;
-        public Vision vision;
+        private Vision vision;
         public Vector2 coinSpawnOffset;
         private Random rnd;
 
         public int res = World.GridResulution;
 
-        private static Timer timerA;
-        private static Timer timerB;
+        private Timer timerA;
+        private Timer timerB;
         private bool timerStart = false;
 
         public bool playerInSight = false;
@@ -78,6 +80,10 @@ namespace Adventure_man
         {
             get
             {
+                //if (playerInSight == true)
+                //    return Color.Blue;
+
+
                 // Debug.WriteLine($"{health}/{(maxHealth * ((float)2 / 3))}");
                 if ((health <= maxHealth) && (health > (maxHealth * ((float)2 / 3))))
                     return Color.Green;
@@ -135,7 +141,20 @@ namespace Adventure_man
             int res = World.GridResulution;
             spawnLocation = new Vector2(X * res, Y * res);
             Location = spawnLocation;
+
+            WeaponTest();
         }
+
+        //public Enemy(int X, int Y, Weapon weapon )
+        //{
+        //    DefaultEnemy();
+        //    int res = World.GridResulution;
+        //    spawnLocation = new Vector2(X * res, Y * res);
+        //    Location = spawnLocation;
+
+        //    this.weapon = weapon;
+            
+        //}
 
         //public override void LoadContent(ContentManager content)
         public override void LoadContent(ContentManager contentManager)
@@ -204,10 +223,13 @@ namespace Adventure_man
             }
             else if (playerInSight)
             {
-                timerA.Enabled = false;
-                timerA.AutoReset = false;
-                timerB.Enabled = false;
-                timerB.AutoReset = false;
+                //timerA.Enabled = false;
+                //timerA.AutoReset = false;
+                //timerB.Enabled = false;
+                //timerB.AutoReset = false;
+
+                timerA.Stop();
+                timerB.Stop();
 
                 Attack();
 
@@ -245,6 +267,10 @@ namespace Adventure_man
             ApplyGravity();
             EnemyLogic();
 
+            if (weapon != null)
+                EnemyWeapon.WeaponCooldown();
+
+
             dir = UpdateSprite();
             base.Update();
         }
@@ -265,6 +291,15 @@ namespace Adventure_man
 
         public void Attack()
         {
+           // Debug.WriteLine("Enemy attacking");
+
+       
+
+            if (EnemyWeapon != null)
+            {
+                EnemyWeapon.UseWeapon(Location, dir);
+            }
+                
         }
 
         public void TakeDamage(int damage)
@@ -285,6 +320,7 @@ namespace Adventure_man
             Coins();
             health = maxHealth;
             playerInSight = false;
+            timerStart = false;
             Location = spawnLocation;
         }
 
@@ -311,6 +347,11 @@ namespace Adventure_man
 
                 EnemyVision = true;
             }
+        }
+
+        public void WeaponTest()
+        {
+            weapon = new Bow(30, 10, 2, this);
         }
 
         public override void OnCollision(GameObject other)
