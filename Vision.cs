@@ -12,6 +12,8 @@ namespace Adventure_man
         private int width;
         private int height;
 
+        private Enemy enemy;
+
         public int Width
         {
             get { return width; }
@@ -49,9 +51,21 @@ namespace Adventure_man
        
         }
 
+        public Vision(Texture2D sprite, Vector2 position, int width, int height, Enemy enemy1)
+        {
+            Location = position;
+            Size = new Vector2(width - 1, height - 1);
+            Sprite = sprite;
+            Width = width;
+            Height = height;
+
+            enemy = enemy1;
+
+        }
+
         public override void Update()
         {
-            MoveTo(Location);
+            MoveTo(enemy.Location);
 
             base.Update();
         }
@@ -66,7 +80,11 @@ namespace Adventure_man
         {
             if (collisionTarget is Player)
             {
-                Enemy.playerInSight = true;
+
+
+                enemy.playerInSight = true;
+
+                //this.enemy.playerInSight = true;
             }
 
             base.OnCollision(collisionTarget);

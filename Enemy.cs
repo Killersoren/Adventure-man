@@ -42,7 +42,7 @@ namespace Adventure_man
         private static Timer timerB;
         private bool timerStart = false;
 
-        public static bool playerInSight = false;
+        public bool playerInSight = false;
         public bool EnemyVision = false;
         public Vector2 lastVelocity;
 
@@ -210,7 +210,7 @@ namespace Adventure_man
                 timerB.AutoReset = false;
 
                 Attack();
-                // MoveTo(World.Player.Location);
+
 
                 //TODO Update position af vision til at følge enemy
             }
@@ -303,7 +303,9 @@ namespace Adventure_man
         {
             if (!EnemyVision)
             {
-                vision = new Vision(visionSprite, Location, 25 * 10, 50);
+              //  vision = new Vision(visionSprite, Location, 25 * 10, 50);
+
+                vision = new Vision(visionSprite, Location, 25 * 10, 50, this);
 
                 Program.AdventureMan.CurrentWorld.newGameObjects.Add(vision);
 
@@ -313,6 +315,13 @@ namespace Adventure_man
 
         public override void OnCollision(GameObject other)
         {
+            if (other is Player)
+            {
+                playerInSight = true;
+            }
+
+
+            base.OnCollision(other);
             //    if (other is Platform)
             //    {
             //        if (other.HitBox.Center.Y > HitBox.Center.Y) // If Player is on top
