@@ -23,6 +23,8 @@ namespace Adventure_man
         /// <param name="direction">The Direction the user is facing</param>
         public abstract void UseWeapon(Vector2 position,Direction direction);
 
+        public abstract void UseWeaponEnemy(Vector2 position, Direction direction);
+
         public void WeaponCooldown()
         {
             
