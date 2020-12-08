@@ -18,9 +18,9 @@ namespace Adventure_man
 
         //public RectangleF Rectangle { get { return new RectangleF((int)position.X, (int)position.Y, sprite.Width, sprite.Height); } }
 
-        public ParallaxSprite(Texture2D texture)
+        public ParallaxSprite(Texture2D Sprite)
         {
-            sprite = texture;
+            sprite = Sprite;
 
         }
 

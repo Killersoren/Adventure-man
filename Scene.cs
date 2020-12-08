@@ -11,18 +11,11 @@ namespace Adventure_man
     {
         
         protected Texture2D backgroundSprite;
-
-        public Scene()
-        {
-        }
-
-
-
         public abstract void Loadcontent();
 
-        public abstract void Draw(GameTime gameTime, SpriteBatch spritebatch);
+        public abstract void Draw(SpriteBatch spritebatch);
 
-        public abstract void Update(GameTime gameTime);
+        public abstract void Update();
 
     }
 }

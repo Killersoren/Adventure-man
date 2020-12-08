@@ -169,7 +169,7 @@ namespace Adventure_man
             }
             laststate = getstate;
 
-            currentScene.Update(gameTime);
+            currentScene.Update();
 
             if (CurrentWorld.forCompleation())
             {
@@ -203,7 +203,7 @@ namespace Adventure_man
                 ob.Draw();
             }
             CurrentWorld.Draw(_spriteBatch);
-            currentScene.Draw(gameTime, _spriteBatch);
+            currentScene.Draw(_spriteBatch);
 
             _spriteBatch.End();
 

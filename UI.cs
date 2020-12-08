@@ -25,7 +25,7 @@ namespace Adventure_man
             backgroundSprite = Program.AdventureMan.content.Load<Texture2D>("bar");
         }
 
-        public override void Draw(GameTime gameTime, SpriteBatch spritebatch)
+        public override void Draw(SpriteBatch spritebatch)
         {
             // Draws background
             //Program.AdventureMan.SceenSize.x / 100 * 1, Program.AdventureMan.SceenSize.y / 100 * 40, 150, 100
@@ -41,12 +41,9 @@ namespace Adventure_man
             spritebatch.DrawString(Program.AdventureMan.font, $"Player Health= {World.Player.health}", new Vector2(0, Program.AdventureMan.font.LineSpacing * 2), Color.White);
             spritebatch.DrawString(Program.AdventureMan.altFont, $"Test Altcodes:███", new Vector2(0, Program.AdventureMan.font.LineSpacing * 3), Color.White);
 #endif
-            //spritebatch.Draw(backgroundSprite, new Rectangle(0, 0, Program.AdventureMan.SceenSize.x, Program.AdventureMan.SceenSize.y), Color.White);
-
-            //  spritebatch.Draw(Program.AdventureMan.CurrentWorld.pickUp.Sprite, new Rectangle(1100, 0, 64, 64), Color.White);
         }
 
-        public override void Update(GameTime gameTime)
+        public override void Update()
         {
         }
     }

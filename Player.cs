@@ -76,23 +76,27 @@ namespace Adventure_man
         }
 
         private void SwapWeapon()
-        {           
+        {
             int i = weapons.IndexOf(currentWeapon);
-            if (i+1<weapons.Count )
+            if (i + 1 < weapons.Count && weapons.Count > 0)
             {
                 currentWeapon = weapons[i + 1];
             }
-            else
+            else if (weapons.Count > 0)
             {
                 currentWeapon = weapons[0];
-            }
 
+            }
         }
         public void PickupWeapon(Weapon weapon)
         {
             weapons.Add(weapon);
             if (weapons.Count == 1)
                 currentWeapon = weapons[0];
+            else
+            {
+                currentWeapon = weapons[1];
+            }
         }
 
         private bool CheckIfGrounded()

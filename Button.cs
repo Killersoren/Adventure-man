@@ -35,7 +35,7 @@ namespace Adventure_man
             this.buttonDescription = buttonDescription;
         }
 
-        public void Update(GameTime gameTime)
+        public void Update()
         {
             // Stores current and last mouse states and sets current position
             mouseLast = mouseCurrent;
@@ -56,7 +56,7 @@ namespace Adventure_man
             }
         }
 
-        public void Draw(GameTime gameTime, SpriteBatch spritebatch)
+        public void Draw()
         {
             // Toggles color of button depending on hover
             if (hover == true)
@@ -68,11 +68,11 @@ namespace Adventure_man
                 this.currentColor = defaultColor;
             }
             // Draws button
-            spritebatch.Draw(sprite, rectangle, currentColor);
+            Program.AdventureMan._spriteBatch.Draw(sprite, rectangle, currentColor);
             // Draws buttons description text in middle of button
             var x = (rectangle.X + (rectangle.Width / 2)) - (Program.AdventureMan.font.MeasureString(buttonDescription).X / 2);
             var y = (rectangle.Y + (rectangle.Height / 2)) - (Program.AdventureMan.font.MeasureString(buttonDescription).Y / 2); //my font was broken so comment this out to test
-            spritebatch.DrawString(Program.AdventureMan.menuFont, buttonDescription, new Vector2(x, y), Color.Black);
+            Program.AdventureMan._spriteBatch.DrawString(Program.AdventureMan.menuFont, buttonDescription, new Vector2(x, y), Color.Black);
         }
     }
 }
