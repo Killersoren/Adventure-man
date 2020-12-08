@@ -26,8 +26,19 @@ namespace Adventure_man
             swordSprite = Program.AdventureMan.Content.Load<Texture2D>("Sword");
 
         }
-        
-       
+
+        public Sword( int damage, float force, float fireRate, MoveableGameObject user)
+        {
+            base.user = user;
+            base.damage = damage;
+            this.fireRate = fireRate;
+
+            // Ras - flyttes til egen load metode eller til SwordAttack ?
+            swordSprite = Program.AdventureMan.Content.Load<Texture2D>("Sword");
+
+        }
+
+
 
         public override void UseWeapon(Vector2 position, GameWorld.Direction direction)
         {

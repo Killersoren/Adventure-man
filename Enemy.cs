@@ -142,7 +142,9 @@ namespace Adventure_man
             spawnLocation = new Vector2(X * res, Y * res);
             Location = spawnLocation;
 
-            WeaponTest();
+            BowTest(); // Spawner fjende med bue
+
+           // SwordTest(); // spawner fjende med sværd
         }
 
         //public Enemy(int X, int Y, Weapon weapon )
@@ -291,14 +293,69 @@ namespace Adventure_man
 
         public void Attack()
         {
-           // Debug.WriteLine("Enemy attacking");
+            // Debug.WriteLine("Enemy attacking");
+            MoveTowardsPlayer();
+
+            void MoveTowardsPlayer()
+            {
+
+                if (weapon is Bow)
+                {
+                    if (World.Player.Location.X < Location.X && Location.X >= World.Player.Location.X + 150)
+                    {
+                        velocity += -Vector2.UnitX;
+
+                    }
+
+                    else if (World.Player.Location.X > Location.X && Location.X <= World.Player.Location.X - 150)
+                    {
+                        velocity += Vector2.UnitX;
+
+                    }
+
+
+                    if (EnemyWeapon != null)
+                    {
+                        EnemyWeapon.UseWeapon(Location, dir);
+                    }
+
+                }
+
+                else if (weapon is Sword)
+                {
+                    if (World.Player.Location.X < Location.X && Location.X >= World.Player.Location.X + 50)
+                    {
+                        velocity += -Vector2.UnitX;
+
+                    }
+
+                    else if (World.Player.Location.X > Location.X && Location.X <= World.Player.Location.X - 50)
+                    {
+                        velocity += Vector2.UnitX;
+
+                    }
+                }
+
+                if (EnemyWeapon != null)
+                {
+                    EnemyWeapon.UseWeapon(Location, dir);
+                }
+
+            }
+        
+            
+            
+            if (World.Player.Location.X < Location.X)
+            {
+                dir = GameWorld.Direction.Left;
+            }
+
+        else if (World.Player.Location.X > Location.X)
+            {
+                dir = GameWorld.Direction.Right;
+            }
 
        
-
-            if (EnemyWeapon != null)
-            {
-                EnemyWeapon.UseWeapon(Location, dir);
-            }
                 
         }
 
@@ -349,9 +406,14 @@ namespace Adventure_man
             }
         }
 
-        public void WeaponTest()
+        public void BowTest()
         {
             weapon = new Bow(30, 10, 2, this);
+        }
+
+        public void SwordTest()
+        {
+            weapon = new Sword(40, 10, 2, this);
         }
 
         public override void OnCollision(GameObject other)
