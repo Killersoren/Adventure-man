@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 using System.Collections.Generic;
 
 namespace Adventure_man
@@ -38,6 +39,7 @@ namespace Adventure_man
         public List<List<GameObject>> worldLayouts;
         public List<World.CompleationParamitor> worldCompleationParamitors;
 
+        private Song backgroundMusic;
 
 
         public enum Direction : int
@@ -119,6 +121,12 @@ namespace Adventure_man
             {
                 o.LoadContent(content);
             }
+
+            ///MUSIC
+            backgroundMusic = Content.Load<Song>("Background Music");
+            MediaPlayer.Play(backgroundMusic);
+            MediaPlayer.IsRepeating = true;
+
         }
 
         protected override void Update(GameTime gameTime)
