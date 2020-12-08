@@ -43,7 +43,7 @@ namespace Adventure_man
             {
                 var sprite = Sprite[i];
                 parallaxSprites.Add(new ParallaxSprite(sprite)
-                { position = new Vector2((i * sprite.Width) - 1, Program.AdventureMan.SceenSize.y - sprite.Width) }
+                { position = new Vector2((i * sprite.Width) , Program.AdventureMan.SceenSize.y - sprite.Width) }
                 );
             }
         }
