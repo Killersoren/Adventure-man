@@ -278,7 +278,7 @@ namespace Adventure_man
 
         public void Attack()
         {
-            if (CurrentWeapon!=null)//Jeg troede jeg allerede havde lagt dette ind men det må jeg alligevel have glemt
+            if (CurrentWeapon!=null)//Jeg troede jeg allerede havde lagt dette ind men det mï¿½ jeg alligevel have glemt
                 CurrentWeapon.UseWeapon(Location, dir);// Need some kind of facing system
         }
 

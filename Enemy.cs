@@ -11,12 +11,12 @@ using System.Timers;
 
 namespace Adventure_man
 {
-    internal class Enemy : MoveableGameObject
+    public class Enemy : MoveableGameObject
     {
         private int health;
         private int maxHealth;
         private Vector2 spawnLocation;
-
+        private Weapon weapon;
         private Vector2 test;
 
         private bool isAlive
@@ -30,19 +30,21 @@ namespace Adventure_man
             }
         }
 
+        internal Weapon EnemyWeapon { get => weapon; private set => weapon = value; }
+
         public Texture2D coinSprite;
         public Texture2D visionSprite;
-        public Vision vision;
+        private Vision vision;
         public Vector2 coinSpawnOffset;
         private Random rnd;
 
         public int res = World.GridResulution;
 
-        private static Timer timerA;
-        private static Timer timerB;
+        private Timer timerA;
+        private Timer timerB;
         private bool timerStart = false;
 
-        public static bool playerInSight = false;
+        public bool playerInSight = false;
         public bool EnemyVision = false;
         public Vector2 lastVelocity;
 
@@ -78,6 +80,10 @@ namespace Adventure_man
         {
             get
             {
+                //if (playerInSight == true)
+                //    return Color.Blue;
+
+
                 // Debug.WriteLine($"{health}/{(maxHealth * ((float)2 / 3))}");
                 if ((health <= maxHealth) && (health > (maxHealth * ((float)2 / 3))))
                     return Color.Green;
@@ -135,7 +141,22 @@ namespace Adventure_man
             int res = World.GridResulution;
             spawnLocation = new Vector2(X * res, Y * res);
             Location = spawnLocation;
+
+            BowTest(); // Spawner fjende med bue
+
+           // SwordTest(); // spawner fjende med sværd
         }
+
+        //public Enemy(int X, int Y, Weapon weapon )
+        //{
+        //    DefaultEnemy();
+        //    int res = World.GridResulution;
+        //    spawnLocation = new Vector2(X * res, Y * res);
+        //    Location = spawnLocation;
+
+        //    this.weapon = weapon;
+            
+        //}
 
         //public override void LoadContent(ContentManager content)
         public override void LoadContent(ContentManager contentManager)
@@ -204,13 +225,16 @@ namespace Adventure_man
             }
             else if (playerInSight)
             {
-                timerA.Enabled = false;
-                timerA.AutoReset = false;
-                timerB.Enabled = false;
-                timerB.AutoReset = false;
+                //timerA.Enabled = false;
+                //timerA.AutoReset = false;
+                //timerB.Enabled = false;
+                //timerB.AutoReset = false;
+
+                timerA.Stop();
+                timerB.Stop();
 
                 Attack();
-                // MoveTo(World.Player.Location);
+
 
                 //TODO Update position af vision til at følge enemy
             }
@@ -245,6 +269,10 @@ namespace Adventure_man
             ApplyGravity();
             EnemyLogic();
 
+            if (weapon != null)
+                EnemyWeapon.WeaponCooldown();
+
+
             dir = UpdateSprite();
             base.Update();
         }
@@ -265,6 +293,70 @@ namespace Adventure_man
 
         public void Attack()
         {
+            // Debug.WriteLine("Enemy attacking");
+            MoveTowardsPlayer();
+
+            void MoveTowardsPlayer()
+            {
+
+                if (weapon is Bow)
+                {
+                    if (World.Player.Location.X < Location.X && Location.X >= World.Player.Location.X + 150)
+                    {
+                        velocity += -Vector2.UnitX;
+
+                    }
+
+                    else if (World.Player.Location.X > Location.X && Location.X <= World.Player.Location.X - 150)
+                    {
+                        velocity += Vector2.UnitX;
+
+                    }
+
+
+                    if (EnemyWeapon != null)
+                    {
+                        EnemyWeapon.UseWeapon(Location, dir);
+                    }
+
+                }
+
+                else if (weapon is Sword)
+                {
+                    if (World.Player.Location.X < Location.X && Location.X >= World.Player.Location.X + 50)
+                    {
+                        velocity += -Vector2.UnitX;
+
+                    }
+
+                    else if (World.Player.Location.X > Location.X && Location.X <= World.Player.Location.X - 50)
+                    {
+                        velocity += Vector2.UnitX;
+
+                    }
+                }
+
+                if (EnemyWeapon != null)
+                {
+                    EnemyWeapon.UseWeapon(Location, dir);
+                }
+
+            }
+        
+            
+            
+            if (World.Player.Location.X < Location.X)
+            {
+                dir = GameWorld.Direction.Left;
+            }
+
+        else if (World.Player.Location.X > Location.X)
+            {
+                dir = GameWorld.Direction.Right;
+            }
+
+       
+                
         }
 
         public void TakeDamage(int damage)
@@ -285,6 +377,7 @@ namespace Adventure_man
             Coins();
             health = maxHealth;
             playerInSight = false;
+            timerStart = false;
             Location = spawnLocation;
         }
 
@@ -303,7 +396,9 @@ namespace Adventure_man
         {
             if (!EnemyVision)
             {
-                vision = new Vision(visionSprite, Location, 25 * 10, 50);
+              //  vision = new Vision(visionSprite, Location, 25 * 10, 50);
+
+                vision = new Vision(visionSprite, Location, 25 * 10, 50, this);
 
                 Program.AdventureMan.CurrentWorld.newGameObjects.Add(vision);
 
@@ -311,8 +406,25 @@ namespace Adventure_man
             }
         }
 
+        public void BowTest()
+        {
+            weapon = new Bow(30, 10, 2, this);
+        }
+
+        public void SwordTest()
+        {
+            weapon = new Sword(40, 10, 2, this);
+        }
+
         public override void OnCollision(GameObject other)
         {
+            if (other is Player)
+            {
+                playerInSight = true;
+            }
+
+
+            base.OnCollision(other);
             //    if (other is Platform)
             //    {
             //        if (other.HitBox.Center.Y > HitBox.Center.Y) // If Player is on top
