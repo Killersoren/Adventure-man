@@ -72,7 +72,7 @@ namespace Adventure_man
         public override void Draw(GameTime gameTime, SpriteBatch spritebatch)
         {
             spritebatch.Draw(backgroundSprite, new Rectangle(0, 0, Program.AdventureMan.SceenSize.x, Program.AdventureMan.SceenSize.y), Color.Black * 0.5f);
-            spritebatch.DrawString(Program.AdventureMan.font, " Menu / Paused ", new Vector2(Program.AdventureMan.SceenSize.x/4, Program.AdventureMan.SceenSize.y/20), Color.Black , 0f, Vector2.Zero, 3f,SpriteEffects.None,0f);
+            spritebatch.DrawString(Program.AdventureMan.menuFont, $" Menu / Paused (Enter)", new Vector2(Program.AdventureMan.SceenSize.x/4, Program.AdventureMan.SceenSize.y/20), Color.Black , 0f, Vector2.Zero, 2f,SpriteEffects.None,0f);
 
 
 

@@ -14,6 +14,9 @@ namespace Adventure_man
 
         public SpriteFont font;
         public SpriteFont altFont;
+        public SpriteFont menuFont;
+
+        
 
         //new public static GameServiceContainer Services;
 
@@ -24,6 +27,7 @@ namespace Adventure_man
 
         private Texture2D collisionTexture;
 
+
         public ContentManager content;
         public (int x, int y) SceenSize;
         private KeyboardState laststate;
@@ -31,12 +35,14 @@ namespace Adventure_man
         private Scene menu;
         private Scene ui;
 
-        public int worldNumber=0;
+        public int worldNumber = 0;
 
         public List<Vector2> playerLocations;
         public List<Vector2> worldSizes;
         public List<List<GameObject>> worldLayouts;
         public List<World.CompleationParamitor> worldCompleationParamitors;
+        public List<List<Parallax>> parallaxes;
+
 
 
 
@@ -89,7 +95,7 @@ namespace Adventure_man
             //    }
             //);
             GenerateWorlds();
-            CurrentWorld = new World(playerLocations[worldNumber], worldSizes[worldNumber], worldLayouts[worldNumber], worldCompleationParamitors[worldNumber]);
+            CurrentWorld = new World(parallaxes[worldNumber], playerLocations[worldNumber], worldSizes[worldNumber], worldLayouts[worldNumber], worldCompleationParamitors[worldNumber]);
 
             // Creates each scene
 
@@ -112,6 +118,9 @@ namespace Adventure_man
             // Sets spritefont
             font = Content.Load<SpriteFont>("Font"); // My font was brokne
             altFont = Content.Load<SpriteFont>("AltFont");
+            menuFont = Content.Load<SpriteFont>("MenuFont");
+
+            
 
             collisionTexture = Content.Load<Texture2D>("CollisionTexture");
 
@@ -119,6 +128,8 @@ namespace Adventure_man
             {
                 o.LoadContent(content);
             }
+
+
         }
 
         protected override void Update(GameTime gameTime)
@@ -159,6 +170,10 @@ namespace Adventure_man
                 ChangeWorld();
 
             }
+            foreach (var ob in CurrentWorld.parallax)
+            {
+                ob.Update();
+            }
 
             base.Update(gameTime);
         }
@@ -167,7 +182,9 @@ namespace Adventure_man
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
+            //_spriteBatch.Begin(SpriteSortMode.BackToFront);
             _spriteBatch.Begin();
+
             //For getting feedback
             //#if DEBUG
             //            _spriteBatch.DrawString(font, $"Player pos= {World.Player.Location.X},{World.Player.Location.Y}", Vector2.Zero, Color.White);
@@ -175,7 +192,10 @@ namespace Adventure_man
             //            _spriteBatch.DrawString(font, $"Player Health= {World.Player.health}", new Vector2(0, font.LineSpacing*2), Color.White);
             //            _spriteBatch.DrawString(font, $"", new Vector2(0, font.LineSpacing*3), Color.White);
             //#endif
-
+            foreach (var ob in CurrentWorld.parallax)
+            {
+                ob.Draw();
+            }
             CurrentWorld.Draw(_spriteBatch);
             currentScene.Draw(gameTime, _spriteBatch);
 
@@ -186,9 +206,9 @@ namespace Adventure_man
         private void ChangeWorld()
         {
             worldNumber++;
-            if(worldNumber<worldLayouts.Count)
+            if (worldNumber < worldLayouts.Count)
             {
-                CurrentWorld = new World(playerLocations[worldNumber], worldSizes[worldNumber],worldLayouts[worldNumber],worldCompleationParamitors[worldNumber]);
+                CurrentWorld = new World(parallaxes[worldNumber], playerLocations[worldNumber], worldSizes[worldNumber], worldLayouts[worldNumber], worldCompleationParamitors[worldNumber]);
                 foreach (GameObject go in CurrentWorld.GameObjects)
                     go.LoadContent(content);
             }
@@ -196,6 +216,39 @@ namespace Adventure_man
         }
         private void GenerateWorlds()
         {
+            var tree = Program.AdventureMan.content.Load<Texture2D>("tree");
+            var cloud = Program.AdventureMan.content.Load<Texture2D>("clouds");
+            var ground = Program.AdventureMan.content.Load<Texture2D>("ground");
+            var sun = Program.AdventureMan.content.Load<Texture2D>("sun");
+
+
+
+            parallaxes = new List<List<Parallax>>
+            {
+                new List<Parallax>
+                {
+                    new Parallax(sun, 5f, 1,true){Offset = new Vector2(-900,-200),},
+                    new Parallax(cloud,20f,1,true){Offset = new Vector2(-400,-600),},
+                    new Parallax(ground, 1f, 1){Offset = new Vector2(0,-1800),},
+                    new Parallax(tree, 2f, 7){Offset = new Vector2(0,-300),},
+                    new Parallax(tree, 3f, 7){Offset = new Vector2(100,-445),},
+
+
+
+                },
+                new List<Parallax>
+                {
+                     new Parallax(cloud,7f,1,true){Offset = new Vector2(-400,-600),},
+                    new Parallax(tree, 3f, 7){Offset = new Vector2(0,-400),},
+                },
+                new List<Parallax>
+                {
+                     new Parallax(cloud,7f,1,true){Offset = new Vector2(-400,-600),},
+                    new Parallax(tree, 3f, 7){Offset = new Vector2(0,-400),},
+                },
+            };
+
+
             playerLocations = new List<Vector2>
             {
                 new Vector2(0*World.GridResulution,5*World.GridResulution),

@@ -78,7 +78,7 @@ namespace Adventure_man
         private void SwapWeapon()
         {           
             int i = weapons.IndexOf(currentWeapon);
-            if (i+1<weapons.Count)
+            if (i+1<weapons.Count )
             {
                 currentWeapon = weapons[i + 1];
             }
@@ -254,6 +254,8 @@ namespace Adventure_man
             {
                 SwapWeapon();
             }
+
+
         }
 
         public override void LoadContent(ContentManager contentManager)

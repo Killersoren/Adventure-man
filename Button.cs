@@ -72,7 +72,7 @@ namespace Adventure_man
             // Draws buttons description text in middle of button
             var x = (rectangle.X + (rectangle.Width / 2)) - (Program.AdventureMan.font.MeasureString(buttonDescription).X / 2);
             var y = (rectangle.Y + (rectangle.Height / 2)) - (Program.AdventureMan.font.MeasureString(buttonDescription).Y / 2); //my font was broken so comment this out to test
-            spritebatch.DrawString(Program.AdventureMan.font, buttonDescription, new Vector2(x, y), Color.Black);
+            spritebatch.DrawString(Program.AdventureMan.menuFont, buttonDescription, new Vector2(x, y), Color.Black);
         }
     }
 }

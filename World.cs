@@ -12,15 +12,15 @@ namespace Adventure_man
         public List<GameObject> GameObjects;
         public List<GameObject> newGameObjects;
         public List<GameObject> GameObjectsToRemove;
-        public static Player Player=new Player();
+        public static Player Player = new Player();
 
         public delegate bool CompleationParamitor();
-        public CompleationParamitor forCompleation=() => { return false; };
+        public CompleationParamitor forCompleation = () => { return false; };
         private List<GameObject> nextWorld;
+        public List<Parallax> parallax;
 
 
         //public PickUp pickUp;
-        private Texture2D sprite1;
 
         /// <summary>
         /// The number of grids the world/level has
@@ -39,23 +39,27 @@ namespace Adventure_man
 
         internal List<GameObject> Objects { get => GameObjects; private set => GameObjects = value; }
 
-        public World(List<GameObject> gameObjects)
+        //public World(List<GameObject> gameObjects)
+        //{
+        //    GameObjects = gameObjects;
+        //    GameObjectsToRemove = new List<GameObject>();
+        //    newGameObjects = new List<GameObject>();
+
+        //    Player = (Player)gameObjects.Find(a => a is Player);
+
+        //    worldGrid = new Vector2(20, 11);
+        //    //gridResulution = 64;
+        //    //worldSize = new Vector2(Program.AdventureMan._graphics.PreferredBackBufferWidth, Program.AdventureMan._graphics.PreferredBackBufferHeight);
+        //    worldSize = new Vector2(worldGrid.X * GridResulution, worldGrid.Y * GridResulution);
+
+        //    Objects.AddRange(Border());
+          
+        
+        //}
+    
+        public World(List<Parallax> parallaxes, Vector2 playerLocation,Vector2 worldGrid,List<GameObject> gameObjects,CompleationParamitor forCompleation)
         {
-            GameObjects = gameObjects;
-            GameObjectsToRemove = new List<GameObject>();
-            newGameObjects = new List<GameObject>();
-
-            Player = (Player)gameObjects.Find(a => a is Player);
-
-            worldGrid = new Vector2(20, 11);
-            //gridResulution = 64;
-            //worldSize = new Vector2(Program.AdventureMan._graphics.PreferredBackBufferWidth, Program.AdventureMan._graphics.PreferredBackBufferHeight);
-            worldSize = new Vector2(worldGrid.X * GridResulution, worldGrid.Y * GridResulution);
-
-            Objects.AddRange(Border());
-        }
-        public World(Vector2 playerLocation,Vector2 worldGrid,List<GameObject> gameObjects,CompleationParamitor forCompleation)
-        {
+            parallax = parallaxes;
             GameObjects = gameObjects;
             GameObjectsToRemove = new List<GameObject>();
             newGameObjects = new List<GameObject>();
@@ -66,14 +70,16 @@ namespace Adventure_man
             this.worldGrid = worldGrid;
             worldSize = new Vector2(worldGrid.X * GridResulution, worldGrid.Y * GridResulution);
             GameObjects.AddRange(Border());
+
+         
         }
 
         public void Update()
         {
             GameObjects.AddRange(newGameObjects);
             newGameObjects.Clear();
-            
 
+           
             foreach (GameObject o in Objects)
             {
                 o.Update();
@@ -84,21 +90,13 @@ namespace Adventure_man
                 GameObjects.Remove(g);
             }
             GameObjectsToRemove.Clear();
-            
+          
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            sprite1 = Program.AdventureMan.content.Load<Texture2D>("tree");
-
-            spriteBatch.Draw(sprite1, new Rectangle(2, 200, 128, 256), Color.White);
-            spriteBatch.Draw(sprite1, new Rectangle(2, 200, 128, 256), Color.White);
-            spriteBatch.Draw(sprite1, new Rectangle(50, 200, 128, 256), Color.White);
-            spriteBatch.Draw(sprite1, new Rectangle(250, 200, 128, 256), Color.White);
-            spriteBatch.Draw(sprite1, new Rectangle(340, 200, 128, 256), Color.White);
-
-            spriteBatch.Draw(sprite1, new Rectangle(500, 200, 128, 256), Color.White);
-
+          
+          
             foreach (GameObject o in Objects)
             {
                 o.Draw(spriteBatch);
@@ -106,6 +104,7 @@ namespace Adventure_man
                 o.DrawCollisionBox(spriteBatch);
 #endif
             }
+          
         }
 
         private IEnumerable<GameObject> Border()

@@ -29,8 +29,9 @@ namespace Adventure_man
             else
             {
                 Sprite.Restart();
-            }
 
+            }
+            
             base.Update();
         }
 
@@ -67,7 +68,6 @@ namespace Adventure_man
                         movingX = false;
                     }
                 }
-
                 if (movingY)
                 {
                     if (!MoveTo(nextTarget.Location += stepY))
@@ -104,7 +104,6 @@ namespace Adventure_man
             {
                 this.Location = position;
             }
-
             return move;
         }
 
