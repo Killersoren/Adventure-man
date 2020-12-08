@@ -58,5 +58,22 @@ namespace Adventure_man
                 cooldown = 1000 / fireRate;
             }
         }
+
+        public override void UseWeaponEnemy(Vector2 position, Direction direction)
+        {
+            if (cooldown <= 0)
+            {
+                bowOffset = new Vector2(0, World.Player.Size.Y / 4);
+                offseta = ((int)World.Player.Size.X + arrowSprite.Width) / 2;
+                offsetb = offseta - arrowSprite.Width;
+                //int dir;
+                //dir = (int)direction;
+                //Program.AdventureMan.CurrentWorld.newGameObjects.Add(arrow.Shoot(position, new Vector2(dir, 0)));
+                GameObject.Spawn(new ArrowEnemy(arrowSprite, position + (bowOffset + new Vector2(offsetb + offseta * (int)World.Player.dir, 0)), damage, force, user, direction));
+                cooldown = 1000 / fireRate;
+            }
+        }
+
+
     }
 }

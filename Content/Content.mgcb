@@ -32,6 +32,12 @@
 /processorParam:TextureFormat=Color
 /build:Arrow.png
 
+#begin Background Music.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Background Music.mp3
+
 #begin bar.png
 /importer:TextureImporter
 /processor:TextureProcessor

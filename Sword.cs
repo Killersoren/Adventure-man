@@ -40,6 +40,7 @@ namespace Adventure_man
 
 
 
+
         public override void UseWeapon(Vector2 position, GameWorld.Direction direction)
         {
             //Ras - Edited version of arrow, no speed(force))
@@ -53,6 +54,22 @@ namespace Adventure_man
 
                 GameObject.Spawn(new SwordAttack(swordSprite, position + (swordOffset + new Vector2(offsetb + offseta * (int)World.Player.dir, 0)), damage, user, direction));
                 
+                cooldown = 1000 / fireRate;
+
+            }
+        }
+
+        public override void UseWeaponEnemy(Vector2 position, GameWorld.Direction direction)
+        {
+            if (cooldown <= 0)
+            {
+                swordOffset = new Vector2(0, World.Player.Size.Y / 4);
+                //offseta = ((int)World.Player.Size.X + swordSprite.Width) / 2;
+                //offsetb = offseta - swordSprite.Width;
+
+
+                GameObject.Spawn(new SwordAttackEnemy(swordSprite, position + (swordOffset + new Vector2(offsetb + offseta * (int)World.Player.dir, 0)), damage, user, direction));
+
                 cooldown = 1000 / fireRate;
 
             }

@@ -142,9 +142,9 @@ namespace Adventure_man
             spawnLocation = new Vector2(X * res, Y * res);
             Location = spawnLocation;
 
-            BowTest(); // Spawner fjende med bue
+          //  BowTest(); // Spawner fjende med bue
 
-           // SwordTest(); // spawner fjende med sværd
+            SwordTest(); // spawner fjende med sværd
         }
 
         //public Enemy(int X, int Y, Weapon weapon )
@@ -230,8 +230,13 @@ namespace Adventure_man
                 //timerB.Enabled = false;
                 //timerB.AutoReset = false;
 
-                timerA.Stop();
-                timerB.Stop();
+                if  (timerStart)
+                {
+                    timerA.Stop();
+                    timerB.Stop();
+                }
+
+   
 
                 Attack();
 
@@ -316,7 +321,7 @@ namespace Adventure_man
 
                     if (EnemyWeapon != null)
                     {
-                        EnemyWeapon.UseWeapon(Location, dir);
+                        EnemyWeapon.UseWeaponEnemy(Location, dir);
                     }
 
                 }
@@ -338,7 +343,7 @@ namespace Adventure_man
 
                 if (EnemyWeapon != null)
                 {
-                    EnemyWeapon.UseWeapon(Location, dir);
+                    EnemyWeapon.UseWeaponEnemy(Location, dir);
                 }
 
             }
