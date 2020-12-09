@@ -267,7 +267,7 @@ namespace Adventure_man
                     new PickUp("doublejump", new Vector2(100, 200), new Vector2(64, 64), (Player p) => { ++p.JumpAmount; }),
                     new PickUp("BowTest",4 ,6 , new Vector2(64, 64), (Player p) => {p.PickupWeapon(new Bow("Falcon Bow", 100, 10, 5, p)); }),
                     new PickUp("Sword",8 ,6.5f, new Vector2(64, 32), (Player p) => {p.PickupWeapon(new Sword("Sword", 100, 10, 5, p)); }),
-                    new Enemy(9, 4),
+                    new Enemy(9, 4, "Bow"),
                     new Platform(0, 7, 13, 1,true),
                     new Platform(4, 4, 2, 1,true),
                     new Platform(7, 2, 2, 1,true),
@@ -278,13 +278,13 @@ namespace Adventure_man
                     new Platform(300, 500, 100, 64),
                     new Platform(200, 300, 100, 64),
                     new Platform(450, 200, 100, 64),
-                    new Enemy(9, 4),
+                    new Enemy(9, 4, "Bow"),
                 },
                 new List<GameObject>
                 {
-                    new Enemy(9, 4),
-                    new Enemy(10, 4),
-                    new Enemy(6, 4),
+                    new Enemy(9, 4, "Sword"),
+                    new Enemy(10, 4, "Bow"),
+                    new Enemy(6, 4, "Sword"),
                 }
             };
             worldCompleationParamitors = new List<World.CompleationParamitor>

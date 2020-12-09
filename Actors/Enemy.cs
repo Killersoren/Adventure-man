@@ -19,6 +19,8 @@ namespace Adventure_man
         private Weapon weapon;
         private Vector2 test;
 
+        private string startingWeapon;
+
         private bool isAlive
         {
             get
@@ -140,10 +142,29 @@ namespace Adventure_man
             int res = World.GridResulution;
             spawnLocation = new Vector2(X * res, Y * res);
             Location = spawnLocation;
+        }
 
-            BowTest(); // Spawner fjende med bue
+        public Enemy(int X, int Y, string startingWeapon1)
+        {
+            DefaultEnemy();
+            int res = World.GridResulution;
+            spawnLocation = new Vector2(X * res, Y * res);
+            Location = spawnLocation;
 
-            // SwordTest(); // spawner fjende med sværd
+            startingWeapon = startingWeapon1;
+
+            if (startingWeapon == "Bow")
+            {
+                BowTest();   // Spawner fjende med bue
+            }
+
+            else if (startingWeapon == "Sword")
+            {
+                 SwordTest(); // spawner fjende med sværd
+            }
+
+
+
         }
 
         //public Enemy(int X, int Y, Weapon weapon )
