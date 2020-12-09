@@ -233,11 +233,11 @@ namespace Adventure_man
             {
                 new List<Parallax>
                 {
-                    new Parallax(sun, 5f, 1,true){Offset = new Vector2(-900,-200),},
-                    new Parallax(cloud,20f,1,true){Offset = new Vector2(-400,-600),},
-                    new Parallax(ground, 1f, 1){Offset = new Vector2(0,-1800),},
-                    new Parallax(tree, 2f, 7){Offset = new Vector2(0,-300),},
-                    new Parallax(tree, 3f, 7){Offset = new Vector2(100,-445),},
+                    new Parallax(sun, 5f, 1,true){Offset = new Vector2(-900,0),},
+                    new Parallax(cloud,20f,1,true){Offset = new Vector2(-400,0),},
+                    new Parallax(ground, 0f, 1){Offset = new Vector2(0,-500),},
+                    new Parallax(tree, 2f, 7){Offset = new Vector2(0,-100),},
+                    new Parallax(tree, 3f, 7){Offset = new Vector2(100,-200),},
 
 
 
