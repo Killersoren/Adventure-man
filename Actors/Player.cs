@@ -27,7 +27,7 @@ namespace Adventure_man
         private SoundEffect coinPickup;
         private Texture2D currentWeaponSprite;
 
-        private bool crouched = false;
+        public bool crouched = false;
 
         public int health;
 
