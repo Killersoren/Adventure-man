@@ -225,31 +225,31 @@ namespace Adventure_man
                 {
                     new Parallax(sun, 5f, 1,true){Offset = new Vector2(-900,0),},
                     new Parallax(cloud,20f,1,true){Offset = new Vector2(-400,0),},
-                    new Parallax(ground, 0f, 1){Offset = new Vector2(0,-500),},
-                    new Parallax(tree, 2f, 7){Offset = new Vector2(0,-100),},
-                    new Parallax(tree, 3f, 7){Offset = new Vector2(100,-200),},
+                    new Parallax(ground, 0f, 1){Offset = new Vector2(0,-600),},
+                    new Parallax(tree, 2f, 7){Offset = new Vector2(0,-200),},
+                    new Parallax(tree, 3f, 7){Offset = new Vector2(100,-250),},
                 },
                 new List<Parallax>
                 {
-                   new Parallax(sun, 5f, 1,true){Offset = new Vector2(-900,-200),},
-                    new Parallax(cloud,20f,1,true){Offset = new Vector2(-400,-600),},
-                    new Parallax(ground, 1f, 1){Offset = new Vector2(0,-1800),},
-                    new Parallax(tree, 2f, 7){Offset = new Vector2(0,-300),},
-                    new Parallax(tree, 3f, 7){Offset = new Vector2(100,-445),},
+                   new Parallax(sun, 5f, 1,true){Offset = new Vector2(-900,0),},
+                    new Parallax(cloud,20f,1,true){Offset = new Vector2(-400,0),},
+                    new Parallax(ground, 0f, 1){Offset = new Vector2(0,-600),},
+                    new Parallax(tree, 2f, 7){Offset = new Vector2(0,-200),},
+                    new Parallax(tree, 3f, 7){Offset = new Vector2(100,-250),},
                 },
                 new List<Parallax>
                 {
-                  new Parallax(sun, 5f, 1,true){Offset = new Vector2(-900,-200),},
-                    new Parallax(cloud,20f,1,true){Offset = new Vector2(-400,-600),},
-                    new Parallax(ground, 1f, 1){Offset = new Vector2(0,-1800),},
-                    new Parallax(tree, 2f, 7){Offset = new Vector2(0,-300),},
-                    new Parallax(tree, 3f, 7){Offset = new Vector2(100,-445),},
+                   new Parallax(sun, 5f, 1,true){Offset = new Vector2(-900,0),},
+                    new Parallax(cloud,20f,1,true){Offset = new Vector2(-400,0),},
+                    new Parallax(ground, 0f, 1){Offset = new Vector2(0,-600),},
+                    new Parallax(tree, 2f, 7){Offset = new Vector2(0,-200),},
+                    new Parallax(tree, 3f, 7){Offset = new Vector2(100,-250),},
                 },
             };
 
             playerLocations = new List<Vector2>
             {
-                new Vector2(0*World.GridResulution,5*World.GridResulution),
+                new Vector2(0*World.GridResulution,8*World.GridResulution),
                 new Vector2(0*World.GridResulution,1*World.GridResulution),
                 new Vector2(0*World.GridResulution,1*World.GridResulution)
             };
@@ -264,27 +264,47 @@ namespace Adventure_man
             {
                 new List<GameObject>
                 {
-                    new PickUp("doublejump", new Vector2(100, 200), new Vector2(64, 64), (Player p) => { ++p.JumpAmount; }),
-                    new PickUp("BowTest",4 ,6 , new Vector2(64, 64), (Player p) => {p.PickupWeapon(new Bow("Falcon Bow", 100, 10, 5, p)); }),
-                    new PickUp("Sword",8 ,6.5f, new Vector2(64, 32), (Player p) => {p.PickupWeapon(new Sword("Sword", 100, 10, 5, p)); }),
-                    new Enemy(9, 4, "Bow"),
-                    new Platform(0, 7, 13, 1,true),
-                    new Platform(4, 4, 2, 1,true),
-                    new Platform(7, 2, 2, 1,true),
+                       new PickUp("Sword",3 ,10f, new Vector2(64, 32), (Player p) => {p.PickupWeapon(new Sword("Sword", 100, 10, 5, p)); }),
+                    new Enemy(9, 4, "Sword"),
+                    new Enemy(8, 4, "Sword"),
+                    new Platform(0, 7, 10, 1,true),
+                    new Platform(9, 8, 2, 1,true),
+                    new Enemy(18, 8, "Sword"),
+
                 },
                 new List<GameObject>
                 {
-                    new Platform(0, 650, 1920, 64),
-                    new Platform(300, 500, 100, 64),
-                    new Platform(200, 300, 100, 64),
-                    new Platform(450, 200, 100, 64),
-                    new Enemy(9, 4, "Bow"),
+                      new PickUp("doublejump", new Vector2(360, 570), new Vector2(64, 64), (Player p) => { ++p.JumpAmount; }),
+
+                    new Platform(200, 400, 400, 64),
+                    new Platform(200, 550, 100, 130),
+                    new Platform(500, 600, 100, 130),
+                    new Platform(1000, 400, 100, 100),
+                    new Platform(1000, 600, 100, 100),
+
+                    new Enemy(6, 4, "Bow"),
+                    new Enemy(5, 4, "Bow"),
+                    new Enemy(18, 4, "Bow"),
+                    new Enemy(10, 4, "Sword"),
+                    new Enemy(11, 4, "Sword"),
+
                 },
                 new List<GameObject>
                 {
+
+                     new PickUp("BowTest",4 ,4 , new Vector2(64, 64), (Player p) => {p.PickupWeapon(new Bow("Falcon Bow", 100, 10, 5, p)); }),
+
+                    new Platform(200, 400, 400, 64),
+                    new Platform(200, 600, 100, 130),
+
                     new Enemy(9, 4, "Sword"),
                     new Enemy(10, 4, "Bow"),
                     new Enemy(6, 4, "Sword"),
+                    new Enemy(16, 4, "Bow"),
+                    new Enemy(17, 4, "Bow"),
+                    new Enemy(18, 4, "Sword"),
+                    new Enemy(15, 4, "Sword"),
+
                 }
             };
             worldCompleationParamitors = new List<World.CompleationParamitor>

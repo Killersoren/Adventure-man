@@ -258,8 +258,8 @@ namespace Adventure_man
         {
             if (isAlive == false)
             {
-                //Die();
-                Respawn();
+                Die();
+                //Respawn();
             }
 
             if ()
