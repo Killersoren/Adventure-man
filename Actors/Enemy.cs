@@ -262,7 +262,7 @@ namespace Adventure_man
                 //Respawn();
             }
 
-            if ()
+            
 
             CreateVision();
             ApplyGravity();
