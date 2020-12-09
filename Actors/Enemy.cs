@@ -277,8 +277,8 @@ namespace Adventure_man
         {
             if (isAlive == false)
             {
-                //Die();
-                Respawn();
+                Die();
+                //Respawn();
             }
 
             //Debug.WriteLine("last Velocity is" + lastVelocity);
@@ -373,7 +373,6 @@ namespace Adventure_man
             Coins();
             Destroy(this);
 
-            //Spawn(new Enemy(9, 3));
         }
 
         public void Respawn()
