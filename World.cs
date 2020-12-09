@@ -15,10 +15,11 @@ namespace Adventure_man
         public static Player Player = new Player();
 
         public delegate bool CompleationParamitor();
+
         public CompleationParamitor forCompleation = () => { return false; };
         private List<GameObject> nextWorld;
         public List<Parallax> parallax;
-
+        public Camera Camera;
 
         //public PickUp pickUp;
 
@@ -53,12 +54,12 @@ namespace Adventure_man
         //    worldSize = new Vector2(worldGrid.X * GridResulution, worldGrid.Y * GridResulution);
 
         //    Objects.AddRange(Border());
-          
-        
+
         //}
-    
-        public World(List<Parallax> parallaxes, Vector2 playerLocation,Vector2 worldGrid,List<GameObject> gameObjects,CompleationParamitor forCompleation)
+
+        public World(List<Parallax> parallaxes, Vector2 playerLocation, Vector2 worldGrid, List<GameObject> gameObjects, CompleationParamitor forCompleation)
         {
+            Camera = new Camera();
             parallax = parallaxes;
             GameObjects = gameObjects;
             GameObjectsToRemove = new List<GameObject>();
@@ -70,16 +71,14 @@ namespace Adventure_man
             this.worldGrid = worldGrid;
             worldSize = new Vector2(worldGrid.X * GridResulution, worldGrid.Y * GridResulution);
             GameObjects.AddRange(Border());
-
-         
         }
 
         public void Update()
         {
+            Camera.Position = Player.Location;
             GameObjects.AddRange(newGameObjects);
             newGameObjects.Clear();
 
-           
             foreach (GameObject o in Objects)
             {
                 o.Update();
@@ -90,13 +89,10 @@ namespace Adventure_man
                 GameObjects.Remove(g);
             }
             GameObjectsToRemove.Clear();
-          
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-          
-          
             foreach (GameObject o in Objects)
             {
                 o.Draw(spriteBatch);
@@ -104,13 +100,12 @@ namespace Adventure_man
                 o.DrawCollisionBox(spriteBatch);
 #endif
             }
-          
         }
 
         private IEnumerable<GameObject> Border()
         {
             yield return new Platform(0, -2, (int)worldGrid.X, 1, true); //Top (y=-2 :Leaves a i grid gab at the op of the two side boarders, but allows for jumping at the top)
-            yield return new Platform(0, worldGrid.Y-0.5f, (int)worldGrid.X, 1, true); //Bottom
+            yield return new Platform(0, worldGrid.Y - 0.5f, (int)worldGrid.X, 1, true); //Bottom
 
             yield return new Platform(-1, 0, 1, (int)worldGrid.Y, true); //Left
             yield return new Platform(worldGrid.X, 0, 1, (int)worldGrid.Y, true); //Right

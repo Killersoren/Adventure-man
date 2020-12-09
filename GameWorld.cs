@@ -17,8 +17,6 @@ namespace Adventure_man
         public SpriteFont altFont;
         public SpriteFont menuFont;
 
-        
-
         //new public static GameServiceContainer Services;
 
         private Scene currentScene;
@@ -27,7 +25,6 @@ namespace Adventure_man
         public World CurrentWorld;
 
         private Texture2D collisionTexture;
-
 
         public ContentManager content;
         public (int x, int y) SceenSize;
@@ -45,8 +42,6 @@ namespace Adventure_man
         public List<List<Parallax>> parallaxes;
 
         private Song backgroundMusic;
-
-
 
         public enum Direction : int
         {
@@ -81,7 +76,7 @@ namespace Adventure_man
             //        new Platform(7, 2, 2, 1,true),
             //        new PickUp("", new Vector2(500, 50), new Vector2(100, 100), (Player p) =>
             //            {
-            //            Program.AdventureMan.CurrentWorld = new World( 
+            //            Program.AdventureMan.CurrentWorld = new World(
             //                new List<GameObject>
             //                {
             //                p,
@@ -122,8 +117,6 @@ namespace Adventure_man
             altFont = Content.Load<SpriteFont>("AltFont");
             menuFont = Content.Load<SpriteFont>("MenuFont");
 
-            
-
             collisionTexture = Content.Load<Texture2D>("CollisionTexture");
 
             foreach (GameObject o in CurrentWorld.Objects)
@@ -133,9 +126,8 @@ namespace Adventure_man
 
             ///MUSIC
             backgroundMusic = Content.Load<Song>("Background Music");
-            MediaPlayer.Play(backgroundMusic);
-            MediaPlayer.IsRepeating = true;
-
+            //MediaPlayer.Play(backgroundMusic);
+            //MediaPlayer.IsRepeating = true;
         }
 
         protected override void Update(GameTime gameTime)
@@ -174,7 +166,6 @@ namespace Adventure_man
             if (CurrentWorld.forCompleation())
             {
                 ChangeWorld();
-
             }
             foreach (var ob in CurrentWorld.parallax)
             {
@@ -209,6 +200,7 @@ namespace Adventure_man
 
             base.Draw(gameTime);
         }
+
         private void ChangeWorld()
         {
             worldNumber++;
@@ -218,16 +210,14 @@ namespace Adventure_man
                 foreach (GameObject go in CurrentWorld.GameObjects)
                     go.LoadContent(content);
             }
-
         }
+
         private void GenerateWorlds()
         {
             var tree = Program.AdventureMan.content.Load<Texture2D>("tree");
             var cloud = Program.AdventureMan.content.Load<Texture2D>("clouds");
             var ground = Program.AdventureMan.content.Load<Texture2D>("ground");
             var sun = Program.AdventureMan.content.Load<Texture2D>("sun");
-
-
 
             parallaxes = new List<List<Parallax>>
             {
@@ -238,9 +228,6 @@ namespace Adventure_man
                     new Parallax(ground, 0f, 1){Offset = new Vector2(0,-500),},
                     new Parallax(tree, 2f, 7){Offset = new Vector2(0,-100),},
                     new Parallax(tree, 3f, 7){Offset = new Vector2(100,-200),},
-
-
-
                 },
                 new List<Parallax>
                 {
@@ -259,7 +246,6 @@ namespace Adventure_man
                     new Parallax(tree, 3f, 7){Offset = new Vector2(100,-445),},
                 },
             };
-
 
             playerLocations = new List<Vector2>
             {
@@ -299,7 +285,6 @@ namespace Adventure_man
                     new Enemy(9, 4),
                     new Enemy(10, 4),
                     new Enemy(6, 4),
-
                 }
             };
             worldCompleationParamitors = new List<World.CompleationParamitor>
@@ -318,7 +303,7 @@ namespace Adventure_man
                     if (World.Player.points>=10)
                     {
                         World.Player.crouched = false;
-                        return true;              
+                        return true;
                     }
                                      else
                         return false;
@@ -339,7 +324,6 @@ namespace Adventure_man
                         World.Player.crouched = false;
                         return true;
                     }
-                    
                     else
                         return false;
                 },
@@ -347,12 +331,7 @@ namespace Adventure_man
                 {
                     return false;
                 }
-
             };
-
-
         }
-
-
     }
 }

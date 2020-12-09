@@ -14,10 +14,8 @@ namespace Adventure_man
         private bool grid;
 
         private delegate void PDraw(SpriteBatch spriteBatch);
+
         private PDraw PlatformDraw = (SpriteBatch spriteBatch) => { };
-
-        
-
 
         public int Width
         {
@@ -50,7 +48,7 @@ namespace Adventure_man
         /// <param name="width">the nuber of Grid spaces its going to fill, so the number we are going to multiply the Sprite width with</param>
         /// <param name="height">Same as above just for height</param>
         /// <param name="grid">To set it apart from non grid platform</param>
-        public Platform(Vector2 pos, int width, int height,bool grid)
+        public Platform(Vector2 pos, int width, int height, bool grid)
         {
             Width = width;
             Height = height;
@@ -60,30 +58,33 @@ namespace Adventure_man
             this.grid = true;
             CheckGrid();
         }
+
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="X">X position in a grid, det at den er float gør at man kan placere den lidt uden for grid</param>
         /// <param name="Y">Y position in a grid, det at den er float gør at man kan placere den lidt uden for grid</param>
         /// <param name="width">number of grid spaces it fils horizontally</param>
         /// <param name="height">number of grid spaces it fils vertically</param>
         /// <param name="grid">to set it apart from non grid (true or false it doesnt matter)</param>
-        public Platform(float X, float Y, int width, int height,bool grid)
+        public Platform(float X, float Y, int width, int height, bool grid)
         {
             Width = width;
             Height = height;
             int res = World.GridResulution;
             Location = new Vector2(X * res, Y * res);
             this.grid = true;
-            this.HitBox = (new RectangleF(X*res,Y*res,width*res,height*res));
+            this.HitBox = (new RectangleF(X * res, Y * res, width * res, height * res));
             CheckGrid();
         }
+
         public Platform(float x, float y, float width, float height)
         {
             this.HitBox = new RectangleF(x, y, width, height);
             grid = false;
             CheckGrid();
         }
+
         public override void LoadContent(ContentManager contentManager)
         {
             Sprite = contentManager.Load<Texture2D>("PlatformTest");
@@ -93,6 +94,7 @@ namespace Adventure_man
         {
             PlatformDraw(spriteBatch);
         }
+
         /// <summary>
         /// This is so that you dont have to check every draw, This changes the Draw / Load Content Methods depending on if the platform is one of the old Grid platforms or the new non grid platform
         /// </summary>
@@ -106,7 +108,7 @@ namespace Adventure_man
                     {
                         for (int x = 0; x < width; x++)
                         {
-                            spriteBatch.Draw(Sprite, new Vector2(Location.X + (Sprite.Width * x), Location.Y + (Sprite.Height * y)), Color.White);
+                            spriteBatch.Draw(Sprite, Program.AdventureMan.CurrentWorld.Camera.WorldToScreen(new Vector2(Location.X + (Sprite.Width * x), Location.Y + (Sprite.Height * y))), Color.White);
                         }
                     }
                 };
@@ -118,7 +120,6 @@ namespace Adventure_man
                     base.Draw(spriteBatch);
                 };
             }
-
         }
 
         //public override void OnCollision(GameObject collisionTarget)

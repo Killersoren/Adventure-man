@@ -66,10 +66,5 @@ namespace Adventure_man
 
             base.OnCollision(collisionTarget);
         }
-
-        public override void Draw(SpriteBatch spriteBatch)
-        {
-            spriteBatch.Draw(Sprite, Location, null, Color.White, 0, origin, 1, effect, 1);
-        }
     }
 }

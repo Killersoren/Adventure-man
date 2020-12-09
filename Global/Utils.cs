@@ -29,25 +29,28 @@ namespace Adventure_man
 
         public static void DrawCollisionBox(this GameObject go, SpriteBatch spriteBatch)
         {
-            Rectangle topLine = go.HitBox;
+            var newBox = go.HitBox.Copy();
+            newBox.Location = Program.AdventureMan.CurrentWorld.Camera.WorldToScreen(go.HitBox.Location);
+
+            Rectangle topLine = newBox;
             topLine.Height = 1;
 
-            Rectangle bottomLine = go.HitBox;
+            Rectangle bottomLine = newBox;
             bottomLine.Y += bottomLine.Height;
             bottomLine.Height = 1;
 
-            Rectangle rightLine = go.HitBox;
+            Rectangle rightLine = newBox;
             rightLine.X += rightLine.Width;
             rightLine.Width = 1;
 
-            Rectangle leftLine = go.HitBox;
+            Rectangle leftLine = newBox;
             leftLine.Width = 1;
 
             spriteBatch.Draw(Globals.DefaultSprite, topLine, Color.Red);
             spriteBatch.Draw(Globals.DefaultSprite, bottomLine, Color.Red);
             spriteBatch.Draw(Globals.DefaultSprite, rightLine, Color.Red);
             spriteBatch.Draw(Globals.DefaultSprite, leftLine, Color.Red);
-            spriteBatch.Draw(Globals.TransparentSprite, go.HitBox, Color.Red);
+            spriteBatch.Draw(Globals.TransparentSprite, newBox, Color.Red);
         }
 
         public static Vector2 RoundTo(this Vector2 vec, int digits)

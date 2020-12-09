@@ -83,7 +83,6 @@ namespace Adventure_man
                 //if (playerInSight == true)
                 //    return Color.Blue;
 
-
                 // Debug.WriteLine($"{health}/{(maxHealth * ((float)2 / 3))}");
                 if ((health <= maxHealth) && (health > (maxHealth * ((float)2 / 3))))
                     return Color.Green;
@@ -144,7 +143,7 @@ namespace Adventure_man
 
             BowTest(); // Spawner fjende med bue
 
-           // SwordTest(); // spawner fjende med sværd
+            // SwordTest(); // spawner fjende med sværd
         }
 
         //public Enemy(int X, int Y, Weapon weapon )
@@ -155,7 +154,7 @@ namespace Adventure_man
         //    Location = spawnLocation;
 
         //    this.weapon = weapon;
-            
+
         //}
 
         //public override void LoadContent(ContentManager content)
@@ -230,16 +229,13 @@ namespace Adventure_man
                 //timerB.Enabled = false;
                 //timerB.AutoReset = false;
 
-                if  (timerStart)
+                if (timerStart)
                 {
                     timerA.Stop();
                     timerB.Stop();
                 }
 
-   
-
                 Attack();
-
 
                 //TODO Update position af vision til at følge enemy
             }
@@ -253,7 +249,7 @@ namespace Adventure_man
         public override void Draw(SpriteBatch spriteBatch)
         {
             base.Draw(spriteBatch);
-            spriteBatch.DrawString(healthbarFont, HealthBar, new Vector2(Location.X + (Size.X / 2), Location.Y - healthbarFont.LineSpacing), HealthbarColor, 0, new Vector2((healthbarFont.MeasureString(HealthBar).X / 2), 0), 1, SpriteEffects.None, 0);
+            spriteBatch.DrawString(healthbarFont, HealthBar, Program.AdventureMan.CurrentWorld.Camera.WorldToScreen(new Vector2(Location.X + (Size.X / 2), Location.Y - healthbarFont.LineSpacing)), HealthbarColor, 0, new Vector2((healthbarFont.MeasureString(HealthBar).X / 2), 0), 1, SpriteEffects.None, 0);
         }
 
         public override void Update()
@@ -276,7 +272,6 @@ namespace Adventure_man
 
             if (weapon != null)
                 EnemyWeapon.WeaponCooldown();
-
 
             dir = UpdateSprite();
             base.Update();
@@ -303,41 +298,31 @@ namespace Adventure_man
 
             void MoveTowardsPlayer()
             {
-
                 if (weapon is Bow)
                 {
                     if (World.Player.Location.X < Location.X && Location.X >= World.Player.Location.X + 150)
                     {
                         velocity += -Vector2.UnitX;
-
                     }
-
                     else if (World.Player.Location.X > Location.X && Location.X <= World.Player.Location.X - 150)
                     {
                         velocity += Vector2.UnitX;
-
                     }
-
 
                     if (EnemyWeapon != null)
                     {
                         EnemyWeapon.UseWeaponEnemy(Location, dir);
                     }
-
                 }
-
                 else if (weapon is Sword)
                 {
                     if (World.Player.Location.X < Location.X && Location.X >= World.Player.Location.X + 50)
                     {
                         velocity += -Vector2.UnitX;
-
                     }
-
                     else if (World.Player.Location.X > Location.X && Location.X <= World.Player.Location.X - 50)
                     {
                         velocity += Vector2.UnitX;
-
                     }
                 }
 
@@ -345,23 +330,16 @@ namespace Adventure_man
                 {
                     EnemyWeapon.UseWeaponEnemy(Location, dir);
                 }
-
             }
-        
-            
-            
+
             if (World.Player.Location.X < Location.X)
             {
                 dir = GameWorld.Direction.Left;
             }
-
-        else if (World.Player.Location.X > Location.X)
+            else if (World.Player.Location.X > Location.X)
             {
                 dir = GameWorld.Direction.Right;
             }
-
-       
-                
         }
 
         public void TakeDamage(int damage)
@@ -401,7 +379,7 @@ namespace Adventure_man
         {
             if (!EnemyVision)
             {
-              //  vision = new Vision(visionSprite, Location, 25 * 10, 50);
+                //  vision = new Vision(visionSprite, Location, 25 * 10, 50);
 
                 vision = new Vision(visionSprite, Location, 25 * 10, 50, this);
 
@@ -427,7 +405,6 @@ namespace Adventure_man
             {
                 playerInSight = true;
             }
-
 
             base.OnCollision(other);
             //    if (other is Platform)
