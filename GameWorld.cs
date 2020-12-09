@@ -316,8 +316,11 @@ namespace Adventure_man
                     //else
                     //    return false;
                     if (World.Player.points>=10)
-                        return true;
-                    else
+                    {
+                        World.Player.crouched = false;
+                        return true;              
+                    }
+                                     else
                         return false;
                 },
                 () =>
@@ -332,7 +335,11 @@ namespace Adventure_man
                     //else
                     //    return false;
                     if (World.Player.points>=30)
+                    {
+                        World.Player.crouched = false;
                         return true;
+                    }
+                    
                     else
                         return false;
                 },

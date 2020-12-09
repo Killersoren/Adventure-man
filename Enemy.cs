@@ -142,9 +142,9 @@ namespace Adventure_man
             spawnLocation = new Vector2(X * res, Y * res);
             Location = spawnLocation;
 
-          //  BowTest(); // Spawner fjende med bue
+            BowTest(); // Spawner fjende med bue
 
-            SwordTest(); // spawner fjende med sværd
+           // SwordTest(); // spawner fjende med sværd
         }
 
         //public Enemy(int X, int Y, Weapon weapon )
