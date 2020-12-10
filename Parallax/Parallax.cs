@@ -9,31 +9,15 @@ namespace Adventure_man
 {
     public class Parallax
     {
+        private List<ParallaxSprite> parallaxSprites;
         private readonly bool alwaysMoving;
-        private Vector2 offset;
-
         private readonly float scrollSpeed;
-        private readonly List<ParallaxSprite> parallaxSprites;
         private float parallaxSpeed;
 
-        /// <summary>
-        /// - Ras Property that sets the offset for each parallax sprites in the list parallaxSprites.
-        /// </summary>
-        public Vector2 Offset
-        {
-            get { return offset; }
-            set
-            {
-                offset = value;
-                foreach (var sprite in parallaxSprites)
-                {
-                    sprite.Offset = offset;
-                }
-            }
-        }
+
         /// <summary>
         /// - Ras Parallax public constructor, the constructor that is called from other clases. 
-        ///  Calls its private constructor with a list of "sprites" * "Amount"
+        ///  Calls its private constructor with a list of "sprites" * "Amount" added with Enumerable.Repeat
         ///  Bool "alwaysMoving" sets the sprites to always move even if player is not (clouds and sun) is sat to false if not given
         ///  "ScrollSpeed" is the speed of the sprites scrolling.
         /// </summary>
@@ -41,45 +25,50 @@ namespace Adventure_man
         /// <param name="ScrollSpeed"></param>
         /// <param name="Amount"></param>
         /// <param name="AlwaysMoving"></param>
-        public Parallax(Texture2D sprite, float ScrollSpeed, int Amount, bool AlwaysMoving = false)
-            : this(new List<Texture2D>(Enumerable.Repeat(sprite, Amount).ToList()), ScrollSpeed, AlwaysMoving)
-        {
-        }
+        public Parallax(Texture2D sprite, float ScrollSpeed, int Amount, Vector2 Offset, bool AlwaysMoving = false)
+            : this(new List<Texture2D>(Enumerable.Repeat(sprite, Amount).ToList()), ScrollSpeed, Offset, AlwaysMoving)
+        { }
+
+
         /// <summary>
         /// - Ras Parallax private constructor, sets scrollSpeed and alwaysMoving bool 
-        ///  Creates a list of parallaxSprites and adds a new ParallaxSprite for each sprite in SpriteList
-        ///  Position is sat for each sprite in the list acording to:
+        ///  Creates a list of parallaxSprites and adds a new ParallaxSprite for each sprite in SpriteList with a offset 
+        ///  Position is sat with overloading acording to:
         ///  X = its Width multiplied with its number in the list to spread out the sprites in the parallax
         /// </summary>
         /// <param name="SpriteList"></param>
         /// <param name="ScrollSpeed"></param>
         /// <param name="AlwaysMoving"></param>
-        private Parallax(List<Texture2D> SpriteList, float ScrollSpeed, bool AlwaysMoving = false)
+        private Parallax(List<Texture2D> SpriteList, float ScrollSpeed, Vector2 offset, bool AlwaysMoving = false)
         {
             parallaxSprites = new List<ParallaxSprite>();
             scrollSpeed = ScrollSpeed;
+
             alwaysMoving = AlwaysMoving;
             for (int i = 0; i < SpriteList.Count; i++)
             {
                 var sprite = SpriteList[i];
-                parallaxSprites.Add(new ParallaxSprite(sprite)
-                { position = new Vector2((i * sprite.Width) , 0) }
+                parallaxSprites.Add(new ParallaxSprite(sprite, offset) { position = new Vector2((i * sprite.Width), 0) }
                 );
             }
         }
 
-
+        /// <summary>
+        /// Ras - Calls Applyspeed
+        /// </summary>
         public void Update()
         {
             ApplySpeed();
         }
+
+
         /// <summary>
         /// Ras - Sets speed of all parallax sprites to their scrollspeed  modifier * time and thoose that are not always moving are multiplied with the players movement.
         /// X position is then subtracted with the speed. 
         /// </summary>
         private void ApplySpeed()
         {
-            parallaxSpeed = (float)(scrollSpeed*Program.AdventureMan.gameTime.ElapsedGameTime.TotalSeconds);
+            parallaxSpeed = (float)(scrollSpeed * Program.AdventureMan.gameTime.ElapsedGameTime.TotalSeconds);
             if (!alwaysMoving)
             {
                 parallaxSpeed *= World.Player.velocity.X;
@@ -90,6 +79,9 @@ namespace Adventure_man
             }
         }
 
+        /// <summary>
+        /// Ras - Draws each sprite from list 
+        /// </summary>
         public void Draw()
         {
             foreach (var sprite in parallaxSprites)

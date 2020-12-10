@@ -8,38 +8,59 @@ namespace Adventure_man
 {
    internal class Sword : Weapon
     {
-        private readonly Texture2D swordSprite;
+        private Texture2D swordSprite;
         private Vector2 swordOffset;
         private readonly int offseta;
         private readonly int offsetb;
         
 
-
+        /// <summary>
+        /// Ras - Swords constructor, Sets parameters to this
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="damage"></param>
+        /// <param name="force"></param>
+        /// <param name="fireRate"></param>
+        /// <param name="user"></param>
         public Sword(string name, int damage, float force, float fireRate, MoveableGameObject user)
         {
             base.user = user;
             base.damage = damage;
             base.name = name;
             this.fireRate = fireRate;
-
-            // Ras - flyttes til egen load metode eller til SwordAttack ?
-            swordSprite = Program.AdventureMan.Content.Load<Texture2D>("Sword");
-
+            Loadcontent()
         }
 
+        /// <summary>
+        /// Ras - Sets swords sprite
+        /// </summary>
+        public void Loadcontent()
+        {
+            swordSprite = Program.AdventureMan.Content.Load<Texture2D>("Sword");
+        }
+
+        /// <summary>
+        /// Ras - Swords constructor, Sets parameters to this (without name)
+        /// </summary>
+        /// <param name="damage"></param>
+        /// <param name="force"></param>
+        /// <param name="fireRate"></param>
+        /// <param name="user"></param>
         public Sword( int damage, float force, float fireRate, MoveableGameObject user)
         {
             base.user = user;
             base.damage = damage;
             this.fireRate = fireRate;
-
-            // Ras - flyttes til egen load metode eller til SwordAttack ?
-            swordSprite = Program.AdventureMan.Content.Load<Texture2D>("Sword");
+            Loadcontent()
 
         }
 
 
-
+        /// <summary>
+        /// Ras - 
+        /// </summary>
+        /// <param name="position"></param>
+        /// <param name="direction"></param>
 
         public override void UseWeapon(Vector2 position, GameWorld.Direction direction)
         {

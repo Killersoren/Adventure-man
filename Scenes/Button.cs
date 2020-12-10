@@ -22,7 +22,7 @@ namespace Adventure_man
 
         /// <summary>
         /// Ras - Button constructor, takes parameter position x/y and buttondescription and creates a rectangle and sets its description text
-        /// All buttons sprites are set to "button" texture
+        /// All buttons sprites are set to "button" texture and hover color is set
         /// </summary>
         /// <param name="positionX"></param>
         /// <param name="positionY"></param>

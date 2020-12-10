@@ -13,55 +13,55 @@ namespace Adventure_man
         private readonly MoveableGameObject friendly;
         private Vector2 stab;
 
+        /// <summary>
+        /// Ras - SwordAttacks constructor, sets parameters to this and calls flipsprite because direction only matters upon attacking
+        /// </summary>
+        /// <param name="sprite"></param>
+        /// <param name="position"></param>
+        /// <param name="damage"></param>
+        /// <param name="friendly"></param>
+        /// <param name="direction"></param>
         public SwordAttack(Texture2D sprite, Vector2 position, int damage, MoveableGameObject friendly, GameWorld.Direction direction)
         {
-            dir = direction;
+            this.dir = direction;
             this.friendly = friendly;
-            Location = position;
-            Sprite = sprite;
-            Size = new Vector2(Sprite.Width, Sprite.Height);
+            this.Location = position;
+            this.Sprite = sprite;
+            this.Size = new Vector2(Sprite.Width, Sprite.Height);
             this.damage = damage;
             FlipSprite();
         }
 
+        /// <summary>
+        /// Ras - Empty for now
+        /// </summary>
+        /// <param name="contentManager"></param>
         public override void LoadContent(ContentManager contentManager)
         {
         }
 
+
+        /// <summary>
+        /// Ras - Changes swords velocity increasingly, and removes it when its too far away from the player,
+        /// </summary>
         public override void Update()
         {
-            // Ras - Changes swords velocity increasingly, and removes it if too far away from the player,
-            // missing: rotate, size, effect ?
             if (stab.X > origin.X + 10 || stab.X < origin.X - 10)
             {
                 Destroy(this);
             }
             else
             {
-                //
                 stab.X += (int)dir;
-
                 velocity = stab + World.Player.velocity;
             }
-
-            // Ras - Edited version of arrow, sword is not removed upon collision but dmg is stil taken
-            //foreach (var other in Program.AdventureMan.CurrentWorld.Objects)
-            //    if (HitBox.Intersects(other.HitBox))
-            //    {
-            //        if (other is Enemy && other != friendly)
-            //        {
-            //            ((Enemy)other).TakeDamage(damage);
-            //        }
-            //        if (other is Player && other != friendly)
-            //        {
-            //            ((Player)other).TakeDamage(damage);
-            //        }
-
-            //    }
-
             base.Update();
         }
 
+        /// <summary>
+        /// Ras - Collision for swordattack, if collisiontarget is enemy or player and not friendly (itself), actor takes dmg. 
+        /// </summary>
+        /// <param name="collisionTarget"></param>
         public override void OnCollision(GameObject collisionTarget)
         {
             if (collisionTarget is Enemy enemy && collisionTarget != friendly)
@@ -72,7 +72,6 @@ namespace Adventure_man
             {
                 player.TakeDamage(damage);
             }
-
             base.OnCollision(collisionTarget);
         }
     }

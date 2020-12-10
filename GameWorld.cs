@@ -17,6 +17,11 @@ namespace Adventure_man
         public SpriteFont altFont;
         public SpriteFont menuFont;
 
+        public Texture2D tree;
+        public Texture2D cloud;
+        public Texture2D ground;
+        public Texture2D sun;
+
         //new public static GameServiceContainer Services;
 
         private Scene currentScene;
@@ -40,6 +45,8 @@ namespace Adventure_man
         public List<List<GameObject>> worldLayouts;
         public List<World.CompleationParamitor> worldCompleationParamitors;
         public List<List<Parallax>> parallaxes;
+
+
 
         private Song backgroundMusic;
 
@@ -117,7 +124,6 @@ namespace Adventure_man
             altFont = Content.Load<SpriteFont>("AltFont");
             menuFont = Content.Load<SpriteFont>("MenuFont");
 
-            //collisionTexture = Content.Load<Texture2D>("CollisionTexture");
 
             foreach (GameObject o in CurrentWorld.Objects)
             {
@@ -214,36 +220,37 @@ namespace Adventure_man
 
         private void GenerateWorlds()
         {
-            var tree = Program.AdventureMan.content.Load<Texture2D>("tree");
-            var cloud = Program.AdventureMan.content.Load<Texture2D>("clouds");
-            var ground = Program.AdventureMan.content.Load<Texture2D>("ground");
-            var sun = Program.AdventureMan.content.Load<Texture2D>("sun");
-            //THIS is Just so it will work i dont know how to do Parralaxes.
+            // Ras - Textures for parallax, called from gameworld loadcontent or ? 
+            tree = Program.AdventureMan.content.Load<Texture2D>("tree");
+            cloud = Program.AdventureMan.content.Load<Texture2D>("clouds");
+            ground = Program.AdventureMan.content.Load<Texture2D>("ground");
+            sun = Program.AdventureMan.content.Load<Texture2D>("sun");
+
             parallaxes = new List<List<Parallax>>
             {
                 new List<Parallax>
                 {
-                    new Parallax(sun, 5f, 1,true){Offset = new Vector2(-900,0),},
-                    new Parallax(cloud,20f,1,true){Offset = new Vector2(-400,0),},
-                    new Parallax(ground, 0f, 1){Offset = new Vector2(0,-600),},
-                    new Parallax(tree, 2f, 7){Offset = new Vector2(0,-200),},
-                    new Parallax(tree, 3f, 7){Offset = new Vector2(100,-250),},
+                    new Parallax(sun, 5f, 1,new Vector2(-900,0),true),
+                    new Parallax(cloud,20f,1,new Vector2(-400,0),true),
+                    new Parallax(ground, 0f, 1, new Vector2(0,-600)),
+                    new Parallax(tree, 2f, 7, new Vector2(0,-200)),
+                    new Parallax(tree, 3f, 7, new Vector2(100,-250)),
                 },
                 new List<Parallax>
                 {
-                   new Parallax(sun, 5f, 1,true){Offset = new Vector2(-900,0),},
-                    new Parallax(cloud,20f,1,true){Offset = new Vector2(-400,0),},
-                    new Parallax(ground, 0f, 1){Offset = new Vector2(0,-600),},
-                    new Parallax(tree, 2f, 7){Offset = new Vector2(0,-200),},
-                    new Parallax(tree, 3f, 7){Offset = new Vector2(100,-250),},
+                   new Parallax(sun, 5f, 1,new Vector2(-900,0),true),
+                    new Parallax(cloud,20f,1,new Vector2(-400,0),true),
+                    new Parallax(ground, 0f, 1, new Vector2(0,-600)),
+                    new Parallax(tree, 2f, 7,new Vector2(0,-200) ),
+                    new Parallax(tree, 3f, 7,new Vector2(100,-250)),
                 },
                 new List<Parallax>
                 {
-                   new Parallax(sun, 5f, 1,true){Offset = new Vector2(-900,0),},
-                    new Parallax(cloud,20f,1,true){Offset = new Vector2(-400,0),},
-                    new Parallax(ground, 0f, 1){Offset = new Vector2(0,-600),},
-                    new Parallax(tree, 2f, 7){Offset = new Vector2(0,-200),},
-                    new Parallax(tree, 3f, 7){Offset = new Vector2(100,-250),},
+                   new Parallax(sun, 5f, 1,new Vector2(-900,0),true),
+                    new Parallax(cloud,20f,1,new Vector2(-400,0),true),
+                    new Parallax(ground, 0f, 1, new Vector2(0,-200)),
+                    new Parallax(tree, 2f, 7, new Vector2(0,-200)),
+                    new Parallax(tree, 3f, 7, new Vector2(100,-250)),
                 },
 
             };

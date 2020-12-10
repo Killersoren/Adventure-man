@@ -27,12 +27,14 @@ namespace Adventure_man
             backgroundSprite = Program.AdventureMan.content.Load<Texture2D>("bar");
         }
 
+
         /// <summary>
         /// Empty for now
         /// </summary>
         public override void Update()
         {
         }
+
 
         /// <summary>
         /// Ras - Draws background and shows the amount of healtch and coins the player have. 

@@ -72,6 +72,9 @@ namespace Adventure_man
             Location = new Vector2(X * res, Y * res);
         }
 
+        /// <summary>
+        /// Ras - If the player has a weapon change it to either 0/1(sword / bow), not a bool incase we had more weapons
+        /// </summary>
         private void SwapWeapon()
         {
             int i = weapons.IndexOf(currentWeapon);
