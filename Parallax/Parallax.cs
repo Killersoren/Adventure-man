@@ -74,7 +74,8 @@ namespace Adventure_man
             ApplySpeed();
         }
         /// <summary>
-        /// Ras - 
+        /// Ras - Sets speed of all parallax sprites to their scrollspeed  modifier * time and thoose that are not always moving are multiplied with the players movement.
+        /// X position is then subtracted with the speed. 
         /// </summary>
         private void ApplySpeed()
         {

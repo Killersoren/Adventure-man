@@ -21,7 +21,7 @@ namespace Adventure_man
         private int availableJumps;
 
         public int JumpAmount;
-        public Direction dir;
+        public new Direction dir;
         private SoundEffect coinPickup;
 
         public bool crouched = false;
