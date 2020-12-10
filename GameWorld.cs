@@ -13,7 +13,6 @@ namespace Adventure_man
         public SpriteBatch _spriteBatch;
         public GameTime gameTime;
 
-
         public SpriteFont font;
         public SpriteFont altFont;
         public SpriteFont menuFont;
@@ -34,18 +33,15 @@ namespace Adventure_man
         private Scene menu;
         private Scene ui;
 
-        public int worldNumber=0;
+        public int worldNumber = 0;
 
         public List<Vector2> playerLocations;
         public List<Vector2> worldSizes;
         public List<List<GameObject>> worldLayouts;
         public List<World.CompleationParamitor> worldCompleationParamitors;
-        public List<List<Parallax>> worldParallaxes;
-
-        public Parallax JUSTSOITWILLWORK;
+        public List<List<Parallax>> parallaxes;
 
         private Song backgroundMusic;
-
 
         public enum Direction : int
         {
@@ -80,7 +76,7 @@ namespace Adventure_man
             //        new Platform(7, 2, 2, 1,true),
             //        new PickUp("", new Vector2(500, 50), new Vector2(100, 100), (Player p) =>
             //            {
-            //            Program.AdventureMan.CurrentWorld = new World( 
+            //            Program.AdventureMan.CurrentWorld = new World(
             //                new List<GameObject>
             //                {
             //                p,
@@ -95,9 +91,8 @@ namespace Adventure_man
             //    ),
             //    }
             //);
-            JUSTSOITWILLWORK = new Parallax(Content.Load<Texture2D>("clouds"), 1, 1, false);
             GenerateWorlds();
-            CurrentWorld = new World(worldParallaxes[worldNumber],playerLocations[worldNumber], worldSizes[worldNumber], worldLayouts[worldNumber], worldCompleationParamitors[worldNumber]);
+            CurrentWorld = new World(parallaxes[worldNumber], playerLocations[worldNumber], worldSizes[worldNumber], worldLayouts[worldNumber], worldCompleationParamitors[worldNumber]);
 
             // Creates each scene
 
@@ -133,7 +128,6 @@ namespace Adventure_man
             backgroundMusic = Content.Load<Song>("Background Music");
             MediaPlayer.Play(backgroundMusic);
             MediaPlayer.IsRepeating = true;
-
         }
 
         protected override void Update(GameTime gameTime)
@@ -167,12 +161,11 @@ namespace Adventure_man
             }
             laststate = getstate;
 
-            currentScene.Update();//currentScene.Update(gameTime);
+            currentScene.Update();
 
             if (CurrentWorld.forCompleation())
             {
                 ChangeWorld();
-
             }
             foreach (var ob in CurrentWorld.parallax)
             {
@@ -186,7 +179,9 @@ namespace Adventure_man
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
+            //_spriteBatch.Begin(SpriteSortMode.BackToFront);
             _spriteBatch.Begin();
+
             //For getting feedback
             //#if DEBUG
             //            _spriteBatch.DrawString(font, $"Player pos= {World.Player.Location.X},{World.Player.Location.Y}", Vector2.Zero, Color.White);
@@ -199,23 +194,24 @@ namespace Adventure_man
                 ob.Draw();
             }
             CurrentWorld.Draw(_spriteBatch);
-            currentScene.Draw(_spriteBatch);//currentScene.Draw(gameTime, _spriteBatch);
+            currentScene.Draw(_spriteBatch);
 
             _spriteBatch.End();
 
             base.Draw(gameTime);
         }
+
         private void ChangeWorld()
         {
             worldNumber++;
-            if(worldNumber<worldLayouts.Count)
+            if (worldNumber < worldLayouts.Count)
             {
-                CurrentWorld = new World(worldParallaxes[worldNumber],playerLocations[worldNumber], worldSizes[worldNumber],worldLayouts[worldNumber],worldCompleationParamitors[worldNumber]);
+                CurrentWorld = new World(parallaxes[worldNumber], playerLocations[worldNumber], worldSizes[worldNumber], worldLayouts[worldNumber], worldCompleationParamitors[worldNumber]);
                 foreach (GameObject go in CurrentWorld.GameObjects)
                     go.LoadContent(content);
             }
-
         }
+
         private void GenerateWorlds()
         {
             var tree = Program.AdventureMan.content.Load<Texture2D>("tree");
@@ -356,12 +352,7 @@ namespace Adventure_man
                 {
                     return false;
                 }
-
             };
-
-
         }
-
-
     }
 }
