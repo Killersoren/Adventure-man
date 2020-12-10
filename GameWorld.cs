@@ -219,7 +219,7 @@ namespace Adventure_man
             var ground = Program.AdventureMan.content.Load<Texture2D>("ground");
             var sun = Program.AdventureMan.content.Load<Texture2D>("sun");
             //THIS is Just so it will work i dont know how to do Parralaxes.
-            worldParallaxes =new List<List<Parallax>>
+            parallaxes = new List<List<Parallax>>
             {
                 new List<Parallax>
                 {
