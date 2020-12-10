@@ -8,10 +8,10 @@ namespace Adventure_man
 {
    internal class Sword : Weapon
     {
-        private Texture2D swordSprite;
+        private readonly Texture2D swordSprite;
         private Vector2 swordOffset;
-        private int offseta;
-        private int offsetb;
+        private readonly int offseta;
+        private readonly int offsetb;
         
 
 

@@ -17,7 +17,7 @@ namespace Adventure_man
         public delegate bool CompleationParamitor();
 
         public CompleationParamitor forCompleation = () => { return false; };
-        private List<GameObject> nextWorld;
+       // private readonly List<GameObject> nextWorld;
         public List<Parallax> parallax;
         public Camera Camera;
 
@@ -31,7 +31,7 @@ namespace Adventure_man
         /// <summary>
         /// How many pixels(^2) in each grid zone
         /// </summary>
-        private static int gridResulution = 64;
+        private static readonly int gridResulution = 64;
 
         public static int GridResulution { get => gridResulution; }
 

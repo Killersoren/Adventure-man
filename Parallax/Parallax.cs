@@ -9,11 +9,11 @@ namespace Adventure_man
 {
     public class Parallax
     {
-        private bool alwaysMoving;
+        private readonly bool alwaysMoving;
         private Vector2 offset;
 
-        private float scrollSpeed;
-        private List<ParallaxSprite> parallaxSprites;
+        private readonly float scrollSpeed;
+        private readonly List<ParallaxSprite> parallaxSprites;
         private float parallaxSpeed;
 
         /// <summary>
@@ -72,25 +72,7 @@ namespace Adventure_man
         public void Update()
         {
             ApplySpeed();
-            // CheckPosition();
         }
-
-        //private void CheckPosition()
-        //{
-        //    for (int i = 0; i < parallaxSprites.Count; i++)
-        //    {
-        //        var sprite = parallaxSprites[i];
-        //        if (sprite.Rectangle.Right <- +200)
-        //        {
-        //            var index = i - 1;
-        //            if (index < 0)
-        //            {
-        //                index = parallaxSprites.Count - 1;
-        //            }
-        //            sprite.position.X = parallaxSprites[index].Rectangle.Right - (parallaxSpeed * 2);
-        //        }
-        //    }
-        //}
         /// <summary>
         /// Ras - 
         /// </summary>

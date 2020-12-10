@@ -12,8 +12,7 @@ namespace Adventure_man
         public delegate void OnPickupDelegate(Player player);
 
         public OnPickupDelegate Use = (Player p) => { };
-        private string spritePath = "";
-        private Texture2D[] sprites;
+        private readonly string spritePath = "";
 
         public PickUp(string spritePath, Vector2 location, Vector2 size, OnPickupDelegate onPickup)
         {
@@ -43,8 +42,7 @@ namespace Adventure_man
 
         public override void OnCollision(GameObject collisionTarget)
         {
-            var p = collisionTarget as Player;
-            if (p != null)
+            if (collisionTarget is Player p)
             {
                 Use.Invoke(p);
                 Program.AdventureMan.CurrentWorld.GameObjectsToRemove.Add(this);

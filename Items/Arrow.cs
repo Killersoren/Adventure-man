@@ -10,9 +10,9 @@ namespace Adventure_man
 {
     internal class Arrow : MoveableGameObject
     {
-        private Vector2 oldLoc;
-        private int damage;
-        private MoveableGameObject friendly;//the object that shot the arrow
+        //private Vector2 oldLoc;
+        private readonly int damage;
+        private readonly MoveableGameObject friendly;//the object that shot the arrow
 
         public Arrow(Texture2D sprite, Vector2 position, int damage, float speed, MoveableGameObject friendly, GameWorld.Direction direction)
         {
@@ -64,14 +64,14 @@ namespace Adventure_man
             {
                 Destroy(this);
             }
-            if (collisionTarget is Enemy && collisionTarget != friendly)
+            if (collisionTarget is Enemy enemy && collisionTarget != friendly)
             {
-                ((Enemy)collisionTarget).TakeDamage(damage);
+                enemy.TakeDamage(damage);
                 Destroy(this);
             }
-            if (collisionTarget is Player && collisionTarget != friendly)
+            if (collisionTarget is Player player && collisionTarget != friendly)
             {
-                ((Player)collisionTarget).TakeDamage(damage);
+                player.TakeDamage(damage);
                 Destroy(this);
             }
             base.OnCollision(collisionTarget);

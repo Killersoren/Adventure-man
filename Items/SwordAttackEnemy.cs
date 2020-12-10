@@ -9,8 +9,8 @@ namespace Adventure_man
 {
     internal class SwordAttackEnemy : MoveableGameObject
     {
-        private int damage;
-        private MoveableGameObject friendly;
+        private readonly int damage;
+        private readonly MoveableGameObject friendly;
         private Vector2 stab;
 
         public SwordAttackEnemy(Texture2D sprite, Vector2 position, int damage, MoveableGameObject friendly, GameWorld.Direction direction)
@@ -39,7 +39,7 @@ namespace Adventure_man
             else
             {
                 //
-                stab.X = stab.X + (int)dir;
+                stab.X += (int)dir;
 
                 velocity = stab + World.Player.velocity;
             }
@@ -59,9 +59,9 @@ namespace Adventure_man
 
         public override void OnCollision(GameObject collisionTarget)
         {
-            if (collisionTarget is Player && collisionTarget != friendly)
+            if (collisionTarget is Player player && collisionTarget != friendly)
             {
-                ((Player)collisionTarget).TakeDamage(damage);
+                player.TakeDamage(damage);
             }
 
             base.OnCollision(collisionTarget);

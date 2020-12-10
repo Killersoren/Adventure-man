@@ -17,9 +17,9 @@ namespace Adventure_man
         private MouseState mouseCurrent;
         private MouseState mouseLast;
         private Rectangle mouseRectangle;
-        private string buttonDescription;
+        private readonly string buttonDescription;
         private Rectangle rectangle;
-        private Texture2D sprite;
+        private readonly Texture2D sprite;
 
         public event EventHandler Click;
 

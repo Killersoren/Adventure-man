@@ -18,7 +18,7 @@ namespace Adventure_man
         public Direction dir;//=Direction.Right
         public Direction staticDir;
 
-        private HashSet<GameObject> collisions = new HashSet<GameObject>();
+        private readonly HashSet<GameObject> collisions = new HashSet<GameObject>();
 
         public override void Update()
         {

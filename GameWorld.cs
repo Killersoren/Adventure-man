@@ -24,7 +24,7 @@ namespace Adventure_man
 
         public World CurrentWorld;
 
-        private Texture2D collisionTexture;
+        //private Texture2D collisionTexture;
 
         public ContentManager content;
         public (int x, int y) SceenSize;
@@ -117,7 +117,7 @@ namespace Adventure_man
             altFont = Content.Load<SpriteFont>("AltFont");
             menuFont = Content.Load<SpriteFont>("MenuFont");
 
-            collisionTexture = Content.Load<Texture2D>("CollisionTexture");
+            //collisionTexture = Content.Load<Texture2D>("CollisionTexture");
 
             foreach (GameObject o in CurrentWorld.Objects)
             {

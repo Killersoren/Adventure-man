@@ -17,9 +17,9 @@ namespace Adventure_man
         private int maxHealth;
         private Vector2 spawnLocation;
         private Weapon weapon;
-        private Vector2 test;
+        //private Vector2 test;
 
-        private string startingWeapon;
+        private readonly string startingWeapon;
 
         private bool isAlive
         {
@@ -53,7 +53,7 @@ namespace Adventure_man
         private float gravStrength = 0; // don't like the placement of this var :/
 
         private SpriteFont healthbarFont;
-        private int healthbarLength = 6;
+        private readonly int healthbarLength = 6;
 
         private string HealthBar
         {

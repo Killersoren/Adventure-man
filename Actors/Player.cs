@@ -22,10 +22,7 @@ namespace Adventure_man
 
         public int JumpAmount;
         public Direction dir;
-        private Sword sword;
-        private Bow bow;
         private SoundEffect coinPickup;
-        private Texture2D currentWeaponSprite;
 
         public bool crouched = false;
 
@@ -306,10 +303,10 @@ namespace Adventure_man
 
         public override void OnCollision(GameObject collisionTarget)
         {
-            if (collisionTarget is Coin)
+            if (collisionTarget is Coin coin)
             {
                 coinPickup.Play(0.6f, 0, 0);
-                points += ((Coin)collisionTarget).coinValue;
+                points += coin.coinValue;
                 Destroy(collisionTarget);
             }
 

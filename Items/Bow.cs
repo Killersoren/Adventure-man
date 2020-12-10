@@ -9,9 +9,8 @@ namespace Adventure_man
 {
     internal class Bow : Weapon
     {
-        private float force;
-        private Arrow arrow;
-        private Texture2D arrowSprite;
+        private readonly float force;
+        private readonly Texture2D arrowSprite;
         private Vector2 bowOffset;
         private int offseta;
         private int offsetb;

@@ -14,7 +14,7 @@ namespace Adventure_man
         public Button fullScreen;
         
 
-        private List<Button> buttons;
+        private readonly List<Button> buttons;
 
         public Menu()
         {
@@ -28,11 +28,12 @@ namespace Adventure_man
             exit.Click += Exit_Click;
             fullScreen.Click += FullScreen_Click;
 
-            buttons = new List<Button>();
-
-            buttons.Add(startResumeGame);
-            buttons.Add(exit);
-            buttons.Add(fullScreen);
+            buttons = new List<Button>
+            {
+                startResumeGame,
+                exit,
+                fullScreen
+            };
             Loadcontent();
 
 
