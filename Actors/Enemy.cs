@@ -163,20 +163,7 @@ namespace Adventure_man
                  SwordTest(); // spawner fjende med sværd
             }
 
-
-
         }
-
-        //public Enemy(int X, int Y, Weapon weapon )
-        //{
-        //    DefaultEnemy();
-        //    int res = World.GridResulution;
-        //    spawnLocation = new Vector2(X * res, Y * res);
-        //    Location = spawnLocation;
-
-        //    this.weapon = weapon;
-
-        //}
 
         //public override void LoadContent(ContentManager content)
         public override void LoadContent(ContentManager contentManager)
@@ -245,10 +232,6 @@ namespace Adventure_man
             }
             else if (playerInSight)
             {
-                //timerA.Enabled = false;
-                //timerA.AutoReset = false;
-                //timerB.Enabled = false;
-                //timerB.AutoReset = false;
 
                 if (timerStart)
                 {
@@ -257,8 +240,6 @@ namespace Adventure_man
                 }
 
                 Attack();
-
-                //TODO Update position af vision til at følge enemy
             }
         }
 
@@ -281,11 +262,7 @@ namespace Adventure_man
                 //Respawn();
             }
 
-            //Debug.WriteLine("last Velocity is" + lastVelocity);
-
-            //Debug.WriteLine("Velocity is" + velocity);
-
-            // Debug.WriteLine(playerInSight);
+            
 
             CreateVision();
             ApplyGravity();
@@ -372,7 +349,6 @@ namespace Adventure_man
         {
             Coins();
             Destroy(this);
-
         }
 
         public void Respawn()
@@ -399,7 +375,6 @@ namespace Adventure_man
         {
             if (!EnemyVision)
             {
-                //  vision = new Vision(visionSprite, Location, 25 * 10, 50);
 
                 vision = new Vision(visionSprite, Location, 25 * 10, 50, this);
 

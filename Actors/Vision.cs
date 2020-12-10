@@ -70,9 +70,6 @@ namespace Adventure_man
 
             dir = enemy.dir;
 
-            //  Debug.WriteLine("dir is " + dir);
-
-            //  Debug.WriteLine("enemy dir is " + enemy.dir);
             if (dir == GameWorld.Direction.Right)
             {
             }
@@ -97,11 +94,7 @@ namespace Adventure_man
         {
             if (collisionTarget is Player)
             {
-
-
                 enemy.playerInSight = true;
-
-                //this.enemy.playerInSight = true;
             }
 
             base.OnCollision(collisionTarget);
