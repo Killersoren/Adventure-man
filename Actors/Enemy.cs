@@ -349,6 +349,7 @@ namespace Adventure_man
         {
             Coins();
             Destroy(this);
+            Destroy(vision);
         }
 
         public void Respawn()

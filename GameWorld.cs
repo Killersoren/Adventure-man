@@ -13,7 +13,6 @@ namespace Adventure_man
         public SpriteBatch _spriteBatch;
         public GameTime gameTime;
 
-
         public SpriteFont font;
         public SpriteFont altFont;
         public SpriteFont menuFont;
@@ -34,18 +33,15 @@ namespace Adventure_man
         private Scene menu;
         private Scene ui;
 
-        public int worldNumber=0;
+        public int worldNumber = 0;
 
         public List<Vector2> playerLocations;
         public List<Vector2> worldSizes;
         public List<List<GameObject>> worldLayouts;
         public List<World.CompleationParamitor> worldCompleationParamitors;
-        public List<List<Parallax>> worldParallaxes;
-
-        public Parallax JUSTSOITWILLWORK;
+        public List<List<Parallax>> parallaxes;
 
         private Song backgroundMusic;
-
 
         public enum Direction : int
         {
@@ -80,7 +76,7 @@ namespace Adventure_man
             //        new Platform(7, 2, 2, 1,true),
             //        new PickUp("", new Vector2(500, 50), new Vector2(100, 100), (Player p) =>
             //            {
-            //            Program.AdventureMan.CurrentWorld = new World( 
+            //            Program.AdventureMan.CurrentWorld = new World(
             //                new List<GameObject>
             //                {
             //                p,
@@ -95,9 +91,8 @@ namespace Adventure_man
             //    ),
             //    }
             //);
-            JUSTSOITWILLWORK = new Parallax(Content.Load<Texture2D>("clouds"), 1, 1, false);
             GenerateWorlds();
-            CurrentWorld = new World(worldParallaxes[worldNumber],playerLocations[worldNumber], worldSizes[worldNumber], worldLayouts[worldNumber], worldCompleationParamitors[worldNumber]);
+            CurrentWorld = new World(parallaxes[worldNumber], playerLocations[worldNumber], worldSizes[worldNumber], worldLayouts[worldNumber], worldCompleationParamitors[worldNumber]);
 
             // Creates each scene
 
@@ -133,7 +128,6 @@ namespace Adventure_man
             backgroundMusic = Content.Load<Song>("Background Music");
             MediaPlayer.Play(backgroundMusic);
             MediaPlayer.IsRepeating = true;
-
         }
 
         protected override void Update(GameTime gameTime)
@@ -167,12 +161,15 @@ namespace Adventure_man
             }
             laststate = getstate;
 
-            currentScene.Update();//currentScene.Update(gameTime);
+            currentScene.Update();
 
             if (CurrentWorld.forCompleation())
             {
                 ChangeWorld();
-
+            }
+            foreach (var ob in CurrentWorld.parallax)
+            {
+                ob.Update();
             }
 
             base.Update(gameTime);
@@ -182,7 +179,9 @@ namespace Adventure_man
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
+            //_spriteBatch.Begin(SpriteSortMode.BackToFront);
             _spriteBatch.Begin();
+
             //For getting feedback
             //#if DEBUG
             //            _spriteBatch.DrawString(font, $"Player pos= {World.Player.Location.X},{World.Player.Location.Y}", Vector2.Zero, Color.White);
@@ -190,48 +189,67 @@ namespace Adventure_man
             //            _spriteBatch.DrawString(font, $"Player Health= {World.Player.health}", new Vector2(0, font.LineSpacing*2), Color.White);
             //            _spriteBatch.DrawString(font, $"", new Vector2(0, font.LineSpacing*3), Color.White);
             //#endif
-
+            foreach (var ob in CurrentWorld.parallax)
+            {
+                ob.Draw();
+            }
             CurrentWorld.Draw(_spriteBatch);
-            currentScene.Draw(_spriteBatch);//currentScene.Draw(gameTime, _spriteBatch);
+            currentScene.Draw(_spriteBatch);
 
             _spriteBatch.End();
 
             base.Draw(gameTime);
         }
+
         private void ChangeWorld()
         {
             worldNumber++;
-            if(worldNumber<worldLayouts.Count)
+            if (worldNumber < worldLayouts.Count)
             {
-                CurrentWorld = new World(worldParallaxes[worldNumber],playerLocations[worldNumber], worldSizes[worldNumber],worldLayouts[worldNumber],worldCompleationParamitors[worldNumber]);
+                CurrentWorld = new World(parallaxes[worldNumber], playerLocations[worldNumber], worldSizes[worldNumber], worldLayouts[worldNumber], worldCompleationParamitors[worldNumber]);
                 foreach (GameObject go in CurrentWorld.GameObjects)
                     go.LoadContent(content);
             }
-
         }
+
         private void GenerateWorlds()
         {
-            //THIS is Just so it will work i dont know how to do Parralaxes.
-            worldParallaxes=new List<List<Parallax>>
+            var tree = Program.AdventureMan.content.Load<Texture2D>("tree");
+            var cloud = Program.AdventureMan.content.Load<Texture2D>("clouds");
+            var ground = Program.AdventureMan.content.Load<Texture2D>("ground");
+            var sun = Program.AdventureMan.content.Load<Texture2D>("sun");
+
+            parallaxes = new List<List<Parallax>>
             {
                 new List<Parallax>
                 {
-                    JUSTSOITWILLWORK
+                    new Parallax(sun, 5f, 1,true){Offset = new Vector2(-900,0),},
+                    new Parallax(cloud,20f,1,true){Offset = new Vector2(-400,0),},
+                    new Parallax(ground, 0f, 1){Offset = new Vector2(0,-600),},
+                    new Parallax(tree, 2f, 7){Offset = new Vector2(0,-200),},
+                    new Parallax(tree, 3f, 7){Offset = new Vector2(100,-250),},
                 },
                 new List<Parallax>
                 {
-                    JUSTSOITWILLWORK
+                   new Parallax(sun, 5f, 1,true){Offset = new Vector2(-900,0),},
+                    new Parallax(cloud,20f,1,true){Offset = new Vector2(-400,0),},
+                    new Parallax(ground, 0f, 1){Offset = new Vector2(0,-600),},
+                    new Parallax(tree, 2f, 7){Offset = new Vector2(0,-200),},
+                    new Parallax(tree, 3f, 7){Offset = new Vector2(100,-250),},
                 },
                 new List<Parallax>
                 {
-                    JUSTSOITWILLWORK
-                }
-
+                   new Parallax(sun, 5f, 1,true){Offset = new Vector2(-900,0),},
+                    new Parallax(cloud,20f,1,true){Offset = new Vector2(-400,0),},
+                    new Parallax(ground, 0f, 1){Offset = new Vector2(0,-600),},
+                    new Parallax(tree, 2f, 7){Offset = new Vector2(0,-200),},
+                    new Parallax(tree, 3f, 7){Offset = new Vector2(100,-250),},
+                },
             };
 
             playerLocations = new List<Vector2>
             {
-                new Vector2(0*World.GridResulution,5*World.GridResulution),
+                new Vector2(0*World.GridResulution,8*World.GridResulution),
                 new Vector2(0*World.GridResulution,1*World.GridResulution),
                 new Vector2(0*World.GridResulution,1*World.GridResulution)
             };
@@ -246,27 +264,46 @@ namespace Adventure_man
             {
                 new List<GameObject>
                 {
-                    new PickUp("doublejump", new Vector2(100, 200), new Vector2(64, 64), (Player p) => { ++p.JumpAmount; }),
-                    new PickUp("BowTest",4 ,6 , new Vector2(64, 64), (Player p) => {p.PickupWeapon(new Bow("Falcon Bow", 100, 10, 5, p)); }),
-                    new PickUp("Sword",8 ,6.5f, new Vector2(64, 32), (Player p) => {p.PickupWeapon(new Sword("Sword", 100, 10, 5, p)); }),
-                    new Enemy(9, 4),
-                    new Platform(0, 7, 13, 1,true),
-                    new Platform(4, 4, 2, 1,true),
-                    new Platform(7, 2, 2, 1,true),
+                       new PickUp("Sword",3 ,10f, new Vector2(64, 32), (Player p) => {p.PickupWeapon(new Sword("Sword", 100, 10, 5, p)); }),
+                    new Enemy(9, 4, "Sword"),
+                    new Enemy(8, 4, "Sword"),
+                    new Platform(0, 7, 10, 1,true),
+                    new Platform(9, 8, 2, 1,true),
+                    new Enemy(18, 8, "Sword"),
+
                 },
                 new List<GameObject>
                 {
-                    new Platform(0, 650, 1920, 64),
-                    new Platform(300, 500, 100, 64),
-                    new Platform(200, 300, 100, 64),
-                    new Platform(450, 200, 100, 64),
-                    new Enemy(9, 4),
+                      new PickUp("doublejump", new Vector2(360, 570), new Vector2(64, 64), (Player p) => { ++p.JumpAmount; }),
+
+                    new Platform(200, 400, 400, 64),
+                    new Platform(200, 550, 100, 130),
+                    new Platform(500, 600, 100, 130),
+                    new Platform(1000, 400, 100, 100),
+                    new Platform(1000, 600, 100, 100),
+
+                    new Enemy(6, 4, "Bow"),
+                    new Enemy(5, 4, "Bow"),
+                    new Enemy(18, 4, "Bow"),
+                    new Enemy(10, 4, "Sword"),
+                    new Enemy(11, 4, "Sword"),
+
                 },
                 new List<GameObject>
                 {
-                    new Enemy(9, 4),
-                    new Enemy(10, 4),
-                    new Enemy(6, 4),
+
+                     new PickUp("BowTest",4 ,4 , new Vector2(64, 64), (Player p) => {p.PickupWeapon(new Bow("Falcon Bow", 100, 10, 5, p)); }),
+
+                    new Platform(200, 400, 400, 64),
+                    new Platform(200, 600, 100, 130),
+
+                    new Enemy(9, 4, "Sword"),
+                    new Enemy(10, 4, "Bow"),
+                    new Enemy(6, 4, "Sword"),
+                    new Enemy(16, 4, "Bow"),
+                    new Enemy(17, 4, "Bow"),
+                    new Enemy(18, 4, "Sword"),
+                    new Enemy(15, 4, "Sword"),
 
                 }
             };
@@ -284,8 +321,11 @@ namespace Adventure_man
                     //else
                     //    return false;
                     if (World.Player.points>=10)
+                    {
+                        World.Player.crouched = false;
                         return true;
-                    else
+                    }
+                                     else
                         return false;
                 },
                 () =>
@@ -300,7 +340,10 @@ namespace Adventure_man
                     //else
                     //    return false;
                     if (World.Player.points>=30)
+                    {
+                        World.Player.crouched = false;
                         return true;
+                    }
                     else
                         return false;
                 },
@@ -308,12 +351,7 @@ namespace Adventure_man
                 {
                     return false;
                 }
-
             };
-
-
         }
-
-
     }
 }
