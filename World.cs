@@ -18,7 +18,7 @@ namespace Adventure_man
 
         public CompleationParamitor forCompleation = () => { return false; };
        // private readonly List<GameObject> nextWorld;
-        public List<Parallax> parallax;
+        public List<Parallax> parallaxList;
         public Camera Camera;
 
         //public PickUp pickUp;
@@ -57,15 +57,25 @@ namespace Adventure_man
 
         //}
 
+
+        /// <summary>
+        /// All - Worlds Constructor, Sets parameters, adds player to GameObjects and sets player spawn to player location
+        /// </summary>
+        /// <param name="parallaxes"></param>
+        /// <param name="playerLocation"></param>
+        /// <param name="worldGrid"></param>
+        /// <param name="gameObjects"></param>
+        /// <param name="forCompleation"></param>
         public World(List<Parallax> parallaxes, Vector2 playerLocation, Vector2 worldGrid, List<GameObject> gameObjects, CompleationParamitor forCompleation)
         {
             Camera = new Camera();
-            parallax = parallaxes;
+            parallaxList = parallaxes;
             GameObjects = gameObjects;
             GameObjectsToRemove = new List<GameObject>();
             newGameObjects = new List<GameObject>();
             Player.SetSpawn(playerLocation);
             GameObjects.Add(Player);
+
 
             this.forCompleation = forCompleation;
             this.worldGrid = worldGrid;
@@ -73,13 +83,22 @@ namespace Adventure_man
             GameObjects.AddRange(Border());
         }
 
+        /// <summary>
+        /// All - Sets Camera position to players location, adds new gameobjects to Gameobjects and updates each parrallax and object from lists
+        /// Removes objects in GameObjects from each Object added to list GamObjectsToRemove
+        /// </summary>
         public void Update()
         {
             Camera.Position = Player.Location;
             GameObjects.AddRange(newGameObjects);
             newGameObjects.Clear();
 
-            foreach (GameObject o in Objects)
+            foreach (Parallax p in parallaxList)
+            {
+                p.Update();
+            }
+
+            foreach (GameObject o in Objects )
             {
                 o.Update();
             }
@@ -91,8 +110,17 @@ namespace Adventure_man
             GameObjectsToRemove.Clear();
         }
 
+        /// <summary>
+        /// All - Draws each parallax and objects from lists, 
+        /// Debug: also draws CollisionBox
+        /// </summary>
+        /// <param name="spriteBatch"></param>
         public void Draw(SpriteBatch spriteBatch)
         {
+            foreach (Parallax p in parallaxList)
+            {
+                p.Draw();
+            }
             foreach (GameObject o in Objects)
             {
                 o.Draw(spriteBatch);

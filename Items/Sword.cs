@@ -10,9 +10,7 @@ namespace Adventure_man
     {
         private Texture2D swordSprite;
         private Vector2 swordOffset;
-        private readonly int offseta;
-        private readonly int offsetb;
-        
+
 
         /// <summary>
         /// Ras - Swords constructor, Sets parameters to this
@@ -28,7 +26,7 @@ namespace Adventure_man
             base.damage = damage;
             base.name = name;
             this.fireRate = fireRate;
-            Loadcontent()
+            Loadcontent();
         }
 
         /// <summary>
@@ -51,45 +49,38 @@ namespace Adventure_man
             base.user = user;
             base.damage = damage;
             this.fireRate = fireRate;
-            Loadcontent()
+            Loadcontent();
 
         }
 
 
         /// <summary>
-        /// Ras - 
+        ///  Ras - If cooldown is 0 or less, spawn a swordattack infront of the player with offset sat to player position + (dir)x=1/-1, y= player.size / 4
+        ///  Resets cooldown with firerate modifier after
         /// </summary>
         /// <param name="position"></param>
         /// <param name="direction"></param>
-
         public override void UseWeapon(Vector2 position, GameWorld.Direction direction)
         {
-            //Ras - Edited version of arrow, no speed(force))
-            // 
             if (cooldown <= 0)
             {
-                swordOffset = new Vector2(0, World.Player.Size.Y / 4);
-                //offseta = ((int)World.Player.Size.X + swordSprite.Width) / 2;
-                //offsetb = offseta - swordSprite.Width;
+                swordOffset = new Vector2((int)World.Player.dir, World.Player.Size.Y / 4);
 
-
-                GameObject.Spawn(new SwordAttack(swordSprite, position + (swordOffset + new Vector2(offsetb + offseta * (int)World.Player.dir, 0)), damage, user, direction));
+                GameObject.Spawn(new SwordAttack(swordSprite, position + swordOffset, damage, user, direction));
                 
                 cooldown = 1000 / fireRate;
 
             }
         }
 
+
+
         public override void UseWeaponEnemy(Vector2 position, GameWorld.Direction direction)
         {
             if (cooldown <= 0)
             {
                 swordOffset = new Vector2(0, World.Player.Size.Y / 4);
-                //offseta = ((int)World.Player.Size.X + swordSprite.Width) / 2;
-                //offsetb = offseta - swordSprite.Width;
-
-
-                GameObject.Spawn(new SwordAttackEnemy(swordSprite, position + (swordOffset + new Vector2(offsetb + offseta * (int)World.Player.dir, 0)), damage, user, direction));
+                GameObject.Spawn(new SwordAttackEnemy(swordSprite, position + (swordOffset + new Vector2( (int)World.Player.dir, 0)), damage, user, direction));
 
                 cooldown = 1000 / fireRate;
 

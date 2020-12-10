@@ -142,9 +142,9 @@ namespace Adventure_man
             }
 
             //Debug.WriteLine("The player location is "+Location);
-            if (currentWeapon!=null)
+            if (currentWeapon != null)
                 CurrentWeapon.WeaponCooldown();
-            
+
             ApplyGravity();
             HandleInput();
             dir = UpdateSprite();
@@ -282,7 +282,7 @@ namespace Adventure_man
 
         public void Attack()
         {
-            if (CurrentWeapon!=null)//Jeg troede jeg allerede havde lagt dette ind men det m� jeg alligevel have glemt
+            if (CurrentWeapon != null)//Jeg troede jeg allerede havde lagt dette ind men det m� jeg alligevel have glemt
                 CurrentWeapon.UseWeapon(Location, dir);// Need some kind of facing system
         }
 
@@ -325,5 +325,5 @@ namespace Adventure_man
             Location = location;
         }
     }
-    
+
 }

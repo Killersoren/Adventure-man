@@ -12,32 +12,31 @@ namespace Adventure_man
         public GraphicsDeviceManager _graphics;
         public SpriteBatch _spriteBatch;
         public GameTime gameTime;
+        public ContentManager content;
 
+        // Fonts
         public SpriteFont font;
         public SpriteFont altFont;
         public SpriteFont menuFont;
+        // 
 
+        // Parallax Textures
         public Texture2D tree;
         public Texture2D cloud;
         public Texture2D ground;
         public Texture2D sun;
+        //
+
+        // Scenes
+        private Scene menu;
+        private Scene ui;
+        private Scene currentScene;
+        public bool isGameStarted = false;
+        //
 
         //new public static GameServiceContainer Services;
 
-        private Scene currentScene;
-        public bool isGameStarted = false;
-
         public World CurrentWorld;
-
-        //private Texture2D collisionTexture;
-
-        public ContentManager content;
-        public (int x, int y) SceenSize;
-        private KeyboardState laststate;
-
-        private Scene menu;
-        private Scene ui;
-
         public int worldNumber = 0;
 
         public List<Vector2> playerLocations;
@@ -46,8 +45,10 @@ namespace Adventure_man
         public List<World.CompleationParamitor> worldCompleationParamitors;
         public List<List<Parallax>> parallaxes;
 
+        //private Texture2D collisionTexture;
 
-
+        public (int x, int y) SceenSize;
+        private KeyboardState laststate;
         private Song backgroundMusic;
 
         public enum Direction : int
@@ -55,6 +56,7 @@ namespace Adventure_man
             Right = 1,
             Left = -1
         }
+
 
         public GameWorld()
         {
@@ -101,17 +103,15 @@ namespace Adventure_man
             GenerateWorlds();
             CurrentWorld = new World(parallaxes[worldNumber], playerLocations[worldNumber], worldSizes[worldNumber], worldLayouts[worldNumber], worldCompleationParamitors[worldNumber]);
 
-            // Creates each scene
-
             _graphics.PreferredBackBufferWidth = (int)CurrentWorld.worldSize.X;
             _graphics.PreferredBackBufferHeight = (int)CurrentWorld.worldSize.Y;
-
             SceenSize = (GraphicsDevice.DisplayMode.Width, GraphicsDevice.DisplayMode.Height);
 
+            // Creates each scene
             menu = new Menu();
             ui = new UI();
-            _graphics.ApplyChanges();
 
+            _graphics.ApplyChanges();
             base.Initialize();
         }
 
@@ -120,10 +120,10 @@ namespace Adventure_man
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // Sets spritefont
-            font = Content.Load<SpriteFont>("Font"); // My font was brokne
+            font = Content.Load<SpriteFont>("Font");
             altFont = Content.Load<SpriteFont>("AltFont");
             menuFont = Content.Load<SpriteFont>("MenuFont");
-
+            //
 
             foreach (GameObject o in CurrentWorld.Objects)
             {
@@ -140,9 +140,9 @@ namespace Adventure_man
         {
             this.gameTime = gameTime;
 
-            // Updates current scene
 
-            // Pauses game by changing scene and not running game updates
+
+            // Ras - Pauses game by changing scene and not running game updates
             if (isGameStarted)
             {
                 currentScene = ui;
@@ -152,6 +152,11 @@ namespace Adventure_man
             {
                 currentScene = menu;
             }
+            //
+
+            // Ras - gets player input,
+            // if input = escape, sets isgamestarted
+            // Debug : swaps escape with enter 
             var getstate = Keyboard.GetState();
 #if DEBUG
             if (getstate.IsKeyDown(Keys.Escape) && !laststate.IsKeyDown(Keys.Escape))
@@ -167,16 +172,14 @@ namespace Adventure_man
             }
             laststate = getstate;
 
+            // Updates current scene
             currentScene.Update();
 
             if (CurrentWorld.forCompleation())
             {
                 ChangeWorld();
             }
-            foreach (var ob in CurrentWorld.parallax)
-            {
-                ob.Update();
-            }
+           
 
             base.Update(gameTime);
         }
@@ -195,10 +198,7 @@ namespace Adventure_man
             //            _spriteBatch.DrawString(font, $"Player Health= {World.Player.health}", new Vector2(0, font.LineSpacing*2), Color.White);
             //            _spriteBatch.DrawString(font, $"", new Vector2(0, font.LineSpacing*3), Color.White);
             //#endif
-            foreach (var ob in CurrentWorld.parallax)
-            {
-                ob.Draw();
-            }
+
             CurrentWorld.Draw(_spriteBatch);
             currentScene.Draw(_spriteBatch);
 

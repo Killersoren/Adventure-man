@@ -27,21 +27,11 @@ namespace Adventure_man
 
         public void WeaponCooldown()
         {
-            
             if (cooldown > 0)
             {
                 cooldown -= (float)Program.AdventureMan.gameTime.ElapsedGameTime.TotalMilliseconds;
-                //World.Player.color = Color.Red;
 
             }
-            //else
-            //{
-            //    //World.Player.color = Color.White;
-
-            //}
-
         }
-
-
     }
 }
