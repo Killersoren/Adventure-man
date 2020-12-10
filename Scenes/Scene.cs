@@ -9,13 +9,17 @@ namespace Adventure_man
 {
     abstract public class Scene
     {
-        
+        /// <summary>
+        /// Ras - A scenes backgroundsprite
+        /// </summary>
         protected Texture2D backgroundSprite;
+      
         public abstract void Loadcontent();
+
+        public abstract void Update();
 
         public abstract void Draw(SpriteBatch spritebatch);
 
-        public abstract void Update();
 
     }
 }

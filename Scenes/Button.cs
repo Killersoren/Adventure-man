@@ -10,68 +10,76 @@ namespace Adventure_man
 {
     internal class Button
     {
-        private bool hover;
-        private Color hoverColor = Color.Gray;
-        private Color defaultColor = Color.White;
-        private Color currentColor = Color.White;
+        private Color hoverColor;
+        private Color currentColor;
         private MouseState mouseCurrent;
         private MouseState mouseLast;
         private Rectangle mouseRectangle;
+        private Rectangle buttonRectangle;
         private readonly string buttonDescription;
-        private Rectangle rectangle;
-        private readonly Texture2D sprite;
-
+        private Texture2D sprite;
         public event EventHandler Click;
 
         /// <summary>
-        /// Button constructor
+        /// Ras - Button constructor, takes parameter position x/y and buttondescription and creates a rectangle and sets its description text
+        /// All buttons sprites are set to "button" texture
         /// </summary>
-        /// <param name="rectangle"></param>
+        /// <param name="positionX"></param>
+        /// <param name="positionY"></param>
         /// <param name="buttonDescription"></param>
         public Button(int positionX, int positionY, string buttonDescription)
         {
-            this.rectangle = new Rectangle(positionX,positionY, 120,50);
-            this.sprite = Program.AdventureMan.content.Load<Texture2D>("button");
+            hoverColor = Color.Gray;
+            this.buttonRectangle = new Rectangle(positionX,positionY, 120,50);
             this.buttonDescription = buttonDescription;
+            Loadcontent();
         }
 
+
+        /// <summary>
+        /// Ras - Loads buttons sprite texture
+        /// </summary>
+        public void Loadcontent()
+        {
+            sprite = Program.AdventureMan.content.Load<Texture2D>("button");
+        }
+         
+
+        /// <summary>
+        /// Ras - Stores current and last mouse states and sets current position
+        /// Changes button color if mouse rectangle intersects with button rectangle
+        /// and invokes button content if last mouse state is clicked and current is realease, invokes when click is over, instead of on click
+        /// Resets color after hovering
+        /// </summary>
         public void Update()
         {
-            // Stores current and last mouse states and sets current position
             mouseLast = mouseCurrent;
             mouseCurrent = Mouse.GetState();
             mouseRectangle = new Rectangle(mouseCurrent.X, mouseCurrent.Y, 1, 1);
-            // Resets hover to false after hovering
-            hover = false;
-            // Sets hover to true if mouse cursor intersects with button rectangle
-            if (mouseRectangle.Intersects(rectangle))
+            if (mouseRectangle.Intersects(buttonRectangle))
             {
-                hover = true;
-                // Invokes button content if last mouse state is clicked and current is realease, invokes when click is over, instead of on click
+                this.currentColor = hoverColor;
                 if (mouseLast.LeftButton == ButtonState.Pressed && mouseCurrent.LeftButton == ButtonState.Released)
                 {
                     Click?.Invoke(this, new EventArgs());
                 }
-
-            }
-        }
-
-        public void Draw()
-        {
-            // Toggles color of button depending on hover
-            if (hover == true)
-            {
-                this.currentColor = hoverColor;
             }
             else
             {
-                this.currentColor = defaultColor;
+                this.currentColor = Color.White;
             }
-            // Draws button
-            Program.AdventureMan._spriteBatch.Draw(sprite, rectangle, currentColor);
-            // Draws buttons description text in middle of button
-            var x = (rectangle.X + (rectangle.Width / 2)) - (Program.AdventureMan.font.MeasureString(buttonDescription).X / 2);
-            var y = (rectangle.Y + (rectangle.Height / 2)) - (Program.AdventureMan.font.MeasureString(buttonDescription).Y / 2); //my font was broken so comment this out to test
+         
+        }
+       
+        
+        /// <summary>
+        /// Ras - Draws button and its description text in middle of button
+        /// </summary>
+        public void Draw()
+        {
+            Program.AdventureMan._spriteBatch.Draw(sprite, buttonRectangle, currentColor);
+            var x = (buttonRectangle.X + (buttonRectangle.Width / 2)) - (Program.AdventureMan.font.MeasureString(buttonDescription).X / 2);
+            var y = (buttonRectangle.Y + (buttonRectangle.Height / 2)) - (Program.AdventureMan.font.MeasureString(buttonDescription).Y / 2);
             Program.AdventureMan._spriteBatch.DrawString(Program.AdventureMan.menuFont, buttonDescription, new Vector2(x, y), Color.Black);
         }
     }

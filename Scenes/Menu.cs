@@ -9,18 +9,16 @@ namespace Adventure_man
 {
     internal class Menu : Scene
     {
-        public Button startResumeGame;
-        public Button exit;
-        public Button fullScreen;
-        
-
+        private readonly Button startResumeGame;
+        private readonly Button exit;
+        private readonly Button fullScreen;
         private readonly List<Button> buttons;
 
+        /// <summary>
+        /// Ras - Menu Constructor, Sets and create the 3 buttons and adds them to a list of buttons
+        /// </summary>
         public Menu()
         {
-
-
-
             startResumeGame = new Button(Program.AdventureMan.SceenSize.x / 100 * 1, Program.AdventureMan.SceenSize.y / 100 * 40, "Start");
             fullScreen = new Button(Program.AdventureMan.SceenSize.x / 100 * 1, Program.AdventureMan.SceenSize.y / 100 * 50, "Fullscreen");
             exit = new Button(Program.AdventureMan.SceenSize.x / 100 * 1, Program.AdventureMan.SceenSize.y / 100 * 60, "Exit");
@@ -39,29 +37,55 @@ namespace Adventure_man
 
         }
 
-        private void FullScreen_Click(object sender, EventArgs e)
-        {
-            Program.AdventureMan._graphics.IsFullScreen = !Program.AdventureMan._graphics.IsFullScreen;
-            Program.AdventureMan._graphics.ApplyChanges();
-        }
 
+        /// <summary>
+        /// Ras - Toggles bool isGamestarted, (leave menu)
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void StartResumeGame_Click(object sender, System.EventArgs e)
+        {
+            Program.AdventureMan.isGameStarted = true;
+        }
+       
+        
+        /// <summary>
+        /// Ras - Exits the game
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Exit_Click(object sender, EventArgs e)
         {
 
             Program.AdventureMan.Exit();
         }
-
-
+       
+        
+        /// <summary>
+        /// Ras - Toggles fullscreen on and off
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void FullScreen_Click(object sender, EventArgs e)
+        {
+            Program.AdventureMan._graphics.IsFullScreen = !Program.AdventureMan._graphics.IsFullScreen;
+            Program.AdventureMan._graphics.ApplyChanges();
+        }
+       
+        
+        /// <summary>
+        /// Ras - Menus backgroundssprite is set (black and drawn at 0.5f opacity to create a darker overlay when in menu)
+        /// </summary>
         public override void Loadcontent()
         {
-            backgroundSprite = Program.AdventureMan.content.Load<Texture2D>("deepart");
+            backgroundSprite = Program.AdventureMan.content.Load<Texture2D>("blankbackground");
         }
-
-        private void StartResumeGame_Click(object sender, System.EventArgs e)
-        {
-            Program.AdventureMan.isGameStarted = true;
-        }
-
+       
+        
+        /// <summary>
+        /// Ras - calls update on all buttons in list
+        /// </summary>
+        /// 
         public override void Update()
         {
             foreach (Button b in buttons)
@@ -69,7 +93,12 @@ namespace Adventure_man
                 b.Update();
             }
         }
-
+        
+        
+        /// <summary>
+        /// Ras - Draws menus backgroundsprite, buttons in list and a string
+        /// </summary>
+        /// <param name="spritebatch"></param>
         public override void Draw(SpriteBatch spritebatch)
         {
             spritebatch.Draw(backgroundSprite, new Rectangle(0, 0, Program.AdventureMan.SceenSize.x, Program.AdventureMan.SceenSize.y), Color.Black * 0.5f);
