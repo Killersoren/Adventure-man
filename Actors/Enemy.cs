@@ -309,7 +309,7 @@ namespace Adventure_man
 
                     if (EnemyWeapon != null)
                     {
-                        EnemyWeapon.UseWeaponEnemy(Location, dir);
+                        EnemyWeapon.UseWeapon(Location, dir,this);
                     }
                 }
                 else if (weapon is Sword)
@@ -326,7 +326,7 @@ namespace Adventure_man
 
                 if (EnemyWeapon != null)
                 {
-                    EnemyWeapon.UseWeaponEnemy(Location, dir);
+                    EnemyWeapon.UseWeapon(Location, dir,this);
                 }
             }
 
@@ -387,12 +387,12 @@ namespace Adventure_man
 
         public void BowTest()
         {
-            weapon = new Bow(30, 10, 2, this);
+            weapon = new Bow(30, 10, 2);
         }
 
         public void SwordTest()
         {
-            weapon = new Sword(40, 10, 2, this);
+            weapon = new Sword(40, 2);
         }
 
         public override void OnCollision(GameObject other)

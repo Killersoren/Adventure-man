@@ -272,7 +272,7 @@ namespace Adventure_man
             {
                 new List<GameObject>
                 {
-                       new PickUp("Sword",3 ,10f, new Vector2(64, 32), (Player p) => {p.PickupWeapon(new Sword("Sword", 100, 10, 5, p)); }),
+                       new PickUp("Sword",3 ,10f, new Vector2(64, 32), (Player p) => {p.PickupWeapon(new Sword("Sword", 100, 5)); }),
                     new Enemy(9, 4, "Sword"),
                     new Enemy(8, 4, "Sword"),
                     new Platform(0, 7, 10, 1,true),
@@ -300,7 +300,7 @@ namespace Adventure_man
                 new List<GameObject>
                 {
 
-                     new PickUp("BowTest",4 ,4 , new Vector2(64, 64), (Player p) => {p.PickupWeapon(new Bow("Falcon Bow", 100, 10, 5, p)); }),
+                     new PickUp("BowTest",4 ,4 , new Vector2(64, 64), (Player p) => {p.PickupWeapon(new Bow("Falcon Bow", 100, 10, 5)); }),
 
                     new Platform(200, 400, 400, 64),
                     new Platform(200, 600, 100, 130),

@@ -290,7 +290,7 @@ namespace Adventure_man
         public void Attack()
         {
             if (CurrentWeapon != null)//Jeg troede jeg allerede havde lagt dette ind men det m� jeg alligevel have glemt
-                CurrentWeapon.UseWeapon(Location, dir);// Need some kind of facing system
+                CurrentWeapon.UseWeapon(Location, dir,this);// Need some kind of facing system
         }
 
         public void TakeDamage(int damage)
