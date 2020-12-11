@@ -377,7 +377,7 @@ namespace Adventure_man
             if (!EnemyVision)
             {
 
-                vision = new Vision(visionSprite, Location, 25 * 10, 50, this);
+                vision = new Vision(visionSprite, Location, 250, 50, this);
 
                 Program.AdventureMan.CurrentWorld.newGameObjects.Add(vision);
 
