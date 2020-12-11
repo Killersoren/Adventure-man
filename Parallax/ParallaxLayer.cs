@@ -73,9 +73,9 @@ namespace Adventure_man
             {
                 parallaxSpeed *= World.Player.velocity.X;
             }
-            foreach (var sprite in parallaxSprites)
+            foreach (var parallaxSprite in parallaxSprites)
             {
-                sprite.position.X -= parallaxSpeed;
+                parallaxSprite.position.X -= parallaxSpeed;
             }
         }
 
