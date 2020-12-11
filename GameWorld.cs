@@ -43,7 +43,7 @@ namespace Adventure_man
         public List<Vector2> worldSizes;
         public List<List<GameObject>> worldLayouts;
         public List<World.CompleationParamitor> worldCompleationParamitors;
-        public List<List<Parallax>> parallaxes;
+        public List<List<ParallaxLayer>> parallax;
 
         //private Texture2D collisionTexture;
 
@@ -101,7 +101,7 @@ namespace Adventure_man
             //    }
             //);
             GenerateWorlds();
-            CurrentWorld = new World(parallaxes[worldNumber], playerLocations[worldNumber], worldSizes[worldNumber], worldLayouts[worldNumber], worldCompleationParamitors[worldNumber]);
+            CurrentWorld = new World(parallax[worldNumber], playerLocations[worldNumber], worldSizes[worldNumber], worldLayouts[worldNumber], worldCompleationParamitors[worldNumber]);
 
             _graphics.PreferredBackBufferWidth = (int)CurrentWorld.worldSize.X;
             _graphics.PreferredBackBufferHeight = (int)CurrentWorld.worldSize.Y;
@@ -212,7 +212,7 @@ namespace Adventure_man
             worldNumber++;
             if (worldNumber < worldLayouts.Count)
             {
-                CurrentWorld = new World(parallaxes[worldNumber], playerLocations[worldNumber], worldSizes[worldNumber], worldLayouts[worldNumber], worldCompleationParamitors[worldNumber]);
+                CurrentWorld = new World(parallax[worldNumber], playerLocations[worldNumber], worldSizes[worldNumber], worldLayouts[worldNumber], worldCompleationParamitors[worldNumber]);
                 foreach (GameObject go in CurrentWorld.GameObjects)
                     go.LoadContent(content);
             }
@@ -226,29 +226,29 @@ namespace Adventure_man
             ground = Program.AdventureMan.content.Load<Texture2D>("ground");
             sun = Program.AdventureMan.content.Load<Texture2D>("sun");
 
-            parallaxes = new List<List<Parallax>>
+            parallax = new List<List<ParallaxLayer>>
             {
-                new List<Parallax>
+                new List<ParallaxLayer>
                 {
-                    new Parallax(sun, 5f, 1,new Vector2(-900,0),true),
-                    new Parallax(cloud,20f,1,new Vector2(-400,0),true),
-                    new Parallax(ground, 0f, 1, new Vector2(0,-600)),
-                    new Parallax(tree, 2f, 7, new Vector2(0,-200)),
-                    new Parallax(tree, 3f, 7, new Vector2(100,-250)),
+                    new ParallaxLayer(sun, 5f, 1,new Vector2(-900,0),true),
+                    new ParallaxLayer(cloud,20f,1,new Vector2(-400,0),true),
+                    new ParallaxLayer(ground, 0f, 1, new Vector2(0,-600)),
+                    new ParallaxLayer(tree, 2f, 7, new Vector2(0,-200)),
+                    new ParallaxLayer(tree, 3f, 7, new Vector2(100,-250)),
                 },
-                new List<Parallax>
+                new List<ParallaxLayer>
                 {
-                   new Parallax(sun, 5f, 1,new Vector2(-900,0),true),
-                    new Parallax(cloud,20f,1,new Vector2(-400,0),true),
-                    new Parallax(ground, 0f, 1, new Vector2(0,-600)),
-                    new Parallax(tree, 3f, 7,new Vector2(100,-250)),
+                   new ParallaxLayer(sun, 5f, 1,new Vector2(-900,0),true),
+                    new ParallaxLayer(cloud,20f,1,new Vector2(-400,0),true),
+                    new ParallaxLayer(ground, 0f, 1, new Vector2(0,-600)),
+                    new ParallaxLayer(tree, 3f, 7,new Vector2(100,-250)),
                 },
-                new List<Parallax>
+                new List<ParallaxLayer>
                 {
-                   new Parallax(sun, 5f, 1,new Vector2(-900,0),true),
-                    new Parallax(ground, 0f, 1, new Vector2(0,-600)),
-                    new Parallax(tree, 2f, 7, new Vector2(0,-200)),
-                    new Parallax(tree, 3f, 7, new Vector2(100,-250)),
+                   new ParallaxLayer(sun, 5f, 1,new Vector2(-900,0),true),
+                    new ParallaxLayer(ground, 0f, 1, new Vector2(0,-600)),
+                    new ParallaxLayer(tree, 2f, 7, new Vector2(0,-200)),
+                    new ParallaxLayer(tree, 3f, 7, new Vector2(100,-250)),
                 },
 
             };

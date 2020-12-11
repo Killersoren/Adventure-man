@@ -18,7 +18,7 @@ namespace Adventure_man
 
         public CompleationParamitor forCompleation = () => { return false; };
        // private readonly List<GameObject> nextWorld;
-        public List<Parallax> parallaxList;
+        public List<ParallaxLayer> parallaxList;
         public Camera Camera;
 
         //public PickUp pickUp;
@@ -66,7 +66,7 @@ namespace Adventure_man
         /// <param name="worldGrid"></param>
         /// <param name="gameObjects"></param>
         /// <param name="forCompleation"></param>
-        public World(List<Parallax> parallaxes, Vector2 playerLocation, Vector2 worldGrid, List<GameObject> gameObjects, CompleationParamitor forCompleation)
+        public World(List<ParallaxLayer> parallaxes, Vector2 playerLocation, Vector2 worldGrid, List<GameObject> gameObjects, CompleationParamitor forCompleation)
         {
             Camera = new Camera();
             parallaxList = parallaxes;
@@ -93,7 +93,7 @@ namespace Adventure_man
             GameObjects.AddRange(newGameObjects);
             newGameObjects.Clear();
 
-            foreach (Parallax p in parallaxList)
+            foreach (ParallaxLayer p in parallaxList)
             {
                 p.Update();
             }
@@ -117,7 +117,7 @@ namespace Adventure_man
         /// <param name="spriteBatch"></param>
         public void Draw(SpriteBatch spriteBatch)
         {
-            foreach (Parallax p in parallaxList)
+            foreach (ParallaxLayer p in parallaxList)
             {
                 p.Draw();
             }

@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Adventure_man
 {
-    public class Parallax
+    public class ParallaxLayer
     {
         private List<ParallaxSprite> parallaxSprites;
         private readonly bool alwaysMoving;
@@ -25,7 +25,7 @@ namespace Adventure_man
         /// <param name="ScrollSpeed"></param>
         /// <param name="Amount"></param>
         /// <param name="AlwaysMoving"></param>
-        public Parallax(Texture2D sprite, float ScrollSpeed, int Amount, Vector2 Offset, bool AlwaysMoving = false)
+        public ParallaxLayer(Texture2D sprite, float ScrollSpeed, int Amount, Vector2 Offset, bool AlwaysMoving = false)
             : this(new List<Texture2D>(Enumerable.Repeat(sprite, Amount).ToList()), ScrollSpeed, Offset, AlwaysMoving)
         { }
 
@@ -39,7 +39,7 @@ namespace Adventure_man
         /// <param name="SpriteList"></param>
         /// <param name="ScrollSpeed"></param>
         /// <param name="AlwaysMoving"></param>
-        private Parallax(List<Texture2D> SpriteList, float ScrollSpeed, Vector2 offset, bool AlwaysMoving = false)
+        private ParallaxLayer(List<Texture2D> SpriteList, float ScrollSpeed, Vector2 offset, bool AlwaysMoving = false)
         {
             parallaxSprites = new List<ParallaxSprite>();
             scrollSpeed = ScrollSpeed;
