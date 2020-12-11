@@ -66,21 +66,16 @@ namespace Adventure_man
 
         public override void Update()
         {
-            MoveTo(enemy.Location);
-
             dir = enemy.dir;
-
             if (dir == GameWorld.Direction.Right)
             {
+                Location = enemy.Location;
             }
 
             else if (dir == GameWorld.Direction.Left)
             {
-                Location += new Vector2(-183, 0);
+                Location = enemy.Location - new Vector2(188,0) ;
             }
-
-            //    dir = UpdateSprite();
-
             base.Update();
         }
 
