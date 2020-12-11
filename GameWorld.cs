@@ -258,8 +258,8 @@ namespace Adventure_man
             playerLocations = new List<Vector2>
             {
                 new Vector2(0*World.GridResulution,8*World.GridResulution),
-                new Vector2(0*World.GridResulution,1*World.GridResulution),
-                new Vector2(0*World.GridResulution,1*World.GridResulution)
+                new Vector2(0*World.GridResulution,8*World.GridResulution),
+                new Vector2(0*World.GridResulution,8*World.GridResulution)
             };
 
             worldSizes = new List<Vector2>
