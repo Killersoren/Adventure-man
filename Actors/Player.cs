@@ -27,6 +27,9 @@ namespace Adventure_man
         public bool crouched = false;
 
         public int health;
+        private int maxHealth;
+
+        public Vector2 spawn;
 
         private bool isAlive
         {
@@ -49,13 +52,16 @@ namespace Adventure_man
 
         private void DefaultPlayer()
         {
-            health = 200;
+             
+            maxHealth = 200;
+            health = maxHealth;
             JumpAmount = 1;
             dragCoefficient = 0.9f;
             speed = 1f;
             staticDir = Direction.Right;
 
             weapons = new List<Weapon>();
+            
 
         }
 
@@ -70,7 +76,7 @@ namespace Adventure_man
 
             int res = World.GridResulution;
             Location = new Vector2(X * res, Y * res);
-
+            spawn = Location;
         }
 
         /// <summary>
@@ -301,8 +307,8 @@ namespace Adventure_man
 
         public void Respawn()
         {
-            health = 200;
-            Location = Vector2.Zero;
+            health = maxHealth;
+            Location = spawn;
         }
 
         public override void OnCollision(GameObject collisionTarget)
@@ -324,6 +330,7 @@ namespace Adventure_man
         public void SetSpawn(Vector2 location)
         {
             Location = location;
+            spawn = location;
         }
     }
 
