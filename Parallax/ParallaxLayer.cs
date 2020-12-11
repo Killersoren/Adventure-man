@@ -9,7 +9,7 @@ namespace Adventure_man
 {
     public class ParallaxLayer
     {
-        private List<ParallaxSprite> parallaxSprites;
+        private readonly List<ParallaxSprite> parallaxSprites;
         private readonly bool alwaysMoving;
         private readonly float scrollSpeed;
         private float parallaxSpeed;

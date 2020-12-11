@@ -23,6 +23,14 @@ namespace Adventure_man
 
         //public PickUp pickUp;
 
+
+        // Parallax Textures
+        public static Texture2D tree = Program.AdventureMan.content.Load<Texture2D>("tree");
+        public static Texture2D cloud = Program.AdventureMan.content.Load<Texture2D>("clouds");
+        public static Texture2D ground = Program.AdventureMan.content.Load<Texture2D>("ground");
+        public static Texture2D sun = Program.AdventureMan.content.Load<Texture2D>("sun");
+        //
+
         /// <summary>
         /// The number of grids the world/level has
         /// </summary>
