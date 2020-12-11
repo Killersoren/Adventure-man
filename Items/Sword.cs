@@ -20,9 +20,9 @@ namespace Adventure_man
         /// <param name="force"></param>
         /// <param name="fireRate"></param>
         /// <param name="user"></param>
-        public Sword(string name, int damage, float force, float fireRate, MoveableGameObject user)
+        public Sword(string name, int damage, float fireRate)
         {
-            base.user = user;
+            //base.user = user;
             base.damage = damage;
             base.name = name;
             this.fireRate = fireRate;
@@ -44,9 +44,9 @@ namespace Adventure_man
         /// <param name="force"></param>
         /// <param name="fireRate"></param>
         /// <param name="user"></param>
-        public Sword( int damage, float force, float fireRate, MoveableGameObject user)
+        public Sword( int damage, float fireRate)
         {
-            base.user = user;
+            //base.user = user;
             base.damage = damage;
             this.fireRate = fireRate;
             Loadcontent();
@@ -60,28 +60,14 @@ namespace Adventure_man
         /// </summary>
         /// <param name="position"></param>
         /// <param name="direction"></param>
-        public override void UseWeapon(Vector2 position, GameWorld.Direction direction)
+        public override void UseWeapon(Vector2 position, GameWorld.Direction direction,MoveableGameObject user)
         {
             if (cooldown <= 0)
             {
-                swordOffset = new Vector2((int)World.Player.dir, World.Player.Size.Y / 4);
+                swordOffset = new Vector2((int)user.dir, user.Size.Y / 4);
 
                 GameObject.Spawn(new SwordAttack(swordSprite, position + swordOffset, damage, user, direction));
                 
-                cooldown = 1000 / fireRate;
-
-            }
-        }
-
-
-
-        public override void UseWeaponEnemy(Vector2 position, GameWorld.Direction direction)
-        {
-            if (cooldown <= 0)
-            {
-                swordOffset = new Vector2(0, World.Player.Size.Y / 4);
-                GameObject.Spawn(new SwordAttackEnemy(swordSprite, position + (swordOffset + new Vector2( (int)World.Player.dir, 0)), damage, user, direction));
-
                 cooldown = 1000 / fireRate;
 
             }

@@ -64,7 +64,7 @@ namespace Adventure_man
         /// <param name="collisionTarget"></param>
         public override void OnCollision(GameObject collisionTarget)
         {
-            if (collisionTarget is Enemy enemy && collisionTarget != friendly)
+            if (collisionTarget is Enemy enemy && collisionTarget != friendly && friendly is Player)
             {
                 enemy.TakeDamage(damage);
             }
