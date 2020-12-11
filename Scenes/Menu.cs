@@ -15,7 +15,7 @@ namespace Adventure_man
         private readonly List<Button> buttons;
 
         /// <summary>
-        /// Ras - Menu Constructor, Sets and create the 3 buttons and adds them to a list of buttons
+        /// Ras - Menu Constructor, Sets and create the 3 buttons and adds them to a new list of buttons
         /// </summary>
         public Menu()
         {
@@ -103,9 +103,6 @@ namespace Adventure_man
         {
             spritebatch.Draw(backgroundSprite, new Rectangle(0, 0, Program.AdventureMan.SceenSize.x, Program.AdventureMan.SceenSize.y), Color.Black * 0.5f);
             spritebatch.DrawString(Program.AdventureMan.menuFont, $" Menu / Paused (Enter)", new Vector2(Program.AdventureMan.SceenSize.x/4, Program.AdventureMan.SceenSize.y/20), Color.Black , 0f, Vector2.Zero, 2f,SpriteEffects.None,0f);
-
-
-
             foreach (Button b in buttons)
             {
                 b.Draw();

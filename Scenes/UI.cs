@@ -37,8 +37,9 @@ namespace Adventure_man
 
 
         /// <summary>
-        /// Ras - Draws background and shows the amount of healtch and coins the player have. 
-        /// Also shows what weapons is equipped if 
+        /// Ras - Draws a black bar at the top of the scene that shows the amount of healtch and what weapons is equipped if any 
+        /// Also shows the amount of coins the player have in the middle and player controls to the right
+        /// Shows aditional info in debug mode
         /// </summary>
         /// <param name="spritebatch"></param>
         /// 
@@ -49,6 +50,11 @@ namespace Adventure_man
             spritebatch.DrawString(Program.AdventureMan.font, $"Player Health= {World.Player.health}", new Vector2(0, Program.AdventureMan.font.LineSpacing * 2), Color.White);
             if (World.Player.CurrentWeapon != null)
                 spritebatch.DrawString(Program.AdventureMan.font, $"Player current Weapon={World.Player.CurrentWeapon.name}", new Vector2(0, Program.AdventureMan.font.LineSpacing), Color.White);
+           
+            spritebatch.DrawString(Program.AdventureMan.font, $"Press Up / W to jump", new Vector2(900, Program.AdventureMan.font.LineSpacing), Color.White);
+            spritebatch.DrawString(Program.AdventureMan.font, $"Press Down/S to crouch", new Vector2(900, Program.AdventureMan.font.LineSpacing*2), Color.White);
+            spritebatch.DrawString(Program.AdventureMan.font, $"Press E to attack", new Vector2(1100, Program.AdventureMan.font.LineSpacing), Color.White);
+            spritebatch.DrawString(Program.AdventureMan.font, $"Press Q to Swap Weapon", new Vector2(1100, Program.AdventureMan.font.LineSpacing*2), Color.White);
 
             //For getting feedback
 #if DEBUG
