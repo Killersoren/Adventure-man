@@ -75,6 +75,8 @@ namespace Adventure_man
             else if (dir == GameWorld.Direction.Left)
             {
                 Location = enemy.Location - new Vector2(188,0) ;
+
+                Location = enemy.Location - new Vector2(width - enemy.Size.X, 0);
             }
             base.Update();
         }
