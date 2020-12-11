@@ -20,12 +20,6 @@ namespace Adventure_man
         public SpriteFont menuFont;
         // 
 
-        // Parallax Textures
-        public Texture2D tree;
-        public Texture2D cloud;
-        public Texture2D ground;
-        public Texture2D sun;
-        //
 
         // Scenes
         private Scene menu;
@@ -220,37 +214,29 @@ namespace Adventure_man
 
         private void GenerateWorlds()
         {
-            // Ras - Textures for parallax, called from gameworld loadcontent or ? 
-            // Sofie - Måske hvis du lavede en parralax constructor that asked for the path, and then itsel loaded the nedded sprites, but at least this way (the way it currently is) you only have to load the sprites once.
-            // But we can at least try loading it in load content, and see if there is an error when we run it.
-            tree = Program.AdventureMan.content.Load<Texture2D>("tree");
-            cloud = Program.AdventureMan.content.Load<Texture2D>("clouds");
-            ground = Program.AdventureMan.content.Load<Texture2D>("ground");
-            sun = Program.AdventureMan.content.Load<Texture2D>("sun");
-
             parallax = new List<List<ParallaxLayer>>
             {
                 new List<ParallaxLayer>
                 {
-                    new ParallaxLayer(sun, 5f, 1,new Vector2(-900,0),true),
-                    new ParallaxLayer(cloud,20f,1,new Vector2(-400,0),true),
-                    new ParallaxLayer(ground, 0f, 1, new Vector2(0,-600)),
-                    new ParallaxLayer(tree, 2f, 7, new Vector2(0,-200)),
-                    new ParallaxLayer(tree, 3f, 7, new Vector2(100,-250)),
+                    new ParallaxLayer(World.sun, 5f, 1,new Vector2(-900,0),true),
+                    new ParallaxLayer(World.cloud,20f,1,new Vector2(-400,0),true),
+                    new ParallaxLayer(World.ground, 0f, 1, new Vector2(0,-600)),
+                    new ParallaxLayer(World.tree, 2f, 7, new Vector2(0,-200)),
+                    new ParallaxLayer(World.tree, 3f, 7, new Vector2(100,-250)),
                 },
                 new List<ParallaxLayer>
                 {
-                   new ParallaxLayer(sun, 5f, 1,new Vector2(-900,0),true),
-                    new ParallaxLayer(cloud,20f,1,new Vector2(-400,0),true),
-                    new ParallaxLayer(ground, 0f, 1, new Vector2(0,-600)),
-                    new ParallaxLayer(tree, 3f, 7,new Vector2(100,-250)),
+                   new ParallaxLayer(World.sun, 5f, 1,new Vector2(-900,0),true),
+                    new ParallaxLayer(World.cloud,20f,1,new Vector2(-400,0),true),
+                    new ParallaxLayer(World.ground, 0f, 1, new Vector2(0,-600)),
+                    new ParallaxLayer(World.tree, 3f, 7,new Vector2(100,-250)),
                 },
                 new List<ParallaxLayer>
                 {
-                   new ParallaxLayer(sun, 5f, 1,new Vector2(-900,0),true),
-                    new ParallaxLayer(ground, 0f, 1, new Vector2(0,-600)),
-                    new ParallaxLayer(tree, 2f, 7, new Vector2(0,-200)),
-                    new ParallaxLayer(tree, 3f, 7, new Vector2(100,-250)),
+                   new ParallaxLayer(World.sun, 5f, 1,new Vector2(-900,0),true),
+                    new ParallaxLayer(World.ground, 0f, 1, new Vector2(0,-600)),
+                    new ParallaxLayer(World.tree, 2f, 7, new Vector2(0,-200)),
+                    new ParallaxLayer(World.tree, 3f, 7, new Vector2(100,-250)),
                 },
 
             };

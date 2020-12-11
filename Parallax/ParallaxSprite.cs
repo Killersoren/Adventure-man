@@ -17,6 +17,7 @@ namespace Adventure_man
         //private Texture2D sun;
 
 
+
         /// <summary>
         ///  Ras - ParralaxSprites constructor, sprite and offset is set from parameters
         /// </summary>
