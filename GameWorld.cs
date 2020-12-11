@@ -221,6 +221,8 @@ namespace Adventure_man
         private void GenerateWorlds()
         {
             // Ras - Textures for parallax, called from gameworld loadcontent or ? 
+            // Sofie - Måske hvis du lavede en parralax constructor that asked for the path, and then itsel loaded the nedded sprites, but at least this way (the way it currently is) you only have to load the sprites once.
+            // But we can at least try loading it in load content, and see if there is an error when we run it.
             tree = Program.AdventureMan.content.Load<Texture2D>("tree");
             cloud = Program.AdventureMan.content.Load<Texture2D>("clouds");
             ground = Program.AdventureMan.content.Load<Texture2D>("ground");
