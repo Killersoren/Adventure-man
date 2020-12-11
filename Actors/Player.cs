@@ -70,6 +70,7 @@ namespace Adventure_man
 
             int res = World.GridResulution;
             Location = new Vector2(X * res, Y * res);
+
         }
 
         /// <summary>

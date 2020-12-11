@@ -241,14 +241,12 @@ namespace Adventure_man
                    new Parallax(sun, 5f, 1,new Vector2(-900,0),true),
                     new Parallax(cloud,20f,1,new Vector2(-400,0),true),
                     new Parallax(ground, 0f, 1, new Vector2(0,-600)),
-                    new Parallax(tree, 2f, 7,new Vector2(0,-200) ),
                     new Parallax(tree, 3f, 7,new Vector2(100,-250)),
                 },
                 new List<Parallax>
                 {
                    new Parallax(sun, 5f, 1,new Vector2(-900,0),true),
-                    new Parallax(cloud,20f,1,new Vector2(-400,0),true),
-                    new Parallax(ground, 0f, 1, new Vector2(0,-200)),
+                    new Parallax(ground, 0f, 1, new Vector2(0,-600)),
                     new Parallax(tree, 2f, 7, new Vector2(0,-200)),
                     new Parallax(tree, 3f, 7, new Vector2(100,-250)),
                 },

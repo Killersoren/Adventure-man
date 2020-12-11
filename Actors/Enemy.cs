@@ -309,7 +309,7 @@ namespace Adventure_man
 
                     if (EnemyWeapon != null)
                     {
-                        EnemyWeapon.UseWeapon(Location, dir);
+                        EnemyWeapon.UseWeaponEnemy(Location, dir);
                     }
                 }
                 else if (weapon is Sword)
@@ -326,7 +326,7 @@ namespace Adventure_man
 
                 if (EnemyWeapon != null)
                 {
-                    EnemyWeapon.UseWeapon(Location, dir);
+                    EnemyWeapon.UseWeaponEnemy(Location, dir);
                 }
             }
 
