@@ -9,27 +9,28 @@ namespace Adventure_man
 {
     public class World
     {
+        /// <summary>
+        /// GameObjects lists
+        /// </summary>
         public List<GameObject> GameObjects;
         public List<GameObject> newGameObjects;
         public List<GameObject> GameObjectsToRemove;
+
+
         public static Player Player = new Player();
-
         public delegate bool CompleationParamitor();
-
         public CompleationParamitor forCompleation = () => { return false; };
-       // private readonly List<GameObject> nextWorld;
-        public List<ParallaxLayer> parallaxList;
         public Camera Camera;
 
-        //public PickUp pickUp;
-
-
-        // Parallax Textures
+        /// <summary>
+        /// Parallax list and static textures
+        /// </summary>
+        public List<ParallaxLayer> parallaxList;
         public static Texture2D tree = Program.AdventureMan.content.Load<Texture2D>("tree");
         public static Texture2D cloud = Program.AdventureMan.content.Load<Texture2D>("clouds");
         public static Texture2D ground = Program.AdventureMan.content.Load<Texture2D>("ground");
         public static Texture2D sun = Program.AdventureMan.content.Load<Texture2D>("sun");
-        //
+        
 
         /// <summary>
         /// The number of grids the world/level has
@@ -44,27 +45,8 @@ namespace Adventure_man
         public static int GridResulution { get => gridResulution; }
 
         public Vector2 worldSize;
-        //public static Vector2 ScreenSize { get => screenSize; }
 
         internal List<GameObject> Objects { get => GameObjects; private set => GameObjects = value; }
-
-        //public World(List<GameObject> gameObjects)
-        //{
-        //    GameObjects = gameObjects;
-        //    GameObjectsToRemove = new List<GameObject>();
-        //    newGameObjects = new List<GameObject>();
-
-        //    Player = (Player)gameObjects.Find(a => a is Player);
-
-        //    worldGrid = new Vector2(20, 11);
-        //    //gridResulution = 64;
-        //    //worldSize = new Vector2(Program.AdventureMan._graphics.PreferredBackBufferWidth, Program.AdventureMan._graphics.PreferredBackBufferHeight);
-        //    worldSize = new Vector2(worldGrid.X * GridResulution, worldGrid.Y * GridResulution);
-
-        //    Objects.AddRange(Border());
-
-        //}
-
 
         /// <summary>
         /// All - Worlds Constructor, Sets parameters, adds player to GameObjects and sets player spawn to player location
