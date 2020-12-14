@@ -29,9 +29,8 @@ namespace Adventure_man
             else
             {
                 Sprite.Restart();
-
             }
-            
+
             base.Update();
         }
 
@@ -94,7 +93,7 @@ namespace Adventure_man
                 if (target.Intersects(gameObject.HitBox))
                 {
                     collisions.Add(gameObject);
-                    if (gameObject is IntermidiateTemporaryClassForStoppingMovement)
+                    if (gameObject.IsBlocking)
                     {
                         move = false;
                     }
@@ -116,6 +115,7 @@ namespace Adventure_man
                 gameObject.OnCollision(this);
             }
         }
+
         /// <summary>
         /// Sofie- Uses the Actors Current Velocity to decide the direction they should be facing.
         /// if the velicity is 0 it either makes the new direction the last direction, and if there is no last direction, like at the start of the game, it uses the sprites orientation to deside the direction.
@@ -159,6 +159,7 @@ namespace Adventure_man
 
             return dir;
         }
+
         /// <summary>
         /// Sofie-Uses the current direction to flip a sprite
         /// </summary>
@@ -175,9 +176,10 @@ namespace Adventure_man
                     break;
             }
         }
+
         /// <summary>
         /// Sofie-Both Check direction and flip sprite put together.
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         public Direction UpdateSprite()

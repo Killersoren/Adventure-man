@@ -11,7 +11,7 @@ using System.Timers;
 
 namespace Adventure_man
 {
-    public class Enemy : MoveableGameObject
+    public class Enemy : Character
     {
         private int health;
         private int maxHealth;
@@ -23,13 +23,7 @@ namespace Adventure_man
 
         private bool isAlive
         {
-            get
-            {
-                if (health > 0)
-                    return true;
-                else
-                    return false;
-            }
+            get => health > 0;
         }
 
         internal Weapon EnemyWeapon { get => weapon; private set => weapon = value; }
@@ -50,10 +44,9 @@ namespace Adventure_man
         public bool EnemyVision = false;
         public Vector2 lastVelocity;
 
-        private float gravStrength = 0; // don't like the placement of this var :/
-
         private SpriteFont healthbarFont;
         private readonly int healthbarLength = 6;
+
         /// <summary>
         /// Sofie- Uses the current health, the max health and the number of segments in the healthbar to create a string to visualise the Enemys current health
         /// </summary>
@@ -79,6 +72,7 @@ namespace Adventure_man
                 return Convert.ToString(temp);
             }
         }
+
         /// <summary>
         /// Sofie- Uses the health and Maxhealth to determine the color of the enemy healthbar
         /// </summary>
@@ -98,29 +92,6 @@ namespace Adventure_man
                     return Color.Red;
                 else
                     return Color.White;
-            }
-        }
-
-        protected bool isGrounded //bad maybe?, we check too often i think, maybe not only when we try to apply gravity (once per cycle) and ocasionally when we jummp
-        {
-            get
-            {
-                var isGrounded = false;
-
-                var downRec = HitBox.Copy();
-                downRec.Location -= new Vector2(0, -5);
-
-                foreach (GameObject gameObject in Program.AdventureMan.CurrentWorld.GameObjects)
-                {
-                    if (downRec.Intersects(gameObject.HitBox) && !isGrounded)
-                    {
-                        if (gameObject is Platform)
-                        {
-                            isGrounded = true;
-                        }
-                    }
-                }
-                return isGrounded;
             }
         }
 
@@ -161,12 +132,10 @@ namespace Adventure_man
             {
                 BowTest();   // Spawner fjende med bue
             }
-
             else if (startingWeapon == "Sword")
             {
-                 SwordTest(); // spawner fjende med sværd
+                SwordTest(); // spawner fjende med sværd
             }
-
         }
 
         //public override void LoadContent(ContentManager content)
@@ -236,7 +205,6 @@ namespace Adventure_man
             }
             else if (playerInSight)
             {
-
                 if (timerStart)
                 {
                     timerA.Stop();
@@ -268,10 +236,8 @@ namespace Adventure_man
                 //Respawn();
             }
 
-            
-
             CreateVision();
-            ApplyGravity();
+            ApplyGravity(0.1f);
             EnemyLogic();
 
             if (weapon != null)
@@ -279,20 +245,6 @@ namespace Adventure_man
 
             dir = UpdateSprite();
             base.Update();
-        }
-
-        private void ApplyGravity()
-        {
-            if (isGrounded)
-            {
-                if (velocity.Y > 0)
-                    velocity.Y = 0;
-
-                gravStrength = 0;
-                return;
-            }
-            gravStrength += 0.1f;
-            velocity += new Vector2(0, gravStrength);
         }
 
         public void Attack()
@@ -315,7 +267,7 @@ namespace Adventure_man
 
                     if (EnemyWeapon != null)
                     {
-                        EnemyWeapon.UseWeapon(Location, dir,this);
+                        EnemyWeapon.UseWeapon(Location, dir, this);
                     }
                 }
                 else if (weapon is Sword)
@@ -332,7 +284,7 @@ namespace Adventure_man
 
                 if (EnemyWeapon != null)
                 {
-                    EnemyWeapon.UseWeapon(Location, dir,this);
+                    EnemyWeapon.UseWeapon(Location, dir, this);
                 }
             }
 
@@ -350,6 +302,7 @@ namespace Adventure_man
         {
             health -= damage;
         }
+
         /// <summary>
         /// Sofie + Søren?- Compleatly destroys the Enemy
         /// </summary>
@@ -359,6 +312,7 @@ namespace Adventure_man
             Destroy(this);
             Destroy(vision);
         }
+
         /// <summary>
         /// Sofie- Resets the enemy
         /// </summary>
@@ -386,7 +340,6 @@ namespace Adventure_man
         {
             if (!EnemyVision)
             {
-
                 vision = new Vision(visionSprite, Location, 250, 50, this);
 
                 Program.AdventureMan.CurrentWorld.newGameObjects.Add(vision);

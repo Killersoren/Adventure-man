@@ -16,13 +16,14 @@ namespace Adventure_man
 
         // Fonts
         public SpriteFont font;
+
         public SpriteFont altFont;
         public SpriteFont menuFont;
-        // 
-
+        //
 
         // Scenes
         private Scene menu;
+
         private Scene ui;
         private Scene currentScene;
         public bool isGameStarted = false;
@@ -50,7 +51,6 @@ namespace Adventure_man
             Right = 1,
             Left = -1
         }
-
 
         public GameWorld()
         {
@@ -134,8 +134,6 @@ namespace Adventure_man
         {
             this.gameTime = gameTime;
 
-
-
             // Ras - Pauses game by changing scene and not running game updates
             if (isGameStarted)
             {
@@ -150,7 +148,7 @@ namespace Adventure_man
 
             // Ras - gets player input,
             // if input = escape, sets isgamestarted
-            // Debug : swaps escape with enter 
+            // Debug : swaps escape with enter
             var getstate = Keyboard.GetState();
 #if DEBUG
             if (getstate.IsKeyDown(Keys.Escape) && !laststate.IsKeyDown(Keys.Escape))
@@ -173,7 +171,6 @@ namespace Adventure_man
             {
                 ChangeWorld();
             }
-           
 
             base.Update(gameTime);
         }
@@ -200,8 +197,9 @@ namespace Adventure_man
 
             base.Draw(gameTime);
         }
+
         /// <summary>
-        /// Changes to the next world, if there is a next world      
+        /// Changes to the next world, if there is a next world
         /// /// </summary>
         private void ChangeWorld()
         {
@@ -213,6 +211,7 @@ namespace Adventure_man
                     go.LoadContent(content);
             }
         }
+
         /// <summary>
         /// Sofie- Generates all og the possible worlds
         /// </summary>
@@ -242,7 +241,6 @@ namespace Adventure_man
                     new ParallaxLayer(World.tree, 2f, 7, new Vector2(0,-200)),
                     new ParallaxLayer(World.tree, 3f, 7, new Vector2(100,-250)),
                 },
-
             };
 
             playerLocations = new List<Vector2>
@@ -262,18 +260,16 @@ namespace Adventure_man
             {
                 new List<GameObject>
                 {
-                       new PickUp("Sword",3 ,10f, new Vector2(64, 32), (Player p) => {p.PickupWeapon(new Sword("Sword", 75, 5)); }),
+                    new PickUp("Sword", 3f, 9, new Vector2(64, 32), (Player p) => {p.PickupWeapon(new Sword("Sword", 75, 5)); }),
                     new Enemy(9, 4, "Sword"),
                     new Enemy(8, 4, "Sword"),
                     new Platform(0, 7, 10, 1,true),
                     new Platform(9, 8, 2, 1,true),
                     new Enemy(18, 8, "Sword"),
-
                 },
                 new List<GameObject>
                 {
                       new PickUp("doublejump", new Vector2(360, 538), new Vector2(64, 64), (Player p) => { ++p.JumpAmount; }),
-
 
                     new Platform(200, 368, 400, 64),
                     new Platform(200, 518, 100, 130),
@@ -286,11 +282,9 @@ namespace Adventure_man
                     new Enemy(18, 4, "Bow"),
                     new Enemy(10, 4, "Sword"),
                     new Enemy(11, 4, "Sword"),
-
                 },
                 new List<GameObject>
                 {
-
                      new PickUp("BowTest",4 ,4 , new Vector2(64, 64), (Player p) => {p.PickupWeapon(new Bow("Falcon Bow", 75, 10, 5)); }),
 
                     new Platform(200, 368, 400, 64),
@@ -303,7 +297,6 @@ namespace Adventure_man
                     new Enemy(17, 4, "Bow"),
                     new Enemy(18, 4, "Sword"),
                     new Enemy(15, 4, "Sword"),
-
                 }
             };
             worldCompleationParamitors = new List<World.CompleationParamitor>

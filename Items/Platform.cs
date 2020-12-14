@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Adventure_man
 {
-    internal class Platform : IntermidiateTemporaryClassForStoppingMovement
+    internal class Platform : GameObject
     {
         private int width;
         private int height;
@@ -69,6 +69,7 @@ namespace Adventure_man
         /// <param name="grid">to set it apart from non grid (true or false it doesnt matter)</param>
         public Platform(float X, float Y, int width, int height, bool grid)
         {
+            IsBlocking = true;
             Width = width;
             Height = height;
             int res = World.GridResulution;
@@ -80,6 +81,7 @@ namespace Adventure_man
 
         public Platform(float x, float y, float width, float height)
         {
+            IsBlocking = true;
             this.HitBox = new RectangleF(x, y, width, height);
             grid = false;
             CheckGrid();
@@ -121,10 +123,5 @@ namespace Adventure_man
                 };
             }
         }
-
-        //public override void OnCollision(GameObject collisionTarget)
-        //{
-        //    base.OnCollision(collisionTarget);
-        //}
     }
 }

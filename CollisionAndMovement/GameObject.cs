@@ -11,6 +11,7 @@ namespace Adventure_man
     public abstract class GameObject
     {
         public SpriteAnimation Sprite;
+        public bool IsBlocking;
 
         public RectangleF HitBox;
 
@@ -66,6 +67,7 @@ namespace Adventure_man
             newBox.Location = Program.AdventureMan.CurrentWorld.Camera.WorldToScreen(HitBox.Location);
             spriteBatch.Draw(Sprite, newBox, null, color, 0f, Vector2.Zero, effect, 0f);
         }
+
         /// <summary>
         /// Sofie- Removes a given Gameobject from the current worlds list of objects
         /// </summary>
@@ -74,6 +76,7 @@ namespace Adventure_man
         {
             Program.AdventureMan.CurrentWorld.GameObjectsToRemove.Add(o);
         }
+
         /// <summary>
         /// Sofie- Adds an object to the current worlds list of objects
         /// </summary>

@@ -7,34 +7,10 @@ using System.Text;
 
 namespace Adventure_man
 {
-    class Coin : MoveableGameObject //Sofie
+    internal class Coin : Character //Sofie
     {
         public int coinValue;
-        private float gravStrength = 0;
         private bool firstUpdate = true;
-        protected bool isGrounded //bad maybe?, we check too often i think, maybe not only when we try to apply gravity (once per cycle) and ocasionally when we jummp
-        {
-            get
-            {
-                var isGrounded = false;
-
-                var downRec = HitBox.Copy();
-                downRec.Location -= new Vector2(0, -1);
-
-                foreach (GameObject gameObject in Program.AdventureMan.CurrentWorld.GameObjects)
-                {
-                    if (downRec.Intersects(gameObject.HitBox) && !isGrounded)
-                    {
-                        if (gameObject is Platform)
-                        {
-                            isGrounded = true;
-                        }
-                    }
-                }
-                return isGrounded;
-            }
-        }
-
 
         /// <summary>
         /// Sofie- Creates a Coin
@@ -64,31 +40,13 @@ namespace Adventure_man
                 firstUpdate = false;
             else
             {
-                ApplyGravity();
+                ApplyGravity(0.1f);
                 base.Update();
             }
-            
         }
-        private void ApplyGravity()
-        {
-            if (isGrounded)
-            {
-                if (velocity.Y > 0)
-                    velocity.Y *=-bounce;
-                if (velocity.X != 0)
-                    velocity.X*=groundDrag;
 
-                gravStrength = 0;
-                return;
-            }
-            gravStrength += 0.1f;
-            velocity += new Vector2(0, gravStrength);
-        }
         public override void LoadContent(ContentManager contentManager)
         {
-            
         }
-
-
     }
 }
