@@ -14,6 +14,7 @@ namespace Adventure_man
 
         /// <summary>
         /// Ras - Swords constructor, Sets parameters to this
+        /// Used for player
         /// </summary>
         /// <param name="name"></param>
         /// <param name="damage"></param>
@@ -22,7 +23,6 @@ namespace Adventure_man
         /// <param name="user"></param>
         public Sword(string name, int damage, float fireRate)
         {
-            //base.user = user;
             base.damage = damage;
             base.name = name;
             this.fireRate = fireRate;
@@ -39,6 +39,7 @@ namespace Adventure_man
 
         /// <summary>
         /// Ras - Swords constructor, Sets parameters to this (without name)
+        /// Used for enemies
         /// </summary>
         /// <param name="damage"></param>
         /// <param name="force"></param>
@@ -46,7 +47,6 @@ namespace Adventure_man
         /// <param name="user"></param>
         public Sword( int damage, float fireRate)
         {
-            //base.user = user;
             base.damage = damage;
             this.fireRate = fireRate;
             Loadcontent();

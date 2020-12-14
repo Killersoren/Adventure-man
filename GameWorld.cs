@@ -86,7 +86,7 @@ namespace Adventure_man
             font = Content.Load<SpriteFont>("Font");
             altFont = Content.Load<SpriteFont>("AltFont");
             menuFont = Content.Load<SpriteFont>("MenuFont");
-            //
+            
 
             foreach (GameObject o in CurrentWorld.Objects)
             {
