@@ -19,7 +19,6 @@ namespace Adventure_man
 
         public SpriteFont altFont;
         public SpriteFont menuFont;
-        //
 
         // Scenes
         private Scene menu;
@@ -27,9 +26,6 @@ namespace Adventure_man
         private Scene ui;
         private Scene currentScene;
         public bool isGameStarted = false;
-        //
-
-        //new public static GameServiceContainer Services;
 
         public World CurrentWorld;
         public int worldNumber = 0;
@@ -40,12 +36,13 @@ namespace Adventure_man
         public List<World.CompleationParamitor> worldCompleationParamitors;
         public List<List<ParallaxLayer>> parallax;
 
-        //private Texture2D collisionTexture;
-
         public (int x, int y) SceenSize;
         private KeyboardState laststate;
         private Song backgroundMusic;
 
+        /// <summary>
+        /// Sets direction to eihter +1 or -1, used to decide which direction and velocity objects have
+        /// </summary>
         public enum Direction : int
         {
             Right = 1,
@@ -57,43 +54,15 @@ namespace Adventure_man
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
-            //Services = base.Services;
-            //screenSize = new Vector2(_graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight);
             content = Content;
             gameTime = new GameTime();
         }
 
+        /// <summary>
+        /// Sets screensize, current world and scene
+        /// </summary>
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
-            //CurrentWorld = new World(
-            //    new List<GameObject>
-            //        {
-            //        new PickUp("doublejump", new Vector2(100, 200), new Vector2(64, 64), (Player p) => { ++p.JumpAmount; }),
-            //        new PickUp("BowTest",4 ,6 , new Vector2(64, 64), (Player p) => {p.PickupWeapon(new Bow("Falcon Bow", 100, 10, 5, p)); }),
-            //        new PickUp("Sword",8 ,6.5f, new Vector2(64, 32), (Player p) => {p.PickupWeapon(new Sword("Sword", 100, 10, 5, p)); }),
-            //        new Player(0, 5),
-            //        new Enemy(9, 4),
-            //        new Platform(0, 7, 13, 1,true),
-            //        new Platform(4, 4, 2, 1,true),
-            //        new Platform(7, 2, 2, 1,true),
-            //        new PickUp("", new Vector2(500, 50), new Vector2(100, 100), (Player p) =>
-            //            {
-            //            Program.AdventureMan.CurrentWorld = new World(
-            //                new List<GameObject>
-            //                {
-            //                p,
-            //                new Platform(0, 650, 1920, 64),
-            //                new Platform(300, 500, 100, 64),
-            //                new Platform(200, 300, 100, 64),
-            //                new Platform(450, 200, 100, 64),
-            //                new Enemy(9, 4),
-            //            }
-            //        );
-            //        }
-            //    ),
-            //    }
-            //);
             GenerateWorlds();
             CurrentWorld = new World(parallax[worldNumber], playerLocations[worldNumber], worldSizes[worldNumber], worldLayouts[worldNumber], worldCompleationParamitors[worldNumber]);
 
@@ -101,7 +70,6 @@ namespace Adventure_man
             _graphics.PreferredBackBufferHeight = (int)CurrentWorld.worldSize.Y;
             SceenSize = (GraphicsDevice.DisplayMode.Width, GraphicsDevice.DisplayMode.Height);
 
-            // Creates each scene
             menu = new Menu();
             ui = new UI();
 
@@ -117,7 +85,6 @@ namespace Adventure_man
             font = Content.Load<SpriteFont>("Font");
             altFont = Content.Load<SpriteFont>("AltFont");
             menuFont = Content.Load<SpriteFont>("MenuFont");
-            //
 
             foreach (GameObject o in CurrentWorld.Objects)
             {
@@ -130,11 +97,12 @@ namespace Adventure_man
             MediaPlayer.IsRepeating = true;
         }
 
-        protected override void Update(GameTime gameTime)
+        /// <summary>
+        /// Ras - Updates currentworld if bool is true and sets currentscene
+        /// </summary>
+        /// <returns></returns>
+        private void GameState()
         {
-            this.gameTime = gameTime;
-
-            // Ras - Pauses game by changing scene and not running game updates
             if (isGameStarted)
             {
                 currentScene = ui;
@@ -144,11 +112,14 @@ namespace Adventure_man
             {
                 currentScene = menu;
             }
-            //
+        }
 
-            // Ras - gets player input,
-            // if input = escape, sets isgamestarted
-            // Debug : swaps escape with enter
+        /// <summary>
+        /// Ras - gets player input, if input = escape, flips bool isgamestarted
+        /// Debug : swaps escape with enter
+        /// </summary>
+        private void PlayerInput()
+        {
             var getstate = Keyboard.GetState();
 #if DEBUG
             if (getstate.IsKeyDown(Keys.Escape) && !laststate.IsKeyDown(Keys.Escape))
@@ -163,6 +134,18 @@ namespace Adventure_man
                 isGameStarted = !isGameStarted;
             }
             laststate = getstate;
+        }
+
+        /// <summary>
+        /// Updates current scene and world.
+        /// </summary>
+        /// <param name="gameTime"></param>
+        protected override void Update(GameTime gameTime)
+        {
+            this.gameTime = gameTime;
+
+            GameState();
+            PlayerInput();
 
             // Updates current scene
             currentScene.Update();
@@ -175,24 +158,16 @@ namespace Adventure_man
             base.Update(gameTime);
         }
 
+        /// <summary>
+        /// Draws currentworld/scene
+        /// </summary>
+        /// <param name="gameTime"></param>
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-
-            //_spriteBatch.Begin(SpriteSortMode.BackToFront);
             _spriteBatch.Begin();
-
-            //For getting feedback
-            //#if DEBUG
-            //            _spriteBatch.DrawString(font, $"Player pos= {World.Player.Location.X},{World.Player.Location.Y}", Vector2.Zero, Color.White);
-            //            _spriteBatch.DrawString(font, $"Player Weapon cooldown ={World.Player.CurrentWeapon.cooldown}", new Vector2(0,font.LineSpacing), Color.White);
-            //            _spriteBatch.DrawString(font, $"Player Health= {World.Player.health}", new Vector2(0, font.LineSpacing*2), Color.White);
-            //            _spriteBatch.DrawString(font, $"", new Vector2(0, font.LineSpacing*3), Color.White);
-            //#endif
-
             CurrentWorld.Draw(_spriteBatch);
             currentScene.Draw(_spriteBatch);
-
             _spriteBatch.End();
 
             base.Draw(gameTime);
@@ -213,7 +188,7 @@ namespace Adventure_man
         }
 
         /// <summary>
-        /// Sofie- Generates all og the possible worlds
+        /// Sofie- Generates all of the possible worlds
         /// </summary>
         private void GenerateWorlds()
         {
@@ -303,15 +278,6 @@ namespace Adventure_man
             {
                 () =>
                 {
-                    //int enemies=0;
-                    //foreach(GameObject go in Program.AdventureMan.CurrentWorld.GameObjects)
-                    //    if (go is Enemy)
-                    //        enemies++;
-
-                    //if (enemies==0)
-                    //    return true;
-                    //else
-                    //    return false;
                     if (World.Player.points>=10)
                         {
                         World.Player.crouched = false;
@@ -322,15 +288,6 @@ namespace Adventure_man
                 },
                 () =>
                 {
-                    //int enemies=0;
-                    //foreach(GameObject go in Program.AdventureMan.CurrentWorld.GameObjects)
-                    //    if (go is Enemy)
-                    //        enemies++;
-
-                    //if (enemies==0)
-                    //    return true;
-                    //else
-                    //    return false;
                     if (World.Player.points>=30)
                          {
                         World.Player.crouched = false;
