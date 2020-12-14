@@ -137,14 +137,21 @@ namespace Adventure_man
 #endif
             }
         }
-
+        /// <summary>
+        /// Creates a boarder around the playing area.
+        /// </summary>
+        /// <returns>The Boarder platforms</returns>
         private IEnumerable<GameObject> Border()
         {
             yield return new Platform(0, -2, (int)worldGrid.X, 1, true); //Top (y=-2 :Leaves a i grid gab at the op of the two side boarders, but allows for jumping at the top)
-            yield return new Platform(0, worldGrid.Y - 0.5f, (int)worldGrid.X, 1, true); //Bottom
+            yield return new Platform(0, worldGrid.Y - 1, (int)worldGrid.X, 1, true); //Bottom
 
-            yield return new Platform(-1, 0, 1, (int)worldGrid.Y, true); //Left
-            yield return new Platform(worldGrid.X, 0, 1, (int)worldGrid.Y, true); //Right
+            yield return new Platform(-1, -2, 1, (int)worldGrid.Y+2, true); //Left
+            yield return new Platform(worldGrid.X, -2, 1, (int)worldGrid.Y+2, true); //Right
+            //yield return new Platform(-1*gridResulution, -2*gridResulution, gridResulution, (worldGrid.Y+2)*gridResulution); //Left
+            //yield return new Platform(worldGrid.X*gridResulution, -2*gridResulution, gridResulution, (worldGrid.Y+2)*gridResulution); //Right
+
+
         }
     }
 }

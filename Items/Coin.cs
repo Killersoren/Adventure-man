@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Adventure_man
 {
-    class Coin : MoveableGameObject
+    class Coin : MoveableGameObject //Sofie
     {
         public int coinValue;
         private float gravStrength = 0;
@@ -36,7 +36,12 @@ namespace Adventure_man
         }
 
 
-
+        /// <summary>
+        /// Sofie- Creates a Coin
+        /// </summary>
+        /// <param name="sprite">The coins sprite</param>
+        /// <param name="position">Start position</param>
+        /// <param name="velocity">the 2D direction it will go in when it moves</param>
         public Coin(Texture2D sprite, Vector2 position, Vector2 velocity)
         {
             dragCoefficient = 1f;
@@ -53,9 +58,9 @@ namespace Adventure_man
 
         public override void Update()
         {
-            if (Location.X > Program.AdventureMan.CurrentWorld.worldSize.X || Location.X < 0 || Location.Y > Program.AdventureMan.CurrentWorld.worldSize.Y || Location.Y < 0)
+            if (Location.X > Program.AdventureMan.CurrentWorld.worldSize.X || Location.X < 0 || Location.Y > Program.AdventureMan.CurrentWorld.worldSize.Y || Location.Y < 0) // despawns COin when out of bounds
                 Destroy(this);
-            if (firstUpdate)
+            if (firstUpdate) // so that the coin doesnt move before it is drawn for the first time
                 firstUpdate = false;
             else
             {

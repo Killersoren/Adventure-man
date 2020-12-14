@@ -54,7 +54,9 @@ namespace Adventure_man
 
         private SpriteFont healthbarFont;
         private readonly int healthbarLength = 6;
-
+        /// <summary>
+        /// Sofie- Uses the current health, the max health and the number of segments in the healthbar to create a string to visualise the Enemys current health
+        /// </summary>
         private string HealthBar
         {
             get
@@ -77,8 +79,10 @@ namespace Adventure_man
                 return Convert.ToString(temp);
             }
         }
-
-        private Color HealthbarColor
+        /// <summary>
+        /// Sofie- Uses the health and Maxhealth to determine the color of the enemy healthbar
+        /// </summary>
+        private Color HealthbarColor//Sofie
         {
             get
             {
@@ -136,7 +140,7 @@ namespace Adventure_man
             DefaultEnemy();
         }
 
-        public Enemy(int X, int Y)
+        public Enemy(float X, float Y)
         {
             DefaultEnemy();
             int res = World.GridResulution;
@@ -144,7 +148,7 @@ namespace Adventure_man
             Location = spawnLocation;
         }
 
-        public Enemy(int X, int Y, string startingWeapon1)
+        public Enemy(float X, float Y, string startingWeapon1)
         {
             DefaultEnemy();
             int res = World.GridResulution;
@@ -251,6 +255,8 @@ namespace Adventure_man
         public override void Draw(SpriteBatch spriteBatch)
         {
             base.Draw(spriteBatch);
+
+            // Sofie- Draws the enemies healthbar directly above its head.
             spriteBatch.DrawString(healthbarFont, HealthBar, Program.AdventureMan.CurrentWorld.Camera.WorldToScreen(new Vector2(Location.X + (Size.X / 2), Location.Y - healthbarFont.LineSpacing)), HealthbarColor, 0, new Vector2((healthbarFont.MeasureString(HealthBar).X / 2), 0), 1, SpriteEffects.None, 0);
         }
 
@@ -344,14 +350,18 @@ namespace Adventure_man
         {
             health -= damage;
         }
-
+        /// <summary>
+        /// Sofie + Søren?- Compleatly destroys the Enemy
+        /// </summary>
         public void Die()
         {
             Coins();
             Destroy(this);
             Destroy(vision);
         }
-
+        /// <summary>
+        /// Sofie- Resets the enemy
+        /// </summary>
         public void Respawn()
         {
             Coins();
@@ -362,7 +372,7 @@ namespace Adventure_man
         }
 
         /// <summary>
-        /// Spawns x-y coins
+        /// Sofie- Spawns 3-6 coins
         /// </summary>
         public void Coins()
         {

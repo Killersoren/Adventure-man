@@ -7,7 +7,7 @@ using static Adventure_man.GameWorld;
 
 namespace Adventure_man
 {
-    internal class Bow : Weapon
+    internal class Bow : Weapon // Sofie
     {
         private readonly float force;
         private readonly Texture2D arrowSprite;
@@ -15,7 +15,7 @@ namespace Adventure_man
         private int offseta;
         private int offsetb;
         /// <summary>
-        /// Bow constructor
+        /// Sofie- Bow constructor
         /// </summary>
         /// <param name="name">The name of the Bow</param>
         /// <param name="damage">The damage of the arrows the bow shoots</param>

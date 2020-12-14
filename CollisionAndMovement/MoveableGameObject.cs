@@ -116,7 +116,11 @@ namespace Adventure_man
                 gameObject.OnCollision(this);
             }
         }
-
+        /// <summary>
+        /// Sofie- Uses the Actors Current Velocity to decide the direction they should be facing.
+        /// if the velicity is 0 it either makes the new direction the last direction, and if there is no last direction, like at the start of the game, it uses the sprites orientation to deside the direction.
+        /// </summary>
+        /// <returns>A direction -1: Left 1: Right</returns>
         private Direction CheckDirection()
         {
             Direction oldDir = dir;
@@ -155,7 +159,9 @@ namespace Adventure_man
 
             return dir;
         }
-
+        /// <summary>
+        /// Sofie-Uses the current direction to flip a sprite
+        /// </summary>
         public void FlipSprite()
         {
             switch (dir)
@@ -169,7 +175,11 @@ namespace Adventure_man
                     break;
             }
         }
-
+        /// <summary>
+        /// Sofie-Both Check direction and flip sprite put together.
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public Direction UpdateSprite()
         {
             Direction tempdir = CheckDirection();

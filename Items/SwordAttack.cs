@@ -64,11 +64,11 @@ namespace Adventure_man
         /// <param name="collisionTarget"></param>
         public override void OnCollision(GameObject collisionTarget)
         {
-            if (collisionTarget is Enemy enemy && collisionTarget != friendly && friendly is Player)
+            if (collisionTarget is Enemy enemy && collisionTarget != friendly && friendly is Player) // Makes it so that an enemy cant hurt itself, and so that only players can harm enemies (now that i say it the first one is now kind of obsolete)
             {
                 enemy.TakeDamage(damage);
             }
-            if (collisionTarget is Player player && collisionTarget != friendly)
+            if (collisionTarget is Player player && collisionTarget != friendly)// Makes it so that a player cant harm themselves
             {
                 player.TakeDamage(damage);
             }

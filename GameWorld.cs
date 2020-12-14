@@ -169,7 +169,7 @@ namespace Adventure_man
             // Updates current scene
             currentScene.Update();
 
-            if (CurrentWorld.forCompleation())
+            if (CurrentWorld.forCompleation()) // if conmpleation peramitors have been meet it changes to the next world.
             {
                 ChangeWorld();
             }
@@ -200,7 +200,9 @@ namespace Adventure_man
 
             base.Draw(gameTime);
         }
-
+        /// <summary>
+        /// Changes to the next world, if there is a next world      
+        /// /// </summary>
         private void ChangeWorld()
         {
             worldNumber++;
@@ -211,7 +213,9 @@ namespace Adventure_man
                     go.LoadContent(content);
             }
         }
-
+        /// <summary>
+        /// Sofie- Generates all og the possible worlds
+        /// </summary>
         private void GenerateWorlds()
         {
             parallax = new List<List<ParallaxLayer>>
@@ -258,7 +262,7 @@ namespace Adventure_man
             {
                 new List<GameObject>
                 {
-                       new PickUp("Sword",3 ,10f, new Vector2(64, 32), (Player p) => {p.PickupWeapon(new Sword("Sword", 100, 5)); }),
+                       new PickUp("Sword",3 ,10f, new Vector2(64, 32), (Player p) => {p.PickupWeapon(new Sword("Sword", 75, 5)); }),
                     new Enemy(9, 4, "Sword"),
                     new Enemy(8, 4, "Sword"),
                     new Platform(0, 7, 10, 1,true),
@@ -268,16 +272,17 @@ namespace Adventure_man
                 },
                 new List<GameObject>
                 {
-                      new PickUp("doublejump", new Vector2(360, 570), new Vector2(64, 64), (Player p) => { ++p.JumpAmount; }),
+                      new PickUp("doublejump", new Vector2(360, 538), new Vector2(64, 64), (Player p) => { ++p.JumpAmount; }),
 
-                    new Platform(200, 400, 400, 64),
-                    new Platform(200, 550, 100, 130),
-                    new Platform(500, 600, 100, 130),
-                    new Platform(1000, 400, 100, 100),
-                    new Platform(1000, 600, 100, 100),
 
-                    new Enemy(6, 4, "Bow"),
-                    new Enemy(5, 4, "Bow"),
+                    new Platform(200, 368, 400, 64),
+                    new Platform(200, 518, 100, 130),
+                    new Platform(500, 568, 100, 130),
+                    new Platform(1000, 368, 100, 100),
+                    new Platform(1000, 568, 100, 100),
+
+                    new Enemy(6, 3.5f, "Bow"),
+                    new Enemy(5, 3.5f, "Bow"),
                     new Enemy(18, 4, "Bow"),
                     new Enemy(10, 4, "Sword"),
                     new Enemy(11, 4, "Sword"),
@@ -286,14 +291,14 @@ namespace Adventure_man
                 new List<GameObject>
                 {
 
-                     new PickUp("BowTest",4 ,4 , new Vector2(64, 64), (Player p) => {p.PickupWeapon(new Bow("Falcon Bow", 100, 10, 5)); }),
+                     new PickUp("BowTest",4 ,4 , new Vector2(64, 64), (Player p) => {p.PickupWeapon(new Bow("Falcon Bow", 75, 10, 5)); }),
 
-                    new Platform(200, 400, 400, 64),
-                    new Platform(200, 600, 100, 130),
+                    new Platform(200, 368, 400, 64),
+                    new Platform(200, 568, 100, 130),
 
-                    new Enemy(9, 4, "Sword"),
+                    new Enemy(9, 3.5f, "Sword"),
                     new Enemy(10, 4, "Bow"),
-                    new Enemy(6, 4, "Sword"),
+                    new Enemy(6, 3.5f, "Sword"),
                     new Enemy(16, 4, "Bow"),
                     new Enemy(17, 4, "Bow"),
                     new Enemy(18, 4, "Sword"),

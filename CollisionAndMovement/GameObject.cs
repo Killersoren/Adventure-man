@@ -66,12 +66,18 @@ namespace Adventure_man
             newBox.Location = Program.AdventureMan.CurrentWorld.Camera.WorldToScreen(HitBox.Location);
             spriteBatch.Draw(Sprite, newBox, null, color, 0f, Vector2.Zero, effect, 0f);
         }
-
+        /// <summary>
+        /// Sofie- Removes a given Gameobject from the current worlds list of objects
+        /// </summary>
+        /// <param name="o">Gameobject you wish to destroy</param>
         public void Destroy(GameObject o)
         {
             Program.AdventureMan.CurrentWorld.GameObjectsToRemove.Add(o);
         }
-
+        /// <summary>
+        /// Sofie- Adds an object to the current worlds list of objects
+        /// </summary>
+        /// <param name="o">Gameobject you wish to add</param>
         public static void Spawn(GameObject o)
         {
             Program.AdventureMan.CurrentWorld.newGameObjects.Add(o);
