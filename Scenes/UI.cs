@@ -46,10 +46,10 @@ namespace Adventure_man
         public override void Draw(SpriteBatch spritebatch)
         {
             spritebatch.Draw(backgroundSprite, new Rectangle(-100, -160, Program.AdventureMan.SceenSize.x, Program.AdventureMan.SceenSize.y / 2), Color.White);
-            spritebatch.DrawString(Program.AdventureMan.font, $"Coins: {World.Player.points}", new Vector2(Program.AdventureMan.CurrentWorld.worldSize.X / 2, 0), Color.Yellow);
-            spritebatch.DrawString(Program.AdventureMan.font, $"Player Health= {World.Player.health}", new Vector2(0, Program.AdventureMan.font.LineSpacing * 2), Color.White);
-            if (World.Player.CurrentWeapon != null)
-                spritebatch.DrawString(Program.AdventureMan.font, $"Player current Weapon={World.Player.CurrentWeapon.name}", new Vector2(0, Program.AdventureMan.font.LineSpacing), Color.White);
+            spritebatch.DrawString(Program.AdventureMan.font, $"Coins: {World.player.points}", new Vector2(Program.AdventureMan.CurrentWorld.worldSize.X / 2, 0), Color.Yellow);
+            spritebatch.DrawString(Program.AdventureMan.font, $"Player Health= {World.player.health}", new Vector2(0, Program.AdventureMan.font.LineSpacing * 2), Color.White);
+            if (World.player.CurrentWeapon != null)
+                spritebatch.DrawString(Program.AdventureMan.font, $"Player current Weapon={World.player.CurrentWeapon.name}", new Vector2(0, Program.AdventureMan.font.LineSpacing), Color.White);
            
             spritebatch.DrawString(Program.AdventureMan.font, $"Press Up / W to jump", new Vector2(900, Program.AdventureMan.font.LineSpacing), Color.White);
             spritebatch.DrawString(Program.AdventureMan.font, $"Press Down/S to crouch", new Vector2(900, Program.AdventureMan.font.LineSpacing*2), Color.White);
@@ -58,7 +58,7 @@ namespace Adventure_man
 
             //For getting feedback
 #if DEBUG
-            spritebatch.DrawString(Program.AdventureMan.font, $"Player pos= {World.Player.Location.X},{World.Player.Location.Y}", Vector2.Zero, Color.White);
+            spritebatch.DrawString(Program.AdventureMan.font, $"Player pos= {World.player.Location.X},{World.player.Location.Y}", Vector2.Zero, Color.White);
             spritebatch.DrawString(Program.AdventureMan.altFont, $"Test Altcodes:███", new Vector2(0, Program.AdventureMan.font.LineSpacing * 3), Color.White);
 #endif
         }

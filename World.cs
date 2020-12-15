@@ -13,24 +13,27 @@ namespace Adventure_man
         /// GameObjects lists
         /// </summary>
         public List<GameObject> GameObjects;
+
         public List<GameObject> newGameObjects;
         public List<GameObject> GameObjectsToRemove;
+        public static Player player = new Player();
 
+        public delegate bool CompleationParameter();
 
-        public static Player Player = new Player();
-        public delegate bool CompleationParamitor();
-        public CompleationParamitor forCompleation = () => { return false; };
+        public CompleationParameter forCompleation = () => { return false; };
+
+        // private readonly List<GameObject> nextWorld;
         public Camera Camera;
 
         /// <summary>
         /// Parallax list and static textures
         /// </summary>
         public List<ParallaxLayer> parallaxList;
+
         public static Texture2D tree = Program.AdventureMan.content.Load<Texture2D>("tree");
         public static Texture2D cloud = Program.AdventureMan.content.Load<Texture2D>("clouds");
         public static Texture2D ground = Program.AdventureMan.content.Load<Texture2D>("ground");
         public static Texture2D sun = Program.AdventureMan.content.Load<Texture2D>("sun");
-        
 
         /// <summary>
         /// The number of grids the world/level has
@@ -40,9 +43,9 @@ namespace Adventure_man
         /// <summary>
         /// How many pixels(^2) in each grid zone
         /// </summary>
-        private static readonly int gridResulution = 64;
+        private static readonly int gridResolution = 64;
 
-        public static int GridResulution { get => gridResulution; }
+        public static int GridResulution { get => gridResolution; }
 
         public Vector2 worldSize;
 
@@ -56,16 +59,15 @@ namespace Adventure_man
         /// <param name="worldGrid"></param>
         /// <param name="gameObjects"></param>
         /// <param name="forCompleation"></param>
-        public World(List<ParallaxLayer> parallaxes, Vector2 playerLocation, Vector2 worldGrid, List<GameObject> gameObjects, CompleationParamitor forCompleation)
+        public World(List<ParallaxLayer> parallaxes, Vector2 playerLocation, Vector2 worldGrid, List<GameObject> gameObjects, CompleationParameter forCompleation)
         {
             Camera = new Camera();
             parallaxList = parallaxes;
             GameObjects = gameObjects;
             GameObjectsToRemove = new List<GameObject>();
             newGameObjects = new List<GameObject>();
-            Player.SetSpawn(playerLocation);
-            GameObjects.Add(Player);
-
+            player.SetSpawn(playerLocation);
+            GameObjects.Add(player);
 
             this.forCompleation = forCompleation;
             this.worldGrid = worldGrid;
@@ -79,7 +81,7 @@ namespace Adventure_man
         /// </summary>
         public void Update()
         {
-            Camera.Position = Player.Location;
+            Camera.Position = player.Location;
             GameObjects.AddRange(newGameObjects);
             newGameObjects.Clear();
 
@@ -88,7 +90,7 @@ namespace Adventure_man
                 p.Update();
             }
 
-            foreach (GameObject o in Objects )
+            foreach (GameObject o in Objects)
             {
                 o.Update();
             }
@@ -101,7 +103,7 @@ namespace Adventure_man
         }
 
         /// <summary>
-        /// All - Draws each parallax and objects from lists, 
+        /// All - Draws each parallax and objects from lists,
         /// Debug: also draws CollisionBox
         /// </summary>
         /// <param name="spriteBatch"></param>
@@ -119,6 +121,7 @@ namespace Adventure_man
 #endif
             }
         }
+
         /// <summary>
         /// Creates a boarder around the playing area.
         /// </summary>
@@ -128,12 +131,10 @@ namespace Adventure_man
             yield return new Platform(0, -2, (int)worldGrid.X, 1, true); //Top (y=-2 :Leaves a i grid gab at the op of the two side boarders, but allows for jumping at the top)
             yield return new Platform(0, worldGrid.Y - 1, (int)worldGrid.X, 1, true); //Bottom
 
-            yield return new Platform(-1, -2, 1, (int)worldGrid.Y+2, true); //Left
-            yield return new Platform(worldGrid.X, -2, 1, (int)worldGrid.Y+2, true); //Right
+            yield return new Platform(-1, -2, 1, (int)worldGrid.Y + 2, true); //Left
+            yield return new Platform(worldGrid.X, -2, 1, (int)worldGrid.Y + 2, true); //Right
             //yield return new Platform(-1*gridResulution, -2*gridResulution, gridResulution, (worldGrid.Y+2)*gridResulution); //Left
             //yield return new Platform(worldGrid.X*gridResulution, -2*gridResulution, gridResulution, (worldGrid.Y+2)*gridResulution); //Right
-
-
         }
     }
 }

@@ -256,11 +256,11 @@ namespace Adventure_man
             {
                 if (weapon is Bow)
                 {
-                    if (World.Player.Location.X < Location.X && Location.X >= World.Player.Location.X + 150)
+                    if (World.player.Location.X < Location.X && Location.X >= World.player.Location.X + 150)
                     {
                         velocity += -Vector2.UnitX;
                     }
-                    else if (World.Player.Location.X > Location.X && Location.X <= World.Player.Location.X - 150)
+                    else if (World.player.Location.X > Location.X && Location.X <= World.player.Location.X - 150)
                     {
                         velocity += Vector2.UnitX;
                     }
@@ -272,11 +272,11 @@ namespace Adventure_man
                 }
                 else if (weapon is Sword)
                 {
-                    if (World.Player.Location.X < Location.X && Location.X >= World.Player.Location.X + 50)
+                    if (World.player.Location.X < Location.X && Location.X >= World.player.Location.X + 50)
                     {
                         velocity += -Vector2.UnitX;
                     }
-                    else if (World.Player.Location.X > Location.X && Location.X <= World.Player.Location.X - 50)
+                    else if (World.player.Location.X > Location.X && Location.X <= World.player.Location.X - 50)
                     {
                         velocity += Vector2.UnitX;
                     }
@@ -288,11 +288,11 @@ namespace Adventure_man
                 }
             }
 
-            if (World.Player.Location.X < Location.X)
+            if (World.player.Location.X < Location.X)
             {
                 dir = GameWorld.Direction.Left;
             }
-            else if (World.Player.Location.X > Location.X)
+            else if (World.player.Location.X > Location.X)
             {
                 dir = GameWorld.Direction.Right;
             }

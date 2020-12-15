@@ -34,7 +34,7 @@ namespace Adventure_man
         /// </summary>
         public void Loadcontent()
         {
-            swordSprite = Program.AdventureMan.Content.Load<Texture2D>("Sword");
+            swordSprite = Program.AdventureMan.Content.Load<Texture2D>("Sword1");
         }
 
         /// <summary>

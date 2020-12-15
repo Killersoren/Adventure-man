@@ -4,6 +4,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 
 namespace Adventure_man
 {
@@ -13,6 +15,7 @@ namespace Adventure_man
         public SpriteBatch _spriteBatch;
         public GameTime gameTime;
         public ContentManager content;
+        private int enemies;
 
         // Fonts
         public SpriteFont font;
@@ -33,7 +36,7 @@ namespace Adventure_man
         public List<Vector2> playerLocations;
         public List<Vector2> worldSizes;
         public List<List<GameObject>> worldLayouts;
-        public List<World.CompleationParamitor> worldCompleationParamitors;
+        public List<World.CompleationParameter> worldCompleationParameters;
         public List<List<ParallaxLayer>> parallax;
 
         public (int x, int y) SceenSize;
@@ -56,6 +59,8 @@ namespace Adventure_man
             IsMouseVisible = true;
             content = Content;
             gameTime = new GameTime();
+
+
         }
 
         /// <summary>
@@ -64,7 +69,7 @@ namespace Adventure_man
         protected override void Initialize()
         {
             GenerateWorlds();
-            CurrentWorld = new World(parallax[worldNumber], playerLocations[worldNumber], worldSizes[worldNumber], worldLayouts[worldNumber], worldCompleationParamitors[worldNumber]);
+            CurrentWorld = new World(parallax[worldNumber], playerLocations[worldNumber], worldSizes[worldNumber], worldLayouts[worldNumber], worldCompleationParameters[worldNumber]);
 
             _graphics.PreferredBackBufferWidth = (int)CurrentWorld.worldSize.X;
             _graphics.PreferredBackBufferHeight = (int)CurrentWorld.worldSize.Y;
@@ -95,6 +100,8 @@ namespace Adventure_man
             backgroundMusic = Content.Load<Song>("Background Music");
             MediaPlayer.Play(backgroundMusic);
             MediaPlayer.IsRepeating = true;
+
+
         }
 
         /// <summary>
@@ -155,6 +162,10 @@ namespace Adventure_man
                 ChangeWorld();
             }
 
+            
+
+      
+
             base.Update(gameTime);
         }
 
@@ -178,10 +189,11 @@ namespace Adventure_man
         /// /// </summary>
         private void ChangeWorld()
         {
+
             worldNumber++;
             if (worldNumber < worldLayouts.Count)
             {
-                CurrentWorld = new World(parallax[worldNumber], playerLocations[worldNumber], worldSizes[worldNumber], worldLayouts[worldNumber], worldCompleationParamitors[worldNumber]);
+                CurrentWorld = new World(parallax[worldNumber], playerLocations[worldNumber], worldSizes[worldNumber], worldLayouts[worldNumber], worldCompleationParameters[worldNumber]);
                 foreach (GameObject go in CurrentWorld.GameObjects)
                     go.LoadContent(content);
             }
@@ -274,13 +286,18 @@ namespace Adventure_man
                     new Enemy(15, 4, "Sword"),
                 }
             };
-            worldCompleationParamitors = new List<World.CompleationParamitor>
+            worldCompleationParameters = new List<World.CompleationParameter>
             {
                 () =>
                 {
-                    if (World.Player.points>=10)
+                    int enemies=0;
+                    foreach(GameObject go in Program.AdventureMan.CurrentWorld.GameObjects)
+                        if (go is Enemy)
+                            enemies++;
+
+                    if (enemies <= 0)
                         {
-                        World.Player.crouched = false;
+                        World.player.crouched = false;
                         return true;
                     }
                     else
@@ -288,9 +305,14 @@ namespace Adventure_man
                 },
                 () =>
                 {
-                    if (World.Player.points>=30)
+                    int enemies=0;
+                    foreach(GameObject go in Program.AdventureMan.CurrentWorld.GameObjects)
+                        if (go is Enemy)
+                            enemies++;
+
+                    if  (enemies <=0)
                          {
-                        World.Player.crouched = false;
+                        World.player.crouched = false;
                         return true;
                     }
                     else

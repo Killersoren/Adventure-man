@@ -22,11 +22,11 @@ namespace Adventure_man
         ///  "ScrollSpeed" is the speed of the sprites scrolling.
         /// </summary>
         /// <param name="sprite"></param>
-        /// <param name="ScrollSpeed"></param>
-        /// <param name="Amount"></param>
-        /// <param name="AlwaysMoving"></param>
-        public ParallaxLayer(Texture2D sprite, float ScrollSpeed, int Amount, Vector2 Offset, bool AlwaysMoving = false)
-            : this(new List<Texture2D>(Enumerable.Repeat(sprite, Amount).ToList()), ScrollSpeed, Offset, AlwaysMoving)
+        /// <param name="scrollSpeed"></param>
+        /// <param name="amount"></param>
+        /// <param name="alwaysMoving"></param>
+        public ParallaxLayer(Texture2D sprite, float scrollSpeed, int amount, Vector2 offset, bool alwaysMoving = false)
+            : this(new List<Texture2D>(Enumerable.Repeat(sprite, amount).ToList()), scrollSpeed, offset, alwaysMoving)
         { }
 
 
@@ -37,14 +37,14 @@ namespace Adventure_man
         ///  X = its Width multiplied with its number in the list to spread out the sprites in the parallax
         /// </summary>
         /// <param name="SpriteList"></param>
-        /// <param name="ScrollSpeed"></param>
-        /// <param name="AlwaysMoving"></param>
-        private ParallaxLayer(List<Texture2D> SpriteList, float ScrollSpeed, Vector2 offset, bool AlwaysMoving = false)
+        /// <param name="scrollSpeed"></param>
+        /// <param name="alwaysMoving"></param>
+        private ParallaxLayer(List<Texture2D> SpriteList, float scrollSpeed, Vector2 offset, bool alwaysMoving = false)
         {
             parallaxSprites = new List<ParallaxSprite>();
-            scrollSpeed = ScrollSpeed;
+            this.scrollSpeed = scrollSpeed;
 
-            alwaysMoving = AlwaysMoving;
+            this.alwaysMoving = alwaysMoving;
             for (int i = 0; i < SpriteList.Count; i++)
             {
                 var sprite = SpriteList[i];
@@ -71,7 +71,7 @@ namespace Adventure_man
             parallaxSpeed = (float)(scrollSpeed * Program.AdventureMan.gameTime.ElapsedGameTime.TotalSeconds);
             if (!alwaysMoving)
             {
-                parallaxSpeed *= World.Player.velocity.X;
+                parallaxSpeed *= World.player.velocity.X;
             }
             foreach (var parallaxSprite in parallaxSprites)
             {
