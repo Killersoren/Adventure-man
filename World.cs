@@ -9,6 +9,9 @@ namespace Adventure_man
 {
     public class World
     {
+        /// <summary>
+        /// GameObjects lists
+        /// </summary>
         public List<GameObject> GameObjects;
         public List<GameObject> newGameObjects;
         public List<GameObject> GameObjectsToRemove;
@@ -18,18 +21,17 @@ namespace Adventure_man
 
         public CompleationParameter forCompleation = () => { return false; };
        // private readonly List<GameObject> nextWorld;
-        public List<ParallaxLayer> parallaxList;
         public Camera camera;
 
-        //public PickUp pickUp;
-
-
-        // Parallax Textures
+        /// <summary>
+        /// Parallax list and static textures
+        /// </summary>
+        public List<ParallaxLayer> parallaxList;
         public static Texture2D tree = Program.AdventureMan.content.Load<Texture2D>("tree");
         public static Texture2D cloud = Program.AdventureMan.content.Load<Texture2D>("clouds");
         public static Texture2D ground = Program.AdventureMan.content.Load<Texture2D>("ground");
         public static Texture2D sun = Program.AdventureMan.content.Load<Texture2D>("sun");
-        //
+        
 
         /// <summary>
         /// The number of grids the world/level has
@@ -44,27 +46,8 @@ namespace Adventure_man
         public static int GridResulution { get => gridResolution; }
 
         public Vector2 worldSize;
-        //public static Vector2 ScreenSize { get => screenSize; }
 
         internal List<GameObject> Objects { get => GameObjects; private set => GameObjects = value; }
-
-        //public World(List<GameObject> gameObjects)
-        //{
-        //    GameObjects = gameObjects;
-        //    GameObjectsToRemove = new List<GameObject>();
-        //    newGameObjects = new List<GameObject>();
-
-        //    Player = (Player)gameObjects.Find(a => a is Player);
-
-        //    worldGrid = new Vector2(20, 11);
-        //    //gridResulution = 64;
-        //    //worldSize = new Vector2(Program.AdventureMan._graphics.PreferredBackBufferWidth, Program.AdventureMan._graphics.PreferredBackBufferHeight);
-        //    worldSize = new Vector2(worldGrid.X * GridResulution, worldGrid.Y * GridResulution);
-
-        //    Objects.AddRange(Border());
-
-        //}
-
 
         /// <summary>
         /// All - Worlds Constructor, Sets parameters, adds player to GameObjects and sets player spawn to player location
@@ -137,14 +120,21 @@ namespace Adventure_man
 #endif
             }
         }
-
+        /// <summary>
+        /// Creates a boarder around the playing area.
+        /// </summary>
+        /// <returns>The Boarder platforms</returns>
         private IEnumerable<GameObject> Border()
         {
             yield return new Platform(0, -2, (int)worldGrid.X, 1, true); //Top (y=-2 :Leaves a i grid gab at the op of the two side boarders, but allows for jumping at the top)
-            yield return new Platform(0, worldGrid.Y - 0.5f, (int)worldGrid.X, 1, true); //Bottom
+            yield return new Platform(0, worldGrid.Y - 1, (int)worldGrid.X, 1, true); //Bottom
 
-            yield return new Platform(-1, 0, 1, (int)worldGrid.Y, true); //Left
-            yield return new Platform(worldGrid.X, 0, 1, (int)worldGrid.Y, true); //Right
+            yield return new Platform(-1, -2, 1, (int)worldGrid.Y+2, true); //Left
+            yield return new Platform(worldGrid.X, -2, 1, (int)worldGrid.Y+2, true); //Right
+            //yield return new Platform(-1*gridResulution, -2*gridResulution, gridResulution, (worldGrid.Y+2)*gridResulution); //Left
+            //yield return new Platform(worldGrid.X*gridResulution, -2*gridResulution, gridResulution, (worldGrid.Y+2)*gridResulution); //Right
+
+
         }
     }
 }

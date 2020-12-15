@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Adventure_man
 {
-    internal class Platform : IntermidiateTemporaryClassForStoppingMovement
+    internal class Platform : GameObject
     {
         private int width;
         private int height;
@@ -42,7 +42,7 @@ namespace Adventure_man
         }
 
         /// <summary>
-        /// Generates a platform object
+        /// Sofie- Generates a platform object in grid
         /// </summary>
         /// <param name="pos">the position of the platform in the grid, Top Left</param>
         /// <param name="width">the nuber of Grid spaces its going to fill, so the number we are going to multiply the Sprite width with</param>
@@ -69,6 +69,7 @@ namespace Adventure_man
         /// <param name="grid">to set it apart from non grid (true or false it doesnt matter)</param>
         public Platform(float X, float Y, int width, int height, bool grid)
         {
+            IsBlocking = true;
             Width = width;
             Height = height;
             int res = World.GridResulution;
@@ -80,6 +81,7 @@ namespace Adventure_man
 
         public Platform(float x, float y, float width, float height)
         {
+            IsBlocking = true;
             this.HitBox = new RectangleF(x, y, width, height);
             grid = false;
             CheckGrid();
@@ -96,11 +98,11 @@ namespace Adventure_man
         }
 
         /// <summary>
-        /// This is so that you dont have to check every draw, This changes the Draw / Load Content Methods depending on if the platform is one of the old Grid platforms or the new non grid platform
+        /// Sofie- This is so that you dont have to check every draw, This changes the Draw / Load Content Methods depending on if the platform is one of the old Grid platforms or the new non grid platform
         /// </summary>
         private void CheckGrid()
         {
-            if (grid)
+            if (grid) //Sofie
             {
                 PlatformDraw = (SpriteBatch spriteBatch) =>
                 {
@@ -121,10 +123,5 @@ namespace Adventure_man
                 };
             }
         }
-
-        //public override void OnCollision(GameObject collisionTarget)
-        //{
-        //    base.OnCollision(collisionTarget);
-        //}
     }
 }

@@ -8,13 +8,13 @@ using System.Threading;
 
 namespace Adventure_man
 {
-    internal class Arrow : MoveableGameObject
+    internal class Arrow : MoveableGameObject //Sofie 
     {
 
         private readonly int damage;
         private readonly MoveableGameObject friendly;//the object that shot the arrow
         /// <summary>
-        /// Makes and shoots an arrow
+        /// Sofie- Makes and shoots an arrow
         /// </summary>
         /// <param name="sprite">loaded in the weapon</param>
         /// <param name="position">the position of the arrow (Calculated so that it is reletive to the Shooter)</param>

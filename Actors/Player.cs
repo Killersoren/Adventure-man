@@ -11,13 +11,11 @@ using static Adventure_man.GameWorld;
 
 namespace Adventure_man
 {
-    public class Player : MoveableGameObject
+    public class Player : Character
     {
         public int points = 0;
-        private float gravStrength = 0; // don't like the placement of this var :/
         private Weapon currentWeapon;
 
-        //private List<Weapon> weapons;
         private int availableJumps;
 
         public int JumpAmount;
@@ -28,41 +26,35 @@ namespace Adventure_man
 
         public int health;
         private int maxHealth;
+        private float invincibilityTime;
+        private float invincibilityTimer;
+        private bool isInvincible;
 
         public Vector2 spawn;
 
         private bool isAlive
         {
-            get
-            {
-                if (health > 0)
-                    return true;
-                else
-                    return false;
-            }
+            get => health > 0;
         }
-
-        //private Weapon[] weapons = new Weapon[2];
 
         private List<Weapon> weapons;
 
-        protected bool isGrounded; //bad maybe?, we check too often i think, maybe not only when we try to apply gravity (once per cycle) and ocasionally when we jummp
-
         internal Weapon CurrentWeapon { get => currentWeapon; private set => currentWeapon = value; }
 
+        /// <summary>
+        /// Sofie- Deafult player, so that we dont have to change the same thing in multiple constructors
+        /// </summary>
         private void DefaultPlayer()
         {
-             
             maxHealth = 200;
             health = maxHealth;
             JumpAmount = 1;
             dragCoefficient = 0.9f;
             speed = 1f;
             staticDir = Direction.Right;
+            invincibilityTime = 1000;
 
             weapons = new List<Weapon>();
-            
-
         }
 
         public Player()
@@ -81,6 +73,7 @@ namespace Adventure_man
 
         /// <summary>
         /// Ras - If the player has a weapon change it to either 0/1(sword / bow), not a bool incase we had more weapons
+        /// (Sofie)
         /// </summary>
         private void SwapWeapon()
         {
@@ -92,80 +85,63 @@ namespace Adventure_man
             else if (weapons.Count > 0)
             {
                 currentWeapon = weapons[0];
-
             }
         }
+
+        /// <summary>
+        /// Sofie- For picking up a new weapon
+        /// </summary>
+        /// <param name="weapon">The weapon to be picked up</param>
         public void PickupWeapon(Weapon weapon)
         {
             weapons.Add(weapon);
             if (weapons.Count == 1)
                 currentWeapon = weapons[0];
-            else
-            {
-                currentWeapon = weapons[1];
-            }
-        }
-
-        private bool CheckIfGrounded()
-        {
-            var isGrounded = false;
-
-            var downRec = HitBox.Copy();
-            downRec.Location -= new Vector2(0, -1);
-
-            foreach (GameObject gameObject in Program.AdventureMan.CurrentWorld.GameObjects)
-            {
-                if (downRec.Intersects(gameObject.HitBox) && !isGrounded)
-                {
-                    if (gameObject is IntermidiateTemporaryClassForStoppingMovement)
-                    {
-                        isGrounded = true;
-                    }
-                }
-            }
-            return isGrounded;
         }
 
         public override void Update()
         {
             isGrounded = CheckIfGrounded();
+            ApplyGravity(0.1f);
 
-            if (isAlive == false)
+            if (isAlive == false)// Checks if the player is alive
             {
-                //Die();
                 Respawn();
             }
 
-            if (isGrounded)
+            if (isGrounded)// Refreshes the jumpcounter and removes gravity if the player is grounded
             {
                 //resets jumps
                 availableJumps = JumpAmount;
 
                 //Reset gravity
-                if (velocity.Y > 0)
-                    velocity.Y = 0;
-
-                gravStrength = 0;
+                ResetGravity();
             }
+            if (isInvincible)
+                InvincibilityCountdown();
 
-            //Debug.WriteLine("The player location is "+Location);
-            if (currentWeapon != null)
+            if (currentWeapon != null) // Runs Weapon cooldown ,only if the player has a weapon.
                 CurrentWeapon.WeaponCooldown();
 
-            ApplyGravity();
             HandleInput();
             dir = UpdateSprite();
             base.Update();
         }
 
-        private void Jump()
+        /// <summary>
+        /// Magnus - Resets the gravity
+        /// </summary>
+        private void ResetGravity()
         {
-            if (availableJumps-- > 0)
-            {
-                velocity.Y = -30;// += new Vector2(0, -30f); //should probably also reset the gravity or something like that for better feel, pretty sure other games also do this
-            }
+            if (velocity.Y > 0)
+                velocity.Y = 0;
+
+            gravStrength = 0;
         }
 
+        /// <summary>
+        /// Sofie- Makes the player crouch by halfing the height of the Hitbox and moving it down by the new height so that it wont be crouching in midair
+        /// </summary>
         private void Crouch()
         {
             Size = new Vector2(Size.X, Size.Y / 2);
@@ -173,6 +149,9 @@ namespace Adventure_man
             crouched = true;
         }
 
+        /// <summary>
+        /// Sofie- To make the Payer uncrouch,by "redoubelling" the hitbox height and moving the location up by the former height to prevent the player from being stuck in the ground, it also checks if there is anything "directly" above it and wont stand up (do as descriped before) until it wont hit its head.
+        /// </summary>
         private void StandUp()
         {
             bool clear = true;
@@ -216,10 +195,17 @@ namespace Adventure_man
             }
         }
 
-        private void ApplyGravity()
+        /// <summary>
+        /// Magnus - Makes the character jump
+        /// </summary>
+        private void Jump()
         {
-            gravStrength += 0.1f;
-            velocity += new Vector2(0, gravStrength);
+            if (availableJumps-- > 0)
+            {
+                velocity.Y = -30;
+
+                ResetGravity();
+            }
         }
 
         private KeyboardState keyState; //don't like this in this scope
@@ -265,8 +251,6 @@ namespace Adventure_man
             {
                 SwapWeapon();
             }
-
-
         }
 
         public override void LoadContent(ContentManager contentManager)
@@ -287,17 +271,31 @@ namespace Adventure_man
             coinPickup = Program.AdventureMan.content.Load<SoundEffect>("CoinSound");
         }
 
+        /// <summary>
+        /// Sofie- Attack using Currrent Weapon, if the Player has any.
+        /// </summary>
         public void Attack()
         {
             if (CurrentWeapon != null)//Jeg troede jeg allerede havde lagt dette ind men det m� jeg alligevel have glemt
-                CurrentWeapon.UseWeapon(Location, dir,this);// Need some kind of facing system
+                CurrentWeapon.UseWeapon(Location, dir, this);// Need some kind of facing system
         }
 
+        /// <summary>
+        /// Sofie- Take damage
+        /// </summary>
+        /// <param name="damage">The amount of damage to be taken</param>
         public void TakeDamage(int damage)
         {
-            health -= damage;
+            if (!isInvincible)
+            {
+                health -= damage;
+                StartInvincibilityTimer();
+            }
         }
 
+        /// <summary>
+        /// Sofie- Removes the Player object
+        /// </summary>
         public void Die()
         {
             Destroy(this);
@@ -305,15 +303,19 @@ namespace Adventure_man
             //Spawn(new Enemy(9, 3));
         }
 
+        /// <summary>
+        /// Sofie- Puts Player back to starting location with max health, and makes it no longer invinviblt
+        /// </summary>
         public void Respawn()
         {
             health = maxHealth;
             Location = spawn;
+            isInvincible = false;
         }
 
         public override void OnCollision(GameObject collisionTarget)
         {
-            if (collisionTarget is Coin coin)
+            if (collisionTarget is Coin coin)//For coin Pickup
             {
                 coinPickup.Play(0.6f, 0, 0);
                 points += coin.coinValue;
@@ -323,15 +325,43 @@ namespace Adventure_man
             base.OnCollision(collisionTarget);
         }
 
-        //public override void Draw(SpriteBatch spriteBatch)
-        //{
-        //    spriteBatch.Draw(Sprite, HitBox, null, color, 0, Vector2.Zero, effect, 0);
-        //}
+        /// <summary>
+        /// FOr setting spawnpoint
+        /// </summary>
+        /// <param name="location"></param>
         public void SetSpawn(Vector2 location)
         {
-            Location = location;
             spawn = location;
+            Location = spawn;
+        }
+
+        /// <summary>
+        /// Sofie- Starts invincibility frames
+        /// </summary>
+        private void StartInvincibilityTimer()
+        {
+            isInvincible = true;
+            invincibilityTimer = invincibilityTime;
+        }
+
+        /// <summary>
+        /// Sofie- Counts down to when invinvibility ends, and flickers the player sprite in and out of existance
+        /// </summary>
+        private void InvincibilityCountdown()
+        {
+            if (invincibilityTimer > 0)
+            {
+                invincibilityTimer -= (float)Program.AdventureMan.gameTime.ElapsedGameTime.TotalMilliseconds;
+                if (color == Color.White)
+                    color = Color.Transparent;
+                else if (color == Color.Transparent)
+                    color = Color.White;
+            }
+            else
+            {
+                isInvincible = false;
+                color = Color.White;
+            }
         }
     }
-
 }
