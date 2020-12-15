@@ -290,7 +290,12 @@ namespace Adventure_man
             {
                 () =>
                 {
-                    if (World.player.points>=10)
+                    int enemies=0;
+                    foreach(GameObject go in Program.AdventureMan.CurrentWorld.GameObjects)
+                        if (go is Enemy)
+                            enemies++;
+
+                    if (enemies <= 0)
                         {
                         World.player.crouched = false;
                         return true;
@@ -300,7 +305,12 @@ namespace Adventure_man
                 },
                 () =>
                 {
-                    if (World.player.points>=30)
+                    int enemies=0;
+                    foreach(GameObject go in Program.AdventureMan.CurrentWorld.GameObjects)
+                        if (go is Enemy)
+                            enemies++;
+
+                    if  (enemies <=0)
                          {
                         World.player.crouched = false;
                         return true;
