@@ -33,11 +33,7 @@ namespace Adventure_man
         public World CurrentWorld;
         public int worldNumber = 0;
 
-        public List<Vector2> playerLocations;
-        public List<Vector2> worldSizes;
-        public List<List<GameObject>> worldLayouts;
-        public List<World.CompleationParameter> worldCompleationParameters;
-        public List<List<ParallaxLayer>> parallax;
+        private List<World> worlds = new List<World>();
 
         public (int x, int y) SceenSize;
         private KeyboardState laststate;
@@ -59,8 +55,6 @@ namespace Adventure_man
             IsMouseVisible = true;
             content = Content;
             gameTime = new GameTime();
-
-
         }
 
         /// <summary>
@@ -69,7 +63,7 @@ namespace Adventure_man
         protected override void Initialize()
         {
             GenerateWorlds();
-            CurrentWorld = new World(parallax[worldNumber], playerLocations[worldNumber], worldSizes[worldNumber], worldLayouts[worldNumber], worldCompleationParameters[worldNumber]);
+            CurrentWorld = worlds[0];
 
             _graphics.PreferredBackBufferWidth = (int)CurrentWorld.worldSize.X;
             _graphics.PreferredBackBufferHeight = (int)CurrentWorld.worldSize.Y;
@@ -100,8 +94,6 @@ namespace Adventure_man
             backgroundMusic = Content.Load<Song>("Background Music");
             MediaPlayer.Play(backgroundMusic);
             MediaPlayer.IsRepeating = true;
-
-
         }
 
         /// <summary>
@@ -162,10 +154,6 @@ namespace Adventure_man
                 ChangeWorld();
             }
 
-            
-
-      
-
             base.Update(gameTime);
         }
 
@@ -189,11 +177,10 @@ namespace Adventure_man
         /// /// </summary>
         private void ChangeWorld()
         {
-
             worldNumber++;
-            if (worldNumber < worldLayouts.Count)
+            if (worldNumber < worlds.Count)
             {
-                CurrentWorld = new World(parallax[worldNumber], playerLocations[worldNumber], worldSizes[worldNumber], worldLayouts[worldNumber], worldCompleationParameters[worldNumber]);
+                CurrentWorld = worlds[worldNumber];
                 foreach (GameObject go in CurrentWorld.GameObjects)
                     go.LoadContent(content);
             }
@@ -204,124 +191,112 @@ namespace Adventure_man
         /// </summary>
         private void GenerateWorlds()
         {
-            parallax = new List<List<ParallaxLayer>>
+            worlds = new List<World>()
             {
-                new List<ParallaxLayer>
-                {
-                    new ParallaxLayer(World.sun, 5f, 1,new Vector2(-900,0),true),
-                    new ParallaxLayer(World.cloud,20f,1,new Vector2(-400,0),true),
-                    new ParallaxLayer(World.ground, 0f, 1, new Vector2(0,-600)),
-                    new ParallaxLayer(World.tree, 2f, 7, new Vector2(0,-200)),
-                    new ParallaxLayer(World.tree, 3f, 7, new Vector2(100,-250)),
-                },
-                new List<ParallaxLayer>
-                {
-                   new ParallaxLayer(World.sun, 5f, 1,new Vector2(-900,0),true),
-                    new ParallaxLayer(World.cloud,20f,1,new Vector2(-400,0),true),
-                    new ParallaxLayer(World.ground, 0f, 1, new Vector2(0,-600)),
-                    new ParallaxLayer(World.tree, 3f, 7,new Vector2(100,-250)),
-                },
-                new List<ParallaxLayer>
-                {
-                   new ParallaxLayer(World.sun, 5f, 1,new Vector2(-900,0),true),
-                    new ParallaxLayer(World.ground, 0f, 1, new Vector2(0,-600)),
-                    new ParallaxLayer(World.tree, 2f, 7, new Vector2(0,-200)),
-                    new ParallaxLayer(World.tree, 3f, 7, new Vector2(100,-250)),
-                },
-            };
+                new World(
+                    new List<ParallaxLayer>
+                    {
+                        new ParallaxLayer(World.sun, 5f, 1,new Vector2(-900,0),true),
+                        new ParallaxLayer(World.cloud,20f,1,new Vector2(-400,0),true),
+                        new ParallaxLayer(World.ground, 0f, 1, new Vector2(0,-600)),
+                        new ParallaxLayer(World.tree, 2f, 7, new Vector2(0,-200)),
+                        new ParallaxLayer(World.tree, 3f, 7, new Vector2(100,-250)),
+                    },
+                    new Vector2(0*World.GridResulution,8*World.GridResulution),
+                    new Vector2(20,11),
+                    new List<GameObject>
+                    {
+                        new PickUp("Sword", 1, 3f, 9, new Vector2(64, 32), (Player p) => {p.PickupWeapon(new Sword("Sword", 75, 5)); }),
+                        new Enemy(9, 4, "Sword"),
+                        new Enemy(8, 4, "Sword"),
+                        new Platform(0, 7, 10, 1,true),
+                        new Platform(9, 8, 2, 1,true),
+                        new Enemy(18, 8, "Sword"),
+                    },
+                    () =>
+                    {
+                        int enemies=0;
+                        foreach(GameObject go in Program.AdventureMan.CurrentWorld.GameObjects)
+                            if (go is Enemy)
+                                enemies++;
 
-            playerLocations = new List<Vector2>
-            {
-                new Vector2(0*World.GridResulution,8*World.GridResulution),
-                new Vector2(0*World.GridResulution,8*World.GridResulution),
-                new Vector2(0*World.GridResulution,8*World.GridResulution)
-            };
-
-            worldSizes = new List<Vector2>
-            {
-                new Vector2(20,11),
-                new Vector2(20,11),
-                new Vector2(20,11)
-            };
-            worldLayouts = new List<List<GameObject>>
-            {
-                new List<GameObject>
-                {
-                    new PickUp("Sword", 1, 3f, 9, new Vector2(64, 32), (Player p) => {p.PickupWeapon(new Sword("Sword", 75, 5)); }),
-                    new Enemy(9, 4, "Sword"),
-                    new Enemy(8, 4, "Sword"),
-                    new Platform(0, 7, 10, 1,true),
-                    new Platform(9, 8, 2, 1,true),
-                    new Enemy(18, 8, "Sword"),
-                },
-                new List<GameObject>
-                {
-                      new PickUp("doublejump", 2, new Vector2(360, 538), new Vector2(64, 64), (Player p) => { ++p.JumpAmount; }),
-
-                    new Platform(200, 368, 400, 64),
-                    new Platform(200, 518, 100, 130),
-                    new Platform(500, 568, 100, 130),
-                    new Platform(1000, 368, 100, 100),
-                    new Platform(1000, 568, 100, 100),
-
-                    new Enemy(6, 3.5f, "Bow"),
-                    new Enemy(5, 3.5f, "Bow"),
-                    new Enemy(18, 4, "Bow"),
-                    new Enemy(10, 4, "Sword"),
-                    new Enemy(11, 4, "Sword"),
-                },
-                new List<GameObject>
-                {
-                     new PickUp("BowTest", 1, 4, 4, new Vector2(64, 64), (Player p) => {p.PickupWeapon(new Bow("Falcon Bow", 75, 10, 5)); }),
-
-                    new Platform(200, 368, 400, 64),
-                    new Platform(200, 568, 100, 130),
-
-                    new Enemy(9, 3.5f, "Sword"),
-                    new Enemy(10, 4, "Bow"),
-                    new Enemy(6, 3.5f, "Sword"),
-                    new Enemy(16, 4, "Bow"),
-                    new Enemy(17, 4, "Bow"),
-                    new Enemy(18, 4, "Sword"),
-                    new Enemy(15, 4, "Sword"),
-                }
-            };
-            worldCompleationParameters = new List<World.CompleationParameter>
-            {
-                () =>
-                {
-                    int enemies=0;
-                    foreach(GameObject go in Program.AdventureMan.CurrentWorld.GameObjects)
-                        if (go is Enemy)
-                            enemies++;
-
-                    if (enemies <= 0)
-                        {
-                        World.player.crouched = false;
-                        return true;
+                        if (enemies <= 0)
+                            {
+                            World.player.crouched = false;
+                            return true;
+                        }
+                        else
+                            return false;
                     }
-                    else
-                        return false;
-                },
-                () =>
-                {
-                    int enemies=0;
-                    foreach(GameObject go in Program.AdventureMan.CurrentWorld.GameObjects)
-                        if (go is Enemy)
-                            enemies++;
+                ),
+                new World(
+                    new List<ParallaxLayer>
+                    {
+                        new ParallaxLayer(World.sun, 5f, 1,new Vector2(-900,0),true),
+                        new ParallaxLayer(World.cloud,20f,1,new Vector2(-400,0),true),
+                        new ParallaxLayer(World.ground, 0f, 1, new Vector2(0,-600)),
+                        new ParallaxLayer(World.tree, 3f, 7,new Vector2(100,-250)),
+                    },
+                    new Vector2(0*World.GridResulution,8*World.GridResulution),
+                    new Vector2(20,11),
+                    new List<GameObject>
+                    {
+                        new PickUp("doublejump", 2, new Vector2(360, 538), new Vector2(64, 64), (Player p) => { ++p.JumpAmount; }),
+                        new Platform(200, 368, 400, 64),
+                        new Platform(200, 518, 100, 130),
+                        new Platform(500, 568, 100, 130),
+                        new Platform(1000, 368, 100, 100),
+                        new Platform(1000, 568, 100, 100),
+                        new Enemy(6, 3.5f, "Bow"),
+                        new Enemy(5, 3.5f, "Bow"),
+                        new Enemy(18, 4, "Bow"),
+                        new Enemy(10, 4, "Sword"),
+                        new Enemy(11, 4, "Sword"),
+                    },
+                    () =>
+                    {
+                        int enemies=0;
+                        foreach(GameObject go in Program.AdventureMan.CurrentWorld.GameObjects)
+                            if (go is Enemy)
+                                enemies++;
 
-                    if  (enemies <=0)
-                         {
-                        World.player.crouched = false;
-                        return true;
+                        if  (enemies <=0)
+                             {
+                            World.player.crouched = false;
+                            return true;
+                        }
+                        else
+                            return false;
                     }
-                    else
+                ),
+                new World(
+                    new List<ParallaxLayer>
+                    {
+                       new ParallaxLayer(World.sun, 5f, 1,new Vector2(-900,0),true),
+                        new ParallaxLayer(World.ground, 0f, 1, new Vector2(0,-600)),
+                        new ParallaxLayer(World.tree, 2f, 7, new Vector2(0,-200)),
+                        new ParallaxLayer(World.tree, 3f, 7, new Vector2(100,-250)),
+                    },
+                    new Vector2(0*World.GridResulution,8*World.GridResulution),
+                    new Vector2(20,11),
+                    new List<GameObject>
+                    {
+                        new PickUp("BowTest", 1, 4, 4, new Vector2(64, 64), (Player p) => {p.PickupWeapon(new Bow("Falcon Bow", 75, 10, 5)); }),
+                        new Platform(200, 368, 400, 64),
+                        new Platform(200, 568, 100, 130),
+                        new Enemy(9, 3.5f, "Sword"),
+                        new Enemy(10, 4, "Bow"),
+                        new Enemy(6, 3.5f, "Sword"),
+                        new Enemy(16, 4, "Bow"),
+                        new Enemy(17, 4, "Bow"),
+                        new Enemy(18, 4, "Sword"),
+                        new Enemy(15, 4, "Sword"),
+                    },
+                    () =>
+                    {
                         return false;
-                },
-                () =>
-                {
-                    return false;
-                }
+                    }
+                )
             };
         }
     }
