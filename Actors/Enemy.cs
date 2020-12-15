@@ -225,7 +225,7 @@ namespace Adventure_man
             base.Draw(spriteBatch);
 
             // Sofie- Draws the enemies healthbar directly above its head.
-            spriteBatch.DrawString(healthbarFont, HealthBar, Program.AdventureMan.CurrentWorld.Camera.WorldToScreen(new Vector2(Location.X + (Size.X / 2), Location.Y - healthbarFont.LineSpacing)), HealthbarColor, 0, new Vector2((healthbarFont.MeasureString(HealthBar).X / 2), 0), 1, SpriteEffects.None, 0);
+            spriteBatch.DrawString(healthbarFont, HealthBar, Program.AdventureMan.CurrentWorld.camera.WorldToScreen(new Vector2(Location.X + (Size.X / 2), Location.Y - healthbarFont.LineSpacing)), HealthbarColor, 0, new Vector2((healthbarFont.MeasureString(HealthBar).X / 2), 0), 1, SpriteEffects.None, 0);
         }
 
         public override void Update()

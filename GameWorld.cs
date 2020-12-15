@@ -290,7 +290,7 @@ namespace Adventure_man
             {
                 () =>
                 {
-                    if (World.Player.points>=10)
+                    if (World.player.points>=10)
                         {
                         World.player.crouched = false;
                         return true;
@@ -300,7 +300,7 @@ namespace Adventure_man
                 },
                 () =>
                 {
-                    if (World.Player.points>=30)
+                    if (World.player.points>=30)
                          {
                         World.player.crouched = false;
                         return true;
