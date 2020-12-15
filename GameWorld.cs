@@ -4,6 +4,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 
 namespace Adventure_man
 {
@@ -13,6 +15,7 @@ namespace Adventure_man
         public SpriteBatch _spriteBatch;
         public GameTime gameTime;
         public ContentManager content;
+        private int enemies;
 
         // Fonts
         public SpriteFont font;
@@ -36,7 +39,7 @@ namespace Adventure_man
         public List<Vector2> playerLocations;
         public List<Vector2> worldSizes;
         public List<List<GameObject>> worldLayouts;
-        public List<World.CompleationParamitor> worldCompleationParamitors;
+        public List<World.CompleationParameter> worldCompleationParameters;
         public List<List<ParallaxLayer>> parallax;
 
         //private Texture2D collisionTexture;
@@ -51,6 +54,7 @@ namespace Adventure_man
             Left = -1
         }
 
+        
 
         public GameWorld()
         {
@@ -61,8 +65,9 @@ namespace Adventure_man
             //screenSize = new Vector2(_graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight);
             content = Content;
             gameTime = new GameTime();
-        }
 
+
+        }
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
@@ -95,7 +100,7 @@ namespace Adventure_man
             //    }
             //);
             GenerateWorlds();
-            CurrentWorld = new World(parallax[worldNumber], playerLocations[worldNumber], worldSizes[worldNumber], worldLayouts[worldNumber], worldCompleationParamitors[worldNumber]);
+            CurrentWorld = new World(parallax[worldNumber], playerLocations[worldNumber], worldSizes[worldNumber], worldLayouts[worldNumber], worldCompleationParameters[worldNumber]);
 
             _graphics.PreferredBackBufferWidth = (int)CurrentWorld.worldSize.X;
             _graphics.PreferredBackBufferHeight = (int)CurrentWorld.worldSize.Y;
@@ -128,14 +133,15 @@ namespace Adventure_man
             backgroundMusic = Content.Load<Song>("Background Music");
             MediaPlayer.Play(backgroundMusic);
             MediaPlayer.IsRepeating = true;
+
+
         }
 
         protected override void Update(GameTime gameTime)
         {
             this.gameTime = gameTime;
 
-
-
+          
             // Ras - Pauses game by changing scene and not running game updates
             if (isGameStarted)
             {
@@ -173,10 +179,23 @@ namespace Adventure_man
             {
                 ChangeWorld();
             }
-           
+
+            
+
+      
 
             base.Update(gameTime);
         }
+
+        private void CountEnemies()
+        {
+            if (Program.AdventureMan.CurrentWorld.GameObjects.OfType<Enemy>().Any())
+            {
+                enemies++;
+            }
+        }
+
+
 
         protected override void Draw(GameTime gameTime)
         {
@@ -203,10 +222,11 @@ namespace Adventure_man
 
         private void ChangeWorld()
         {
+
             worldNumber++;
             if (worldNumber < worldLayouts.Count)
             {
-                CurrentWorld = new World(parallax[worldNumber], playerLocations[worldNumber], worldSizes[worldNumber], worldLayouts[worldNumber], worldCompleationParamitors[worldNumber]);
+                CurrentWorld = new World(parallax[worldNumber], playerLocations[worldNumber], worldSizes[worldNumber], worldLayouts[worldNumber], worldCompleationParameters[worldNumber]);
                 foreach (GameObject go in CurrentWorld.GameObjects)
                     go.LoadContent(content);
             }
@@ -301,22 +321,18 @@ namespace Adventure_man
 
                 }
             };
-            worldCompleationParamitors = new List<World.CompleationParamitor>
+            worldCompleationParameters = new List<World.CompleationParameter>
             {
                 () =>
                 {
-                    //int enemies=0;
-                    //foreach(GameObject go in Program.AdventureMan.CurrentWorld.GameObjects)
-                    //    if (go is Enemy)
-                    //        enemies++;
+                    int enemies=0;
+                    foreach(GameObject go in Program.AdventureMan.CurrentWorld.GameObjects)
+                        if (go is Enemy)
+                            enemies++;
 
-                    //if (enemies==0)
-                    //    return true;
-                    //else
-                    //    return false;
-                    if (World.Player.points>=10)
+                    if /*(World.player.points>=10)*/ (enemies <= 0)
                         {
-                        World.Player.crouched = false;
+                        World.player.crouched = false;
                         return true;
                     }
                     else
@@ -324,18 +340,14 @@ namespace Adventure_man
                 },
                 () =>
                 {
-                    //int enemies=0;
-                    //foreach(GameObject go in Program.AdventureMan.CurrentWorld.GameObjects)
-                    //    if (go is Enemy)
-                    //        enemies++;
+                    int enemies=0;
+                    foreach(GameObject go in Program.AdventureMan.CurrentWorld.GameObjects)
+                        if (go is Enemy)
+                            enemies++;
 
-                    //if (enemies==0)
-                    //    return true;
-                    //else
-                    //    return false;
-                    if (World.Player.points>=30)
+                    if /*(World.player.points>=30)*/ (enemies <=0)
                          {
-                        World.Player.crouched = false;
+                        World.player.crouched = false;
                         return true;
                     }
                     else

@@ -63,7 +63,7 @@ namespace Adventure_man
             //spriteBatch.Draw(Sprite, HitBox, color);
 
             var newBox = HitBox.Copy();
-            newBox.Location = Program.AdventureMan.CurrentWorld.Camera.WorldToScreen(HitBox.Location);
+            newBox.Location = Program.AdventureMan.CurrentWorld.camera.WorldToScreen(HitBox.Location);
             spriteBatch.Draw(Sprite, newBox, null, color, 0f, Vector2.Zero, effect, 0f);
         }
 

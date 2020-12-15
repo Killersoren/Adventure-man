@@ -53,7 +53,7 @@ namespace Adventure_man
             else
             {
                 stab.X += (int)dir;
-                velocity = stab + World.Player.velocity;
+                velocity = stab + World.player.velocity;
             }
             base.Update();
         }

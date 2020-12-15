@@ -251,7 +251,7 @@ namespace Adventure_man
         public override void Draw(SpriteBatch spriteBatch)
         {
             base.Draw(spriteBatch);
-            spriteBatch.DrawString(healthbarFont, HealthBar, Program.AdventureMan.CurrentWorld.Camera.WorldToScreen(new Vector2(Location.X + (Size.X / 2), Location.Y - healthbarFont.LineSpacing)), HealthbarColor, 0, new Vector2((healthbarFont.MeasureString(HealthBar).X / 2), 0), 1, SpriteEffects.None, 0);
+            spriteBatch.DrawString(healthbarFont, HealthBar, Program.AdventureMan.CurrentWorld.camera.WorldToScreen(new Vector2(Location.X + (Size.X / 2), Location.Y - healthbarFont.LineSpacing)), HealthbarColor, 0, new Vector2((healthbarFont.MeasureString(HealthBar).X / 2), 0), 1, SpriteEffects.None, 0);
         }
 
         public override void Update()
@@ -298,11 +298,11 @@ namespace Adventure_man
             {
                 if (weapon is Bow)
                 {
-                    if (World.Player.Location.X < Location.X && Location.X >= World.Player.Location.X + 150)
+                    if (World.player.Location.X < Location.X && Location.X >= World.player.Location.X + 150)
                     {
                         velocity += -Vector2.UnitX;
                     }
-                    else if (World.Player.Location.X > Location.X && Location.X <= World.Player.Location.X - 150)
+                    else if (World.player.Location.X > Location.X && Location.X <= World.player.Location.X - 150)
                     {
                         velocity += Vector2.UnitX;
                     }
@@ -314,11 +314,11 @@ namespace Adventure_man
                 }
                 else if (weapon is Sword)
                 {
-                    if (World.Player.Location.X < Location.X && Location.X >= World.Player.Location.X + 50)
+                    if (World.player.Location.X < Location.X && Location.X >= World.player.Location.X + 50)
                     {
                         velocity += -Vector2.UnitX;
                     }
-                    else if (World.Player.Location.X > Location.X && Location.X <= World.Player.Location.X - 50)
+                    else if (World.player.Location.X > Location.X && Location.X <= World.player.Location.X - 50)
                     {
                         velocity += Vector2.UnitX;
                     }
@@ -330,11 +330,11 @@ namespace Adventure_man
                 }
             }
 
-            if (World.Player.Location.X < Location.X)
+            if (World.player.Location.X < Location.X)
             {
                 dir = GameWorld.Direction.Left;
             }
-            else if (World.Player.Location.X > Location.X)
+            else if (World.player.Location.X > Location.X)
             {
                 dir = GameWorld.Direction.Right;
             }

@@ -30,7 +30,7 @@ namespace Adventure_man
         public static void DrawCollisionBox(this GameObject go, SpriteBatch spriteBatch)
         {
             var newBox = go.HitBox.Copy();
-            newBox.Location = Program.AdventureMan.CurrentWorld.Camera.WorldToScreen(go.HitBox.Location);
+            newBox.Location = Program.AdventureMan.CurrentWorld.camera.WorldToScreen(go.HitBox.Location);
 
             Rectangle topLine = newBox;
             topLine.Height = 1;

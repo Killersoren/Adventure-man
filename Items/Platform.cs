@@ -108,7 +108,7 @@ namespace Adventure_man
                     {
                         for (int x = 0; x < width; x++)
                         {
-                            spriteBatch.Draw(Sprite, Program.AdventureMan.CurrentWorld.Camera.WorldToScreen(new Vector2(Location.X + (Sprite.Width * x), Location.Y + (Sprite.Height * y))), Color.White);
+                            spriteBatch.Draw(Sprite, Program.AdventureMan.CurrentWorld.camera.WorldToScreen(new Vector2(Location.X + (Sprite.Width * x), Location.Y + (Sprite.Height * y))), Color.White);
                         }
                     }
                 };

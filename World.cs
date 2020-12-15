@@ -12,14 +12,14 @@ namespace Adventure_man
         public List<GameObject> GameObjects;
         public List<GameObject> newGameObjects;
         public List<GameObject> GameObjectsToRemove;
-        public static Player Player = new Player();
+        public static Player player = new Player();
 
-        public delegate bool CompleationParamitor();
+        public delegate bool CompleationParameter();
 
-        public CompleationParamitor forCompleation = () => { return false; };
+        public CompleationParameter forCompleation = () => { return false; };
        // private readonly List<GameObject> nextWorld;
         public List<ParallaxLayer> parallaxList;
-        public Camera Camera;
+        public Camera camera;
 
         //public PickUp pickUp;
 
@@ -39,9 +39,9 @@ namespace Adventure_man
         /// <summary>
         /// How many pixels(^2) in each grid zone
         /// </summary>
-        private static readonly int gridResulution = 64;
+        private static readonly int gridResolution = 64;
 
-        public static int GridResulution { get => gridResulution; }
+        public static int GridResulution { get => gridResolution; }
 
         public Vector2 worldSize;
         //public static Vector2 ScreenSize { get => screenSize; }
@@ -74,15 +74,15 @@ namespace Adventure_man
         /// <param name="worldGrid"></param>
         /// <param name="gameObjects"></param>
         /// <param name="forCompleation"></param>
-        public World(List<ParallaxLayer> parallaxes, Vector2 playerLocation, Vector2 worldGrid, List<GameObject> gameObjects, CompleationParamitor forCompleation)
+        public World(List<ParallaxLayer> parallaxes, Vector2 playerLocation, Vector2 worldGrid, List<GameObject> gameObjects, CompleationParameter forCompleation)
         {
-            Camera = new Camera();
+            camera = new Camera();
             parallaxList = parallaxes;
             GameObjects = gameObjects;
             GameObjectsToRemove = new List<GameObject>();
             newGameObjects = new List<GameObject>();
-            Player.SetSpawn(playerLocation);
-            GameObjects.Add(Player);
+            player.SetSpawn(playerLocation);
+            GameObjects.Add(player);
 
 
             this.forCompleation = forCompleation;
@@ -97,7 +97,7 @@ namespace Adventure_man
         /// </summary>
         public void Update()
         {
-            Camera.Position = Player.Location;
+            camera.Position = player.Location;
             GameObjects.AddRange(newGameObjects);
             newGameObjects.Clear();
 

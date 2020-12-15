@@ -54,7 +54,7 @@ namespace Adventure_man
             {
 
                 CalculateOffsets(user);
-                GameObject.Spawn(new Arrow(arrowSprite, position + (bowOffset + new Vector2(offsetb + offseta * (int)World.Player.dir, 0)), damage, force, user, direction));
+                GameObject.Spawn(new Arrow(arrowSprite, position + (bowOffset + new Vector2(offsetb + offseta * (int)World.player.dir, 0)), damage, force, user, direction));
                 cooldown = 1000 / fireRate;
             }
         }
