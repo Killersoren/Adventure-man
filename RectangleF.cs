@@ -5,26 +5,18 @@ using System.Text;
 
 namespace Adventure_man
 {
-    public class RectangleF
+    /// <summary>
+    /// A struct representing rectangles in 2d space
+    /// </summary>
+    public struct RectangleF
     {
-        public float X = 0;
-        public float Y = 0;
-        public float Width = 0;
-        public float Height = 0;
+        public float X;
+        public float Y;
+        public float Width;
+        public float Height;
         public Vector2 Location { get => new Vector2(X, Y); set { X = value.X; Y = value.Y; } }
         public Vector2 Size { get => new Vector2(Width, Height); set { Width = value.X; Height = value.Y; } }
-
         public Vector2 Center { get => new Vector2(X - Width / 2, Y - Height / 2); }
-
-        public RectangleF()
-        {
-        }
-
-        public RectangleF(Vector2 location, Vector2 size)
-        {
-            Location = location;
-            Size = size;
-        }
 
         public RectangleF(float x, float y, float with, float height)
         {
@@ -34,24 +26,37 @@ namespace Adventure_man
             Height = height;
         }
 
-        public bool Contains(Vector2 point)
+        public RectangleF(Vector2 location, Vector2 size) : this(location.X, location.Y, size.X, size.Y)
         {
-            return ((point.X > X && point.X < X + Width) && (point.Y > Y && point.Y < Y + Height));
         }
 
+        /// <summary>
+        /// Method for checkig if a RectangleF contains a point
+        /// </summary>
+        /// <param name="point">The choordinates of the point</param>
+        /// <returns>true if the rectangle contains the point and false if the point is outside, or on the edge of te rectangle</returns>
+        public bool Contains(Vector2 point)
+        {
+            return (point.X > X && point.X < X + Width && point.Y > Y && point.Y < Y + Height);
+        }
+
+        /// <summary>
+        /// Method for cheking of two RectangleF's overlap
+        /// </summary>
+        /// <param name="rec">The rectangle to check against</param>
+        /// <returns>True if the rectangles overlap</returns>
         public bool Intersects(RectangleF rec)
         {
             return X < rec.X + rec.Width && X + Width > rec.X && Y < rec.Y + rec.Height && Y + Height > rec.Y;
         }
 
+        /// <summary>
+        /// Converts a RectangleF to a Microsoft.Xna.Framework.Rectangle
+        /// </summary>
+        /// <param name="rec">The RectangleF to convert</param>
         public static implicit operator Rectangle(RectangleF rec)
         {
             return new Rectangle(rec.Location.ToPoint(), rec.Size.ToPoint());
-        }
-
-        public RectangleF Copy()
-        {
-            return new RectangleF(X, Y, Width, Height);
         }
     }
 }

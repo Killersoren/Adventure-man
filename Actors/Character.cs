@@ -23,7 +23,7 @@ namespace Adventure_man
         {
             var isGrounded = false;
 
-            var downRec = HitBox.Copy();
+            var downRec = HitBox;
             downRec.Location -= new Vector2(0, -0.5f);
 
             foreach (GameObject gameObject in Program.AdventureMan.CurrentWorld.GameObjects)

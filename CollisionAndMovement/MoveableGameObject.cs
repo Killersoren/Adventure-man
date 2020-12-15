@@ -50,7 +50,7 @@ namespace Adventure_man
             bool movingX = stepX != Vector2.Zero;
             bool movingY = stepY != Vector2.Zero;
 
-            var nextTarget = HitBox.Copy();
+            var nextTarget = HitBox;
 
             while (movingX || movingY)
             {
@@ -86,7 +86,7 @@ namespace Adventure_man
         public bool MoveTo(Vector2 position)
         {
             bool move = true;
-            var target = HitBox.Copy();
+            var target = HitBox;
             target.Location = position;
             foreach (GameObject gameObject in Program.AdventureMan.CurrentWorld.GameObjects)
             {

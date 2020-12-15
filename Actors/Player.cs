@@ -155,7 +155,7 @@ namespace Adventure_man
         private void StandUp()
         {
             bool clear = true;
-            var target = HitBox.Copy();
+            var target = HitBox;
 
             target.Location = Location - new Vector2(0, Size.Y);
 
