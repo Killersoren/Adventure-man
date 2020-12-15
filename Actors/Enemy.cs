@@ -99,7 +99,7 @@ namespace Adventure_man
         {
             dragCoefficient = 0.9f;
             speed = 0.2f;
-
+            color = Color.Black;
             maxHealth = 200;
             health = maxHealth;
             rnd = new Random();
