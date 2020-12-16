@@ -17,11 +17,10 @@ namespace Adventure_man
         private int maxHealth;
         private Vector2 spawnLocation;
         private Weapon weapon;
-        //private Vector2 test;
 
         private readonly string startingWeapon;
 
-        private bool isAlive
+        private bool IsAlive
         {
             get => health > 0;
         }
@@ -36,8 +35,8 @@ namespace Adventure_man
 
         public int res = World.GridResulution;
 
-        private Timer timerA;
-        private Timer timerB;
+        private Timer timerLeft;
+        private Timer timerRight;
         private bool timerStart = false;
 
         public bool playerInSight = false;
@@ -119,22 +118,29 @@ namespace Adventure_man
             Location = spawnLocation;
         }
 
-        public Enemy(float X, float Y, string startingWeapon1)
+
+        /// <summary>
+        /// Søren - Spawns a enemy with a position using x and y coordinates and a starting weapon
+        /// </summary>
+        /// <param name="X">The x coordinate of the enemy on the map</param>
+        /// <param name="Y">The y coordinate of the enemy on the map</param>
+        /// <param name="startingWeapon">The weapon the enemy spawns with</param>
+        public Enemy(float X, float Y, string startingWeapon)
         {
             DefaultEnemy();
             int res = World.GridResulution;
             spawnLocation = new Vector2(X * res, Y * res);
             Location = spawnLocation;
 
-            startingWeapon = startingWeapon1;
+            this.startingWeapon = startingWeapon;
 
-            if (startingWeapon == "Bow")
+            if (this.startingWeapon == "Bow")
             {
-                BowTest();   // Spawner fjende med bue
+                SpawnBow();
             }
-            else if (startingWeapon == "Sword")
+            else if (this.startingWeapon == "Sword")
             {
-                SwordTest(); // spawner fjende med sværd
+                SpawnSword();
             }
         }
 
@@ -159,56 +165,73 @@ namespace Adventure_man
             healthbarFont = Program.AdventureMan.altFont;
         }
 
-        private void SetTimerA()
+
+        /// <summary>
+        /// Søren - Sets the timer for when the enemy will move left.
+        /// </summary>
+        private void SetTimerLeft()
         {
-            // Create a timer with a two second interval.
-            timerA = new System.Timers.Timer(1500);
-            // Hook up the Elapsed event for the timer.
-            timerA.Elapsed += OnTimedEventA;
-            timerA.AutoReset = false;
-            timerA.Enabled = true;
+            timerLeft = new Timer(2500);
+            timerLeft.Elapsed += OnTimedEventLeft;
+            timerLeft.AutoReset = false;
+            timerLeft.Enabled = true;
+        }
+        /// <summary>
+        /// Søren - Sets the timer for when the enemy will move Right.
+        /// </summary>
+        private void SetTimerRight()
+        {
+            timerRight = new Timer(2500);
+            timerRight.Elapsed += OnTimedEventRight;
+            timerRight.AutoReset = false;
+            timerRight.Enabled = true;
         }
 
-        private void SetTimerB()
+        /// <summary>
+        /// Søren - The enemy moves to the left and starts the timer to move right.
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="e"></param>
+        private void OnTimedEventLeft(Object source, ElapsedEventArgs e)
         {
-            // Create a timer with a two second interval.
-            timerB = new System.Timers.Timer(1500);
-            // Hook up the Elapsed event for the timer.
-            timerB.Elapsed += OnTimedEventB;
-            timerB.AutoReset = false;
-            timerB.Enabled = true;
-        }
-
-        private void OnTimedEventA(Object source, ElapsedEventArgs e)
-        {
-            timerStart = true;
             velocity += -Vector2.UnitX;
-
-            SetTimerB();
+            SetTimerRight();
         }
-
-        private void OnTimedEventB(Object source, ElapsedEventArgs e)
+        /// <summary>
+        /// Søren - The enemy moves to the Right and starts the timer to move left.
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="e"></param>
+        private void OnTimedEventRight(Object source, ElapsedEventArgs e)
         {
             velocity += Vector2.UnitX;
-            SetTimerA();
+            SetTimerLeft();
+            timerStart = true;
         }
 
+
+        /// <summary>
+        /// Søren - The enemy logic, as to how the enemy moves and attacks.
+        /// </summary>
         public void EnemyLogic()
         {
             if (playerInSight == false)
 
             {
+
                 if (!timerStart)
                 {
-                    SetTimerA();
+                    velocity += -Vector2.UnitX;
+                    SetTimerRight();
+
                 }
             }
             else if (playerInSight)
             {
                 if (timerStart)
                 {
-                    timerA.Stop();
-                    timerB.Stop();
+                    timerLeft.Stop();
+                    timerRight.Stop();
                 }
 
                 Attack();
@@ -230,7 +253,9 @@ namespace Adventure_man
 
         public override void Update()
         {
-            if (isAlive == false)
+            Debug.WriteLine("the velocity is " + velocity);
+
+            if (IsAlive == false)
             {
                 Die();
                 //Respawn();
@@ -247,11 +272,13 @@ namespace Adventure_man
             base.Update();
         }
 
+        /// <summary>
+        /// Søren - When set to attack the player the enemy will check if it has a sword or a bow, and use that to determine how close to move to the player's location.
+        /// </summary>
         public void Attack()
         {
-            // Debug.WriteLine("Enemy attacking");
+          
             MoveTowardsPlayer();
-
             void MoveTowardsPlayer()
             {
                 if (weapon is Bow)
@@ -304,7 +331,7 @@ namespace Adventure_man
         }
 
         /// <summary>
-        /// Sofie + Søren?- Compleatly destroys the Enemy
+        /// Sofie + Søren- Compleatly destroys the Enemy
         /// </summary>
         public void Die()
         {
@@ -336,24 +363,33 @@ namespace Adventure_man
             }
         }
 
+
+        /// <summary>
+        /// Søren - Creates the vision for the enemy.
+        /// </summary>
         public void CreateVision()
         {
             if (!EnemyVision)
             {
                 vision = new Vision(visionSprite, Location, 250, 50, this);
+                
 
                 Program.AdventureMan.CurrentWorld.newGameObjects.Add(vision);
 
                 EnemyVision = true;
             }
         }
-
-        public void BowTest()
+        /// <summary>
+        /// Søren - sets the enemy's weapon to a bow
+        /// </summary>
+        public void SpawnBow()
         {
             weapon = new Bow(30, 10, 2);
         }
-
-        public void SwordTest()
+        /// <summary>
+        /// Søren - sets the enemy's weapon to a sword
+        /// </summary>
+        public void SpawnSword()
         {
             weapon = new Sword(40, 2);
         }

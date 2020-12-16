@@ -1,4 +1,4 @@
-﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -38,21 +38,15 @@ namespace Adventure_man
                     height = 1;
             }
         }
-
-
-        public Vision(Texture2D sprite, Vector2 position, int width, int height)
-        {
-            Location = position;
-            Size = new Vector2(width - 1, height - 1);
-            Sprite = sprite;
-            Width = width;
-            Height = height;
-
-            
-       
-        }
-
-        public Vision(Texture2D sprite, Vector2 position, int width, int height, Enemy enemy1)
+        /// <summary>
+        /// Søren - Generates the vision
+        /// </summary>
+        /// <param name="sprite">The sprite for the vision</param>
+        /// <param name="position">The position of the vision</param>
+        /// <param name="width">How wide the sprite is (How far the enemy can see</param>
+        /// <param name="height">How tall the sprite is</param>
+        /// <param name="enemy">The enemy that generated the vision</param>
+        public Vision(Texture2D sprite, Vector2 position, int width, int height, Enemy enemy)
         {
             Location = position;
             Size = new Vector2(width, height);
@@ -60,7 +54,7 @@ namespace Adventure_man
             Width = width;
             Height = height;
 
-            enemy = enemy1;
+            this.enemy = enemy;
 
         }
 
@@ -74,8 +68,6 @@ namespace Adventure_man
 
             else if (dir == GameWorld.Direction.Left)
             {
-                Location = enemy.Location - new Vector2(188,0) ;
-
                 Location = enemy.Location - new Vector2(width - enemy.Size.X, 0);
             }
             base.Update();

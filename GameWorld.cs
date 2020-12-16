@@ -15,7 +15,6 @@ namespace Adventure_man
         public SpriteBatch _spriteBatch;
         public GameTime gameTime;
         public ContentManager content;
-        private int enemies;
 
         // Fonts
         public SpriteFont font;
