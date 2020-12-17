@@ -53,8 +53,6 @@ namespace Adventure_man
         {
             get
             {
-                //  Debug.WriteLine($"{healthbarFont.MeasureString("█").X} {healthbarFont.MeasureString(" ").X} {healthbarFont.Spacing}");
-
                 StringBuilder temp = new StringBuilder("", healthbarLength);
                 double space = maxHealth / healthbarLength;
                 int full = (int)Math.Floor(health / space);
@@ -79,10 +77,6 @@ namespace Adventure_man
         {
             get
             {
-                //if (playerInSight == true)
-                //    return Color.Blue;
-
-                // Debug.WriteLine($"{health}/{(maxHealth * ((float)2 / 3))}");
                 if ((health <= maxHealth) && (health > (maxHealth * ((float)2 / 3))))
                     return Color.Green;
                 else if ((health <= (maxHealth * ((float)2 / 3))) && (health > (maxHealth * ((float)1 / 3))))
@@ -144,18 +138,15 @@ namespace Adventure_man
             }
         }
 
-        //public override void LoadContent(ContentManager content)
         public override void LoadContent(ContentManager contentManager)
         {
             var sprites = new Texture2D[2];
             for (int i = 0; i < sprites.Length; i++)
             {
-                //sprites[i] = content.Load<Texture2D>("MoveTest" + (i + 1)+"_v2");
                 sprites[i] = Program.AdventureMan.content.Load<Texture2D>("MoveTest" + (i + 1) + "_v2");
             }
 
             Sprite = new SpriteAnimation(sprites);
-            //HitBox = new RectangleF((int)Location.X, (int)Location.Y, Sprite.Width, Sprite.Height);
             Size = new Vector2(Sprite.Width - 1, Sprite.Height - 1);
 
             coinSpawnOffset = new Vector2(Size.X / 2, Size.Y / 4);
@@ -237,12 +228,6 @@ namespace Adventure_man
                 Attack();
             }
         }
-
-        //public void Draw(SpriteBatch spriteBatch)
-        //{
-        //    spriteBatch.Draw(Sprite, Location, Color.White);
-
-        //}
         public override void Draw(SpriteBatch spriteBatch)
         {
             base.Draw(spriteBatch);
@@ -258,7 +243,6 @@ namespace Adventure_man
             if (IsAlive == false)
             {
                 Die();
-                //Respawn();
             }
 
             CreateVision();
@@ -402,24 +386,6 @@ namespace Adventure_man
             }
 
             base.OnCollision(other);
-            //    if (other is Platform)
-            //    {
-            //        if (other.HitBox.Center.Y > HitBox.Center.Y) // If Player is on top
-            //        {
-            //            //color = Color.Red;
-            //            Velocity.Y = 0;
-            //            //velocity.Normalize();
-            //        }
-            //        if (other.HitBox.Bottom <= CollisionBox.Bottom && other.CollisionBox.Center.X < CollisionBox.Center.X) // if the player is to the Right of the platform
-            //        {
-            //            velocity += new Vector2(1, 0);
-            //        }
-            //        if (other.CollisionBox.Bottom <= CollisionBox.Bottom && other.CollisionBox.Center.X > CollisionBox.Center.X)// if the player is to the Left of the platform
-            //        {
-            //            velocity += new Vector2(-1, 0);
-            //        }
-            //    }
-            //}
         }
     }
 }

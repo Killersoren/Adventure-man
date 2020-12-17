@@ -167,23 +167,6 @@ namespace Adventure_man
                     {
                         Debug.WriteLine("Cant Uncrouch");
                         clear = false;
-
-                        //The Bellow code is for if you want the Jumper to uncrouch in the air and get pushed down by platforms above,
-                        //if not in a grid this will have problems though
-
-                        //if (isGrounded)
-                        //{
-                        //    Debug.WriteLine("Cant Uncrouch");
-                        //    clear = false;
-                        //}
-                        //else
-                        //{
-                        //    while(target.Intersects(o.HitBox))
-                        //    {
-                        //        target.Location += new Vector2(0, 1);
-                        //    }
-                        //    clear = true;
-                        //}
                     }
                 }
             }
@@ -261,11 +244,7 @@ namespace Adventure_man
                 //sprites[i] = content.Load<Texture2D>("MoveTest" + (i + 1)+"_v2");
                 sprites[i] = Program.AdventureMan.content.Load<Texture2D>("MoveTest" + (i + 1) + "_v2");
             }
-
-            //currentWeaponSprite = Program.AdventureMan.content.Load<Texture2D>("Sword");
-
             Sprite = new SpriteAnimation(sprites);
-            //HitBox = new RectangleF((int)Location.X, (int)Location.Y, Sprite.Width, Sprite.Height);
             Size = new Vector2(Sprite.Width - 1, Sprite.Height - 1);
 
             coinPickup = Program.AdventureMan.content.Load<SoundEffect>("CoinSound");
@@ -299,8 +278,6 @@ namespace Adventure_man
         public void Die()
         {
             Destroy(this);
-
-            //Spawn(new Enemy(9, 3));
         }
 
         /// <summary>

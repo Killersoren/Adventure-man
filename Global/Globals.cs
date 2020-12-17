@@ -10,7 +10,6 @@ namespace Adventure_man
     {
         public static SpriteAnimation DefaultSprite = Program.AdventureMan.Content.Load<Texture2D>("PlatformTest");
         public static SpriteAnimation TransparentSprite;
-        //public static SpriteFont DefaultFont = Program.AdventureMan.Content.Load<SpriteFont>(""); //Add this
 
         static Globals()
         {

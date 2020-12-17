@@ -23,7 +23,6 @@ namespace Adventure_man
         /// <param name="fireRate">how many arrows the bow shoots every second</param>
         public Bow(string name, int damage, float force, float fireRate)
         {
-            //base.user = user;
             base.damage = damage;
             base.name = name;
             this.force = force;
@@ -40,7 +39,6 @@ namespace Adventure_man
         /// <param name="fireRate">how many arrows the bow shoots every second</param>
         public Bow(int damage, float force, float fireRate)
         {
-            //base.user = user;
             base.damage = damage;
             this.force = force;
             this.fireRate = fireRate;

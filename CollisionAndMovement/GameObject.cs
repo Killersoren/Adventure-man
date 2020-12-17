@@ -61,8 +61,6 @@ namespace Adventure_man
 
         public virtual void Draw(SpriteBatch spriteBatch)
         {
-            //spriteBatch.Draw(Sprite, HitBox, color);
-
             var newBox = HitBox;
             newBox.Location = Program.AdventureMan.CurrentWorld.Camera.WorldToScreen(HitBox.Location);
             spriteBatch.Draw(Sprite, newBox, null, color, 0f, Vector2.Zero, effect, 0f);

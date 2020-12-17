@@ -23,7 +23,6 @@ namespace Adventure_man
 
         public CompleationParameter forCompleation = () => { return false; };
 
-        // private readonly List<GameObject> nextWorld;
         public Camera Camera;
 
         /// <summary>
@@ -135,8 +134,6 @@ namespace Adventure_man
 
             yield return new Platform(-1, -2, 1, (int)worldGrid.Y + 2, true); //Left
             yield return new Platform(worldGrid.X, -2, 1, (int)worldGrid.Y + 2, true); //Right
-            //yield return new Platform(-1*gridResulution, -2*gridResulution, gridResulution, (worldGrid.Y+2)*gridResulution); //Left
-            //yield return new Platform(worldGrid.X*gridResulution, -2*gridResulution, gridResulution, (worldGrid.Y+2)*gridResulution); //Right
         }
     }
 }

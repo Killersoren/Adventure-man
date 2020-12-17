@@ -127,12 +127,10 @@ namespace Adventure_man
             if (velocity.X > 0)
             {
                 dir = Direction.Right;
-                //staticDir = Direction.Right;
             }
             else if (velocity.X < 0)
             {
                 dir = Direction.Left;
-                //staticDir = Direction.Left;
             }
             else
             {

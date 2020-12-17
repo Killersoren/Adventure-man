@@ -92,14 +92,5 @@ namespace Adventure_man
         {
             return new SpriteAnimation(new Texture2D[] { t });
         }
-
-        /// <summary>
-        /// Gets next frame
-        /// </summary>
-        /// <returns></returns>
-        //public Texture2D GetNextFrame()
-        //{
-        //    return frames[(++currIndex % ((ulong)frames.Length * InverseSpeed)) / InverseSpeed];
-        //}
     }
 }
