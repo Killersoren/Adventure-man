@@ -33,10 +33,7 @@ namespace Adventure_man
                 fullScreen
             };
             Loadcontent();
-
-
         }
-
 
         /// <summary>
         /// Ras - Toggles bool isGamestarted, (leave menu)
@@ -47,8 +44,7 @@ namespace Adventure_man
         {
             Program.AdventureMan.isGameStarted = true;
         }
-       
-        
+
         /// <summary>
         /// Ras - Exits the game
         /// </summary>
@@ -56,11 +52,9 @@ namespace Adventure_man
         /// <param name="e"></param>
         private void Exit_Click(object sender, EventArgs e)
         {
-
             Program.AdventureMan.Exit();
         }
-       
-        
+
         /// <summary>
         /// Ras - Toggles fullscreen on and off
         /// </summary>
@@ -71,8 +65,7 @@ namespace Adventure_man
             Program.AdventureMan._graphics.IsFullScreen = !Program.AdventureMan._graphics.IsFullScreen;
             Program.AdventureMan._graphics.ApplyChanges();
         }
-       
-        
+
         /// <summary>
         /// Ras - Menus backgroundssprite is set (black and drawn at 0.5f opacity to create a darker overlay when in menu)
         /// </summary>
@@ -80,12 +73,11 @@ namespace Adventure_man
         {
             backgroundSprite = Program.AdventureMan.content.Load<Texture2D>("blankbackground");
         }
-       
-        
+
         /// <summary>
         /// Ras - calls update on all buttons in list
         /// </summary>
-        /// 
+        ///
         public override void Update()
         {
             foreach (Button b in buttons)
@@ -93,8 +85,7 @@ namespace Adventure_man
                 b.Update();
             }
         }
-        
-        
+
         /// <summary>
         /// Ras - Draws menus backgroundsprite, buttons in list and a string
         /// </summary>
@@ -102,7 +93,7 @@ namespace Adventure_man
         public override void Draw(SpriteBatch spritebatch)
         {
             spritebatch.Draw(backgroundSprite, new Rectangle(0, 0, Program.AdventureMan.SceenSize.x, Program.AdventureMan.SceenSize.y), Color.Black * 0.5f);
-            spritebatch.DrawString(Program.AdventureMan.menuFont, $" Menu / Paused (Enter)", new Vector2(Program.AdventureMan.SceenSize.x/4, Program.AdventureMan.SceenSize.y/20), Color.Black , 0f, Vector2.Zero, 2f,SpriteEffects.None,0f);
+            spritebatch.DrawString(Program.AdventureMan.menuFont, $"Menu / Paused", new Vector2(Program.AdventureMan.SceenSize.x / 4, Program.AdventureMan.SceenSize.y / 20), Color.Black, 0f, Vector2.Zero, 2f, SpriteEffects.None, 0f);
             foreach (Button b in buttons)
             {
                 b.Draw();
