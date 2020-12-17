@@ -17,6 +17,7 @@ namespace Adventure_man
         public List<GameObject> newGameObjects;
         public List<GameObject> GameObjectsToRemove;
         public static Player player = new Player();
+        public Vector2 playerLocation;
 
         public delegate bool CompleationParameter();
 
@@ -66,6 +67,7 @@ namespace Adventure_man
             GameObjects = gameObjects;
             GameObjectsToRemove = new List<GameObject>();
             newGameObjects = new List<GameObject>();
+            this.playerLocation = playerLocation;
             player.SetSpawn(playerLocation);
             GameObjects.Add(player);
 

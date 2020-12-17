@@ -15,6 +15,7 @@ namespace Adventure_man
         public SpriteBatch _spriteBatch;
         public GameTime gameTime;
         public ContentManager content;
+        private int enemies;
 
         // Fonts
         public SpriteFont font;
@@ -63,6 +64,7 @@ namespace Adventure_man
         {
             GenerateWorlds();
             CurrentWorld = worlds[0];
+            World.player.SetSpawn(CurrentWorld.playerLocation);
 
             _graphics.PreferredBackBufferWidth = (int)CurrentWorld.worldSize.X;
             _graphics.PreferredBackBufferHeight = (int)CurrentWorld.worldSize.Y;
@@ -182,6 +184,7 @@ namespace Adventure_man
                 CurrentWorld = worlds[worldNumber];
                 foreach (GameObject go in CurrentWorld.GameObjects)
                     go.LoadContent(content);
+                World.player.SetSpawn(CurrentWorld.playerLocation);
             }
         }
 
